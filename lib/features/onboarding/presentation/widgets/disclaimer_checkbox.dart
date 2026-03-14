@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class DisclaimerCheckbox extends StatelessWidget {
   const DisclaimerCheckbox({
@@ -33,10 +34,7 @@ class DisclaimerCheckbox extends StatelessWidget {
         const Expanded(
           child: Text(
             'I understand and agree to these terms.',
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 16,
-            ),
+            style: AppTextStyles.bodyText1,
           ),
         ),
       ],

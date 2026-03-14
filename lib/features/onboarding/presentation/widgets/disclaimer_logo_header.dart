@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class DisclaimerLogoHeader extends StatelessWidget {
   const DisclaimerLogoHeader({super.key});
@@ -15,11 +16,7 @@ class DisclaimerLogoHeader extends StatelessWidget {
         const SizedBox(width: 10),
         const Text(
           'KRehab',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTextStyles.heading2,
         ),
       ],
     );

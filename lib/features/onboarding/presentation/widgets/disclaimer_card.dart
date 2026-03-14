@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class DisclaimerCard extends StatelessWidget {
   const DisclaimerCard({super.key});
@@ -39,11 +40,7 @@ class DisclaimerCard extends StatelessWidget {
           Expanded(
             child: Text(
               _disclaimerText,
-              style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 14,
-                height: 1.5,
-              ),
+              style: AppTextStyles.bodyText2,
             ),
           ),
         ],

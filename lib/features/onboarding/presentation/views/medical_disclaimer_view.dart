@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/onboarding/presentation/widgets/continue_button.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
+
+import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_button.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_card.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_checkbox.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_image_section.dart';
@@ -21,7 +24,11 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
   }
 
   void _onContinue() {
-    // TODO: navigate to the next screen
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const OnboardingView(),
+      ),
+    );
   }
 
   @override
@@ -39,11 +46,7 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
               const SizedBox(height: 32),
               const Text(
                 'Before You Begin',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.heading1,
               ),
               const SizedBox(height: 24),
               const DisclaimerImageSection(),
@@ -52,7 +55,7 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
               const SizedBox(height: 20),
               DisclaimerCheckbox(value: _agreed, onChanged: _onCheckboxChanged),
               const Spacer(),
-              ContinueButton(enabled: _agreed, onPressed: _onContinue),
+              DisclaimerButton(enabled: _agreed, onPressed: _onContinue),
               const SizedBox(height: 24),
             ],
           ),
