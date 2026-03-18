@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/features/onboarding/domain/models/onboarding_page_model.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:k_rehab/features/onboarding/domain/entities/onboarding_page_model.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_feature_item.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_hero_image.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_text_section.dart';
@@ -13,8 +14,14 @@ class OnboardingPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RecoveryHeroImage(imagePath: page.imagePath),
-        RecoveryTextSection(title: page.title, subtitle: page.subtitle),
+        RecoveryHeroImage(imagePath: page.imagePath)
+            .animate()
+            .fadeIn(duration: 400.ms)
+            .slideY(begin: 0.1, curve: Curves.easeOut),
+        RecoveryTextSection(title: page.title, subtitle: page.subtitle)
+            .animate()
+            .fadeIn(duration: 400.ms, delay: 100.ms)
+            .slideY(begin: 0.1, curve: Curves.easeOut),
         const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -26,7 +33,13 @@ class OnboardingPageContent extends StatelessWidget {
                   padding: page.features[i].padding,
                   iconPath: page.features[i].iconPath,
                   title: page.features[i].title,
-                ),
+                )
+                    .animate()
+                    .fadeIn(
+                      duration: 350.ms,
+                      delay: Duration(milliseconds: 150 + (i * 80)),
+                    )
+                    .slideX(begin: 0.15, curve: Curves.easeOut),
               ],
             ],
           ),

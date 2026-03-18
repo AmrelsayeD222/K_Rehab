@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp.router(
       title: 'KRehab',
       debugShowCheckedModeBanner: false,
-      home: MedicalDisclaimerView(),
+      routerConfig: AppRouter.router,
     );
   }
 }

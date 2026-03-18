@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
 
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_button.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_card.dart';
@@ -24,11 +25,7 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
   }
 
   void _onContinue() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const OnboardingView(),
-      ),
-    );
+    context.go(AppRouter.onboarding);
   }
 
   @override
@@ -44,10 +41,7 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
               const SizedBox(height: 24),
               const DisclaimerLogoHeader(),
               const SizedBox(height: 32),
-              const Text(
-                'Before You Begin',
-                style: AppTextStyles.heading1,
-              ),
+              const Text('Before You Begin', style: AppTextStyles.heading1),
               const SizedBox(height: 24),
               const DisclaimerImageSection(),
               const SizedBox(height: 24),

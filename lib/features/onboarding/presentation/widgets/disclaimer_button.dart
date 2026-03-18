@@ -17,7 +17,7 @@ class DisclaimerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SizedBox(
         width: double.infinity,
         height: 56,
@@ -34,10 +34,7 @@ class DisclaimerButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Next",
-                style: AppTextStyles.buttonText,
-              ),
+              Text("Next", style: AppTextStyles.buttonText),
               const SizedBox(width: 8),
               SvgPicture.asset(AssetPaths.arrowIcon),
             ],
