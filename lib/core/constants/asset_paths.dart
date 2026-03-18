@@ -29,4 +29,11 @@ abstract class AssetPaths {
   static const String trackProgressIcon =
       '$_onboarding/track_progress_icon.svg';
   static const String videoGuidedIcon = '$_onboarding/video_guided_icon.svg';
+
+  // Auth assets
+  static const String _auth = 'assets/auth';
+  static const String appleLogo = '$_auth/apple-logo.svg';
+  static const String googleLogo = '$_auth/google-icon-logo-svgrepo-com.svg';
+  static const String loginIcon = '$_auth/login icon.svg';
+  static const String signupIcon = '$_auth/signup icon.svg';
 }
