@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
@@ -41,41 +42,55 @@ class _LoginViewState extends State<LoginView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const AuthHeader(
-                  iconPath: AssetPaths.loginIcon,
-                  title: 'Welcome Back',
-                  subtitle: 'Login to continue your recovery journey',
-                  topSpacing: 50,
-                  bottomSpacing: 48,
-                ),
+                      iconPath: AssetPaths.loginIcon,
+                      title: 'Welcome Back',
+                      subtitle: 'Login to continue your recovery journey',
+                      topSpacing: 50,
+                      bottomSpacing: 48,
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 _LoginFormSection(
-                  emailController: _emailController,
-                  passwordController: _passwordController,
-                  onLoginPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Login logic placeholder
-                    }
-                  },
-                ),
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      onLoginPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Login logic placeholder
+                        }
+                      },
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms, delay: 100.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 32),
                 AuthSocialSection(
-                  googleIconPath: AssetPaths.googleLogo,
-                  appleIconPath: AssetPaths.appleLogo,
-                  onGooglePressed: () {},
-                  onApplePressed: () {},
-                ),
+                      googleIconPath: AssetPaths.googleLogo,
+                      appleIconPath: AssetPaths.appleLogo,
+                      onGooglePressed: () {},
+                      onApplePressed: () {},
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms, delay: 180.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 48),
                 AuthToggleRow(
-                  label: "Don't have an account? ",
-                  actionText: 'Sign Up',
-                  onActionTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignupView(),
-                      ),
-                    );
-                  },
-                ),
+                      label: "Don't have an account? ",
+                      actionText: 'Sign Up',
+                      onActionTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, _, _) => const SignupView(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                    )
+                    .animate()
+                    .fadeIn(duration: 350.ms, delay: 250.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 24),
               ],
             ),

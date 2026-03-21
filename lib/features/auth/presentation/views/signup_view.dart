@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/features/auth/presentation/views/login_view.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_header.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_social_section.dart';
@@ -41,35 +43,54 @@ class _SignupViewState extends State<SignupView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const AuthHeader(
-                  iconPath: AssetPaths.signupIcon,
-                  title: 'Create Account',
-                  subtitle: 'Start your personalized recovery today',
-                  topSpacing: 50,
-                  bottomSpacing: 40,
-                ),
+                      iconPath: AssetPaths.signupIcon,
+                      title: 'Create Account',
+                      subtitle: 'Start your personalized recovery today',
+                      topSpacing: 50,
+                      bottomSpacing: 40,
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 _SignupFormSection(
-                  nameController: _nameController,
-                  emailController: _emailController,
-                  passwordController: _passwordController,
-                  onSignupPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Signup logic placeholder
-                    }
-                  },
-                ),
+                      nameController: _nameController,
+                      emailController: _emailController,
+                      passwordController: _passwordController,
+                      onSignupPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Signup logic placeholder
+                        }
+                      },
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms, delay: 100.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 32),
                 AuthSocialSection(
-                  googleIconPath: AssetPaths.googleLogo,
-                  appleIconPath: AssetPaths.appleLogo,
-                  onGooglePressed: () {},
-                  onApplePressed: () {},
-                ),
+                      googleIconPath: AssetPaths.googleLogo,
+                      appleIconPath: AssetPaths.appleLogo,
+                      onGooglePressed: () {},
+                      onApplePressed: () {},
+                    )
+                    .animate()
+                    .fadeIn(duration: 400.ms, delay: 180.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 40),
                 AuthToggleRow(
-                  label: 'Already have an account? ',
-                  actionText: 'Login',
-                  onActionTap: () => Navigator.pop(context),
-                ),
+                      label: 'Already have an account? ',
+                      actionText: 'Login',
+                      onActionTap: () => Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, _, _) => const LoginView(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      ),
+                    )
+                    .animate()
+                    .fadeIn(duration: 350.ms, delay: 250.ms)
+                    .slideY(begin: 0.1, curve: Curves.easeOut),
                 const SizedBox(height: 24),
               ],
             ),
