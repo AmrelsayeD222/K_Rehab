@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:k_rehab/features/auth/logic/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/views/login_view.dart';
 import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
@@ -41,8 +42,13 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: login,
-        pageBuilder: (context, state) =>
-            customTransitionPage(state: state, child: const LoginView()),
+        pageBuilder: (context, state) => customTransitionPage(
+          state: state,
+          child: BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: const LoginView(),
+          ),
+        ),
       ),
       GoRoute(
         path: signup,

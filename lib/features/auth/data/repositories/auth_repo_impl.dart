@@ -50,4 +50,23 @@ class AuthRepoImpl extends AuthRepo {
       return Left(SupabaseDatabaseFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> login(String email, String password) async {
+    try {
+      final response = await client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      final session = response.session;
+      if (session != null) {
+        return Right(session.accessToken);
+      }
+      return Left(SupabaseAuthFailure('User login failed: No session returned'));
+    } on AuthApiException catch (e) {
+      return Left(SupabaseAuthFailure.fromAuthException(e));
+    } catch (e) {
+      return Left(SupabaseAuthFailure(e.toString()));
+    }
+  }
 }

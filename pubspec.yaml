@@ -21,6 +21,7 @@ dependencies:
   flutter_animate: ^4.5.2
   supabase_flutter: ^2.12.0
   get_it: ^9.2.1
+  flutter_secure_storage: ^10.0.0
 
 dev_dependencies:
   flutter_test:

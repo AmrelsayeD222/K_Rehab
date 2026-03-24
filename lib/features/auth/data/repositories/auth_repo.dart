@@ -9,4 +9,5 @@ abstract class AuthRepo {
     String name,
   );
   Future<Either<Failure, void>> createProfile(UserModel userModel);
+  Future<Either<Failure, String>> login(String email, String password);
 }
