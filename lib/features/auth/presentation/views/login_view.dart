@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_header.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_social_section.dart';
+import 'package:k_rehab/features/auth/presentation/widgets/auth_button.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_toggle_row.dart';
-import 'package:k_rehab/features/onboarding/presentation/widgets/onboarding_button.dart';
-import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -78,14 +79,7 @@ class _LoginViewState extends State<LoginView> {
                       label: "Don't have an account? ",
                       actionText: 'Sign Up',
                       onActionTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, _, _) => const SignupView(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
-                        );
+                        context.go(AppRouter.signup);
                       },
                     )
                     .animate()
@@ -144,7 +138,7 @@ class _LoginFormSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 32),
-        OnboardingButton(text: 'Login', onPressed: onLoginPressed),
+        AuthButton(text: 'Login', onPressed: onLoginPressed),
       ],
     );
   }
