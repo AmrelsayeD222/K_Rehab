@@ -19,9 +19,10 @@ abstract class AppRouter {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String home = '/home';
+  static String initialLocation = disclaimer;
 
-  static final GoRouter router = GoRouter(
-    initialLocation: disclaimer,
+  static GoRouter router() => GoRouter(
+    initialLocation: initialLocation,
     routes: [
       GoRoute(
         path: disclaimer,
