@@ -6,12 +6,13 @@ import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/features/auth/logic/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/logic/register/register_cubit.dart';
-import 'package:k_rehab/features/home/home_view.dart';
+
 import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:k_rehab/core/router/main_view.dart';
 
-import 'custom_transition_page.dart';
+
 
 abstract class AppRouter {
   static const String disclaimer = '/';
@@ -26,48 +27,35 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: disclaimer,
-        pageBuilder: (context, state) => customTransitionPage(
-          state: state,
-          child: const MedicalDisclaimerView(),
-        ),
+        builder: (context, state) => const MedicalDisclaimerView(),
       ),
       GoRoute(
         path: onboarding,
-        pageBuilder: (context, state) => customTransitionPage(
-          state: state,
-          child: BlocProvider(
-            create: (_) => getIt<OnboardingCubit>(),
-            child: const OnboardingView(),
-          ),
+        builder: (context, state) => BlocProvider(
+          create: (_) => getIt<OnboardingCubit>(),
+          child: const OnboardingView(),
         ),
       ),
       GoRoute(
         path: login,
-        pageBuilder: (context, state) => customTransitionPage(
-          state: state,
-          child: BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: const LoginView(),
-          ),
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<LoginCubit>(),
+          child: const LoginView(),
         ),
       ),
       GoRoute(
         path: signup,
-        pageBuilder: (context, state) => customTransitionPage(
-          state: state,
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<CreateUserCubit>()),
-            ],
-            child: const SignupView(),
-          ),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<RegisterCubit>()),
+            BlocProvider(create: (_) => getIt<CreateUserCubit>()),
+          ],
+          child: const SignupView(),
         ),
       ),
       GoRoute(
         path: home,
-        pageBuilder: (context, state) =>
-            customTransitionPage(state: state, child: const HomeView()),
+        builder: (context, state) => const MainView(),
       ),
     ],
   );
