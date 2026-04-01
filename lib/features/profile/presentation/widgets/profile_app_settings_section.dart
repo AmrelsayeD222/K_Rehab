@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/profile/widgets/custom_menu_card_widget.dart';
-import 'package:k_rehab/features/profile/widgets/profile_section_card.dart';
-import 'package:k_rehab/features/profile/widgets/profile_section_title.dart';
-import 'package:k_rehab/features/profile/widgets/profile_segmented_toggle.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/custom_menu_card_widget.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_section_card.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_section_title.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_segmented_toggle.dart';
 
 class ProfileAppSettingsSection extends StatelessWidget {
   const ProfileAppSettingsSection({super.key});

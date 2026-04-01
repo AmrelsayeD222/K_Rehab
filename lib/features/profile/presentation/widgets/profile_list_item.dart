@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 
-import 'package:k_rehab/features/profile/models/profile_menu_item_data.dart';
+import 'package:k_rehab/features/profile/presentation/models/profile_menu_item_data.dart';
 
 class ProfileListItem extends StatelessWidget {
   const ProfileListItem({

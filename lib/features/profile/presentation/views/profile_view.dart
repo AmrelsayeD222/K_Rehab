@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/profile/widgets/profile_account_section.dart';
-import 'package:k_rehab/features/profile/widgets/profile_app_settings_section.dart';
-import 'package:k_rehab/features/profile/widgets/profile_header.dart';
-import 'package:k_rehab/features/profile/widgets/profile_logout_button.dart';
-import 'package:k_rehab/features/profile/widgets/profile_support_section.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_account_section.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_app_settings_section.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_header.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_logout_button.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_support_section.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
