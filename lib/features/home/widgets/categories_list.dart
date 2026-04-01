@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class CategoriesList extends StatelessWidget {
   const CategoriesList({super.key});
 
-  final List<Map<String, dynamic>> categories = const [
-    {'name': 'Shoulder', 'icon': Icons.accessibility_new_rounded},
-    {'name': 'Knee', 'icon': Icons.directions_run_rounded},
-    {'name': 'Back', 'icon': Icons.airline_seat_recline_extra_rounded},
-    {'name': 'Neck', 'icon': Icons.person_rounded},
-    {'name': 'Ankle', 'icon': Icons.bolt_rounded},
+  final List categories = const [
+    {'name': 'Shoulder', 'image': AssetPaths.shoulderIcon},
+    {'name': 'Knee', 'image': AssetPaths.kneeIcon},
+    {'name': 'Back', 'image': AssetPaths.backIcon},
+    {'name': 'Neck', 'image': AssetPaths.neckIcon},
+    {'name': 'Ankle', 'image': AssetPaths.ankleIcon},
+    {'name': 'Hip', 'image': AssetPaths.hipIcon},
   ];
 
   @override
@@ -38,19 +40,10 @@ class CategoriesList extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 20.0),
                     child: Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(18),
-                          decoration: BoxDecoration(
-                            color: AppColors.cardBackground,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: AppColors.primary.withValues(alpha: .08),
-                            ),
-                          ),
-                          child: Icon(
-                            category['icon'] as IconData,
-                            color: AppColors.primary,
-                            size: 30,
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundImage: AssetImage(
+                            category['image'] as String,
                           ),
                         ),
                         const SizedBox(height: 10),

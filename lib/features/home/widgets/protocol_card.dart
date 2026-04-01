@@ -43,7 +43,7 @@ class ProtocolCard extends StatelessWidget {
     return Text(
       model.title,
       style: AppTextStyles.heading2.copyWith(
-        color: AppColors.primary,
+        color: AppColors.featuredCardBackground,
         height: 1.2,
         fontSize: 20,
       ),
@@ -62,7 +62,7 @@ class ProtocolCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: const Icon(
             Icons.arrow_forward_rounded,
-            color: AppColors.primary,
+            color: AppColors.featuredCardBackground,
             size: 20,
           ),
         ),

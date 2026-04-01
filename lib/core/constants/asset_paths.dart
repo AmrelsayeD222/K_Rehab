@@ -49,4 +49,15 @@ abstract class AssetPaths {
   static const String acl = 'assets/home/acl.png';
   static const String shoulder = 'assets/home/shoulder.png';
   static const String back = 'assets/home/back.png';
+  static const String kneeIcon = 'assets/home/knee_icon.jpg';
+  static const String backIcon = 'assets/home/back_icon.jpg';
+  static const String shoulderIcon = 'assets/home/shoulder_icon.jpg';
+  static const String ankleIcon = 'assets/home/ankle_icon.jpg';
+  static const String neckIcon = 'assets/home/neck_icon.jpg';
+  static const String hipIcon = 'assets/home/hip_icon.jpg';
+  static const String straightLegRaise = 'assets/home/straight_leg_raise.jpg';
+  static const String kneeExtention = 'assets/home/knee_extention.jpg';
+
+  static const String calfRaise = 'assets/home/calf_raise.jpg';
+  static const String birdDog = 'assets/home/bird_dog.jpg';
 }

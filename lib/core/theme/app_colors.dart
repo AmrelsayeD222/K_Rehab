@@ -9,4 +9,5 @@ abstract class AppColors {
   static const Color textSecondary = Color(0xFF8B9BB4);
   static const Color textMuted = Color(0xFF4A5568);
   static const Color textDark = Color(0xFF111318);
+  static const Color featuredCardBackground = Color(0xFF2a5051);
 }
