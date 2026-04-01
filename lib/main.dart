@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/services/secure_storage_service.dart';
+import 'package:k_rehab/core/services/cache_helper.dart';
+
 import 'package:k_rehab/core/services/supabase_config.dart';
 import 'package:k_rehab/core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SupabaseConfig.init();
+  await CacheHelper.init();
   setupServiceLocator();
 
-  final token = await getIt<SecureStorageService>().getToken();
-  AppRouter.initialLocation = token != null
-      ? AppRouter.home
-      : AppRouter.disclaimer;
+  final bool isLoggedIn = CacheHelper.getData(key: 'isLoggedIn') ?? false;
 
-  runApp(const MyApp());
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'KRehab',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      routerConfig: AppRouter.router(),
+      routerConfig: AppRouter.router(isLoggedIn),
     );
   }
 }

@@ -20,10 +20,24 @@ abstract class AppRouter {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String home = '/home';
-  static String initialLocation = disclaimer;
+  static GoRouter router(bool isLoggedIn) => GoRouter(
+    initialLocation: disclaimer,
+    redirect: (context, state) {
+      final isAuthRoute = state.matchedLocation == login || 
+                          state.matchedLocation == signup || 
+                          state.matchedLocation == disclaimer || 
+                          state.matchedLocation == onboarding;
 
-  static GoRouter router() => GoRouter(
-    initialLocation: initialLocation,
+      if (!isLoggedIn && !isAuthRoute) {
+        return disclaimer; 
+      }
+
+      if (isLoggedIn && isAuthRoute) {
+        return home;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: disclaimer,
