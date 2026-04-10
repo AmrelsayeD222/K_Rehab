@@ -12,28 +12,33 @@ import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaime
 import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:k_rehab/core/router/main_view.dart';
 
-
+import 'package:k_rehab/core/services/cache_helper.dart';
 
 abstract class AppRouter {
   static const String disclaimer = '/';
   static const String onboarding = '/onboarding';
   static const String login = '/login';
   static const String signup = '/signup';
-  static const String home = '/home';
-  static GoRouter router(bool isLoggedIn) => GoRouter(
-    initialLocation: disclaimer,
+  static const String mainView = '/mainView';
+  static GoRouter router() => GoRouter(
+    initialLocation: CacheHelper.getData(key: 'isLoggedIn') == true
+        ? mainView
+        : disclaimer,
     redirect: (context, state) {
-      final isAuthRoute = state.matchedLocation == login || 
-                          state.matchedLocation == signup || 
-                          state.matchedLocation == disclaimer || 
-                          state.matchedLocation == onboarding;
+      final isLoggedIn = CacheHelper.getData(key: 'isLoggedIn') ?? false;
+
+      final isAuthRoute =
+          state.matchedLocation == login ||
+          state.matchedLocation == signup ||
+          state.matchedLocation == disclaimer ||
+          state.matchedLocation == onboarding;
 
       if (!isLoggedIn && !isAuthRoute) {
-        return disclaimer; 
+        return disclaimer;
       }
 
       if (isLoggedIn && isAuthRoute) {
-        return home;
+        return mainView;
       }
 
       return null;
@@ -67,10 +72,7 @@ abstract class AppRouter {
           child: const SignupView(),
         ),
       ),
-      GoRoute(
-        path: home,
-        builder: (context, state) => const MainView(),
-      ),
+      GoRoute(path: mainView, builder: (context, state) => const MainView()),
     ],
   );
 }

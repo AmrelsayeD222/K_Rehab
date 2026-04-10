@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/services/secure_storage_service.dart';
+import 'package:k_rehab/features/auth/data/models/sign_up_params.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 
 part 'login_state.dart';
@@ -19,8 +20,10 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login() async {
     emit(LoginLoading());
     final result = await authRepo.login(
-      emailController.text,
-      passwordController.text,
+      AuthParams(
+        email: emailController.text,
+        password: passwordController.text,
+      ),
     );
     result.fold(
       (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),

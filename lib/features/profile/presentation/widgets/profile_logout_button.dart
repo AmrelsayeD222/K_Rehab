@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k_rehab/features/profile/presentation/cubit/profile_cubit.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   const ProfileLogoutButton({super.key});
@@ -10,7 +12,9 @@ class ProfileLogoutButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          context.read<ProfileCubit>().logout();
+        },
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
           backgroundColor: _logoutColor.withValues(alpha: 0.1),
@@ -19,12 +23,30 @@ class ProfileLogoutButton extends StatelessWidget {
             side: const BorderSide(color: _logoutColor, width: 1),
           ),
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.logout_rounded, color: _logoutColor, size: 20),
-            SizedBox(width: 10),
-            Text(
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLogoutLoading) {
+                  return const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: _logoutColor,
+                      strokeWidth: 2,
+                    ),
+                  );
+                }
+                return const Icon(
+                  Icons.logout_rounded,
+                  color: _logoutColor,
+                  size: 20,
+                );
+              },
+            ),
+            const SizedBox(width: 10),
+            const Text(
               'Log Out',
               style: TextStyle(
                 color: _logoutColor,

@@ -12,14 +12,11 @@ void main() async {
   await CacheHelper.init();
   setupServiceLocator();
 
-  final bool isLoggedIn = CacheHelper.getData(key: 'isLoggedIn') ?? false;
-
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  const MyApp({super.key, required this.isLoggedIn});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'KRehab',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      routerConfig: AppRouter.router(isLoggedIn),
+      routerConfig: AppRouter.router(),
     );
   }
 }

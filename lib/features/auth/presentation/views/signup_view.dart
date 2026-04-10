@@ -25,7 +25,7 @@ class SignupView extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Account Created Successfully!')),
           );
-          context.go(AppRouter.home);
+          context.go(AppRouter.mainView);
         } else if (state is CreateUserFailure) {
           ScaffoldMessenger.of(
             context,
