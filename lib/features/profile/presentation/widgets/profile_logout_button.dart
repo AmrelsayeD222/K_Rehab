@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/logout/log_out_cubit.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   const ProfileLogoutButton({super.key});
@@ -13,7 +13,7 @@ class ProfileLogoutButton extends StatelessWidget {
       width: double.infinity,
       child: TextButton(
         onPressed: () {
-          context.read<ProfileCubit>().logout();
+          context.read<LogOutCubit>().logout();
         },
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -26,9 +26,9 @@ class ProfileLogoutButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<ProfileCubit, ProfileState>(
+            BlocBuilder<LogOutCubit, LogOutState>(
               builder: (context, state) {
-                if (state is ProfileLogoutLoading) {
+                if (state is LogOutLoading) {
                   return const SizedBox(
                     width: 20,
                     height: 20,

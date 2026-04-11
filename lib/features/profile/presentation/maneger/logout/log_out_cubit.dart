@@ -3,25 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/services/secure_storage_service.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 
-part 'profile_state.dart';
+part 'log_out_state.dart';
 
-class ProfileCubit extends Cubit<ProfileState> {
+class LogOutCubit extends Cubit<LogOutState> {
   final ProfileRepo profileRepo;
   final SecureStorageService secureStorageService;
 
-  ProfileCubit({required this.profileRepo, required this.secureStorageService})
-    : super(ProfileInitial());
+  LogOutCubit({required this.profileRepo, required this.secureStorageService})
+    : super(LogOutInitial());
 
   Future<void> logout() async {
-    emit(ProfileLogoutLoading());
+    emit(LogOutLoading());
     final result = await profileRepo.logout();
 
     result.fold(
-      (failure) =>
-          emit(ProfileLogoutFailure(errorMessage: failure.errorMessage)),
+      (failure) => emit(LogOutFailure(errorMessage: failure.errorMessage)),
       (success) async {
         await secureStorageService.deleteToken();
-        emit(ProfileLogoutSuccess());
+        emit(LogOutSuccess());
       },
     );
   }

@@ -1,15 +1,31 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
+
+  Future<void> _pickImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      if (context.mounted) {
+        context.read<ProfileImageCubit>().uploadProfileImage(File(image.path));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildAvatar(),
+        _buildAvatar(context),
         const SizedBox(height: 16),
         const Text('Amr Elsayed', style: AppTextStyles.heading1),
         const SizedBox(height: 8),
@@ -18,7 +34,7 @@ class ProfileHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatar() {
+  Widget _buildAvatar(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -34,20 +50,44 @@ class ProfileHeader extends StatelessWidget {
               end: Alignment.bottomRight,
             ),
           ),
-          child: const CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: Icon(
-              Icons.person_rounded,
-              size: 52,
-              color: AppColors.textSecondary,
-            ),
+          child: BlocBuilder<ProfileImageCubit, ProfileImageState>(
+            builder: (context, state) {
+              if (state is ProfileImageLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                );
+              }
+
+              ImageProvider? imageProvider;
+              if (state is ProfileImageLoaded) {
+                if (state.localImage != null) {
+                  imageProvider = FileImage(state.localImage!);
+                } else if (state.imageUrl != null) {
+                  imageProvider = CachedNetworkImageProvider(state.imageUrl!);
+                }
+              }
+
+              return CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage: imageProvider,
+                child: imageProvider == null
+                    ? const Icon(
+                        Icons.person_rounded,
+                        size: 52,
+                        color: AppColors.textSecondary,
+                      )
+                    : null,
+              );
+            },
           ),
         ),
         Positioned(
           bottom: 0,
           right: 0,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              _pickImage(context);
+            },
             child: Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(

@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/profile/presentation/cubit/profile_cubit.dart';
+
+import 'package:k_rehab/features/profile/presentation/maneger/logout/log_out_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_account_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_app_settings_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_header.dart';
@@ -16,16 +18,21 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ProfileCubit>(),
-      child: BlocListener<ProfileCubit, ProfileState>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<LogOutCubit>()),
+        BlocProvider(
+          create: (context) => getIt<ProfileImageCubit>()..getProfileImage(),
+        ),
+      ],
+      child: BlocListener<LogOutCubit, LogOutState>(
         listener: (context, state) {
-          if (state is ProfileLogoutSuccess) {
+          if (state is LogOutSuccess) {
             context.go(AppRouter.login);
-          } else if (state is ProfileLogoutFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
-            );
+          } else if (state is LogOutFailure) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
           }
         },
         child: Scaffold(
