@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/logout/log_out_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   const ProfileLogoutButton({super.key});

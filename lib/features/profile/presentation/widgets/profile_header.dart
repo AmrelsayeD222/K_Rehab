@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_state.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_state.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});

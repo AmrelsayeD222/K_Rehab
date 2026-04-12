@@ -4,7 +4,7 @@ import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/aiCoach/ai_coach_view.dart';
 import 'package:k_rehab/features/exercises/exercises_view.dart';
-import 'package:k_rehab/features/home/views/home_view.dart';
+import 'package:k_rehab/features/home/presentation/views/home_view.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
 
 import 'package:k_rehab/features/protocols/protocols_view.dart';

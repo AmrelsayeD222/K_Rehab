@@ -9,9 +9,9 @@ import 'package:k_rehab/features/auth/logic/register/register_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 import 'package:k_rehab/features/profile/data/repo/repo_impl.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/logout/log_out_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
-import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_state.dart';
+import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_state.dart';
 
 class UserInfoCubit extends Cubit<UserInfoState> {
   final ProfileRepo profileRepo;
