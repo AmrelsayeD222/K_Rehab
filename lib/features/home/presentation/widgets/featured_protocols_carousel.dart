@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/home/models/protocol_card_model.dart';
-import 'package:k_rehab/features/home/widgets/protocol_card.dart';
+import 'package:k_rehab/features/home/presentation/models/protocol_card_model.dart';
+import 'package:k_rehab/features/home/presentation/widgets/protocol_card.dart';
 
 class FeaturedProtocolsCarousel extends StatelessWidget {
   const FeaturedProtocolsCarousel({super.key});

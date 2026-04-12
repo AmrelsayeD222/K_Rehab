@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/home/models/exercise_card_mode.dart';
+import 'package:k_rehab/features/home/presentation/models/exercise_card_mode.dart';
 
 class ExercisesGrid extends StatelessWidget {
   const ExercisesGrid({super.key});
