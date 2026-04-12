@@ -53,4 +53,18 @@ class ProfileRepoImpl implements ProfileRepo {
       return left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> getUserName() async {
+    try {
+      final user = client.auth.currentUser;
+      if (user != null) {
+        final name = user.userMetadata?['name'] as String?;
+        return right(name ?? 'Unknown User');
+      }
+      return left(ServerFailure(message: 'User not logged in'));
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
 }

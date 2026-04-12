@@ -7,6 +7,7 @@ import 'package:k_rehab/core/theme/app_colors.dart';
 
 import 'package:k_rehab/features/profile/presentation/maneger/logout/log_out_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_account_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_app_settings_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_header.dart';
@@ -24,6 +25,7 @@ class ProfileView extends StatelessWidget {
         BlocProvider(
           create: (context) => getIt<ProfileImageCubit>()..getProfileImage(),
         ),
+        BlocProvider(create: (context) => getIt<UserInfoCubit>()..getUserInfo()),
       ],
       child: BlocListener<LogOutCubit, LogOutState>(
         listener: (context, state) {

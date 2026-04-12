@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/maneger/profile_image/profile_image_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/maneger/user_info/user_info_state.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -27,7 +29,19 @@ class ProfileHeader extends StatelessWidget {
       children: [
         _buildAvatar(context),
         const SizedBox(height: 16),
-        const Text('Amr Elsayed', style: AppTextStyles.heading1),
+        BlocBuilder<UserInfoCubit, UserInfoState>(
+          builder: (context, state) {
+            String displayedName = '';
+            if (state is UserInfoLoading) {
+              return const SizedBox();
+            } else if (state is UserInfoLoaded) {
+              displayedName = state.userName;
+            } else if (state is UserInfoError) {
+              displayedName = 'User';
+            }
+            return Text(displayedName, style: AppTextStyles.heading1);
+          },
+        ),
         const SizedBox(height: 8),
         _buildPremiumBadge(),
       ],
