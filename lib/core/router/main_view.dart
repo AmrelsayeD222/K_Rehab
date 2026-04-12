@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
+import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/aiCoach/ai_coach_view.dart';
 import 'package:k_rehab/features/exercises/exercises_view.dart';
 import 'package:k_rehab/features/home/presentation/views/home_view.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
 
 import 'package:k_rehab/features/protocols/protocols_view.dart';
@@ -36,8 +40,17 @@ class MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<ProfileImageCubit>()..getProfileImage(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<UserInfoCubit>()..getUserInfo(),
+        ),
+      ],
+      child: Scaffold(
+        body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
           setState(() {
@@ -132,6 +145,7 @@ class MainViewState extends State<MainView> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
