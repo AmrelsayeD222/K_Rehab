@@ -25,10 +25,12 @@ class LoginCubit extends Cubit<LoginState> {
         password: passwordController.text,
       ),
     );
+    if (isClosed) return;
     result.fold(
       (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),
       (token) async {
         await secureStorageService.saveToken(token);
+        if (isClosed) return;
         emit(LoginSuccess(token: token));
       },
     );

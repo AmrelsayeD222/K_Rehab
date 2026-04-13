@@ -13,6 +13,7 @@ class FeaturedExercisesCubit extends Cubit<FeaturedExercisesState> {
   Future<void> getFeaturedExercises() async {
     emit(FeaturedExercisesLoading());
     final result = await featuredExercisesRepo.getFeaturedExercises();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(FeaturedExercisesFailure(error: failure.errorMessage)),
       (featuredExercises) =>

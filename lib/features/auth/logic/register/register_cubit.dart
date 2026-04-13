@@ -24,6 +24,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         name: nameController.text,
       ),
     );
+    if (isClosed) return;
     result.fold(
       (failure) => emit(RegisterFailure(errorMessage: failure.errorMessage)),
       (userModel) => emit(RegisterSuccess(userModel: userModel)),

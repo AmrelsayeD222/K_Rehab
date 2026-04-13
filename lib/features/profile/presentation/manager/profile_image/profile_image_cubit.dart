@@ -13,6 +13,7 @@ class ProfileImageCubit extends Cubit<ProfileImageState> {
   Future<void> uploadProfileImage(File image) async {
     emit(ProfileImageLoading());
     final result = await profileRepo.uploadProfileImage(image);
+    if (isClosed) return;
     result.fold(
       (failure) => emit(ProfileImageError(errorMessage: failure.errorMessage)),
       (success) => emit(ProfileImageLoaded(localImage: image)),
@@ -22,6 +23,7 @@ class ProfileImageCubit extends Cubit<ProfileImageState> {
   Future<void> getProfileImage() async {
     emit(ProfileImageLoading());
     final result = await profileRepo.getProfileImage();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(ProfileImageError(errorMessage: failure.errorMessage)),
       (success) => emit(ProfileImageLoaded(imageUrl: success)),

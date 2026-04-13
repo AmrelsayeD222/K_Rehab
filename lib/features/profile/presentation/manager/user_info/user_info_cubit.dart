@@ -10,6 +10,7 @@ class UserInfoCubit extends Cubit<UserInfoState> {
   Future<void> getUserInfo() async {
     emit(UserInfoLoading());
     final result = await profileRepo.getUserName();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(UserInfoError(errorMessage: failure.errorMessage)),
       (name) => emit(UserInfoLoaded(userName: name)),

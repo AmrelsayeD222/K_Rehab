@@ -15,11 +15,13 @@ class LogOutCubit extends Cubit<LogOutState> {
   Future<void> logout() async {
     emit(LogOutLoading());
     final result = await profileRepo.logout();
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(LogOutFailure(errorMessage: failure.errorMessage)),
       (success) async {
         await secureStorageService.deleteToken();
+        if (isClosed) return;
         emit(LogOutSuccess());
       },
     );

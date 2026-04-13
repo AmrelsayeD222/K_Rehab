@@ -13,6 +13,7 @@ class FeaturedProtocolCubit extends Cubit<FeaturedProtocolState> {
   Future<void> getFeaturedProtocols() async {
     emit(FeaturedProtocolLoading());
     final result = await featuredProtocolRepo.getFeaturedProtocols();
+    if (isClosed) return;
     result.fold(
       (failure) => emit(FeaturedProtocolFailure(error: failure.errorMessage)),
       (protocols) => emit(FeaturedProtocolSuccess(protocols: protocols)),

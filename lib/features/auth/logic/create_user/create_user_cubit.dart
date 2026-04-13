@@ -11,6 +11,7 @@ class CreateUserCubit extends Cubit<CreateUserState> {
 
   Future<void> createUser(UserModel userModel) async {
     final result = await authRepo.createProfile(userModel);
+    if (isClosed) return;
     result.fold(
       (failure) => emit(CreateUserFailure(errorMessage: failure.errorMessage)),
       (_) => emit(CreateUserSuccess()),
