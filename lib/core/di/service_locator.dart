@@ -14,6 +14,9 @@ import 'package:k_rehab/features/profile/presentation/manager/profile_image/prof
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:k_rehab/features/home/data/repo/featured_protocol_repo.dart';
+import 'package:k_rehab/features/home/data/repo/featured_protocol_repo_impl.dart';
+import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/featured_protocol_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -63,5 +66,14 @@ void setupServiceLocator() {
 
   getIt.registerFactory<UserInfoCubit>(
     () => UserInfoCubit(profileRepo: getIt<ProfileRepo>()),
+  );
+
+  // Home Feature Registrations
+  getIt.registerLazySingleton<FeaturedProtocolRepo>(
+    () => FeaturedProtocolRepoImpl(),
+  );
+
+  getIt.registerFactory<FeaturedProtocolCubit>(
+    () => FeaturedProtocolCubit(getIt<FeaturedProtocolRepo>()),
   );
 }
