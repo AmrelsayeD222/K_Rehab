@@ -1,0 +1,110 @@
+import 'package:flutter/material.dart';
+import 'package:k_rehab/core/theme/app_colors.dart';
+
+class ExerciseCard extends StatelessWidget {
+  final String imagePath;
+  final String tag;
+  final String title;
+  final String subtitle;
+  final VoidCallback? onTap;
+
+  const ExerciseCard({
+    super.key,
+    required this.imagePath,
+    required this.tag,
+    required this.title,
+    required this.subtitle,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.cardBackground,
+          border: Border.all(color: const Color(0xFF3B4A46)),
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Row(
+          children: [
+            // Image
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Opacity(
+                opacity: 0.8,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.fitness_center, color: Colors.grey),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            // Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Tag
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0x33005DC3),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      tag.toUpperCase(),
+                      style: const TextStyle(
+                        fontFamily: 'Manrope',
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFACC7FF),
+                        fontSize: 10,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  // Title
+                  Text(
+                    title,
+                    style: const TextStyle(
+                       fontFamily: 'Manrope',
+                       fontWeight: FontWeight.bold,
+                       fontSize: 15,
+                       color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  // Subtitle
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontFamily: 'Manrope',
+                      fontSize: 12,
+                      color: Color(0xFFBACAC5),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Arrow/Icon
+            const Icon(
+              Icons.chevron_right,
+               color: Colors.white54,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
