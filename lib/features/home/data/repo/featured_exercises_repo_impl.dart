@@ -1,0 +1,23 @@
+import 'package:dartz/dartz.dart';
+import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/features/home/data/models/featured_exercises_model.dart';
+import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+class FeaturedExercisesRepoImpl implements FeaturedExercisesRepo {
+  final SupabaseClient supabaseClient;
+  FeaturedExercisesRepoImpl({required this.supabaseClient});
+  @override
+  Future<Either<Failure, List<FeaturedExercisesModel>>>
+  getFeaturedExercises() async {
+    try {
+      final response = await supabaseClient.from('featured exercises').select();
+      final List<FeaturedExercisesModel> featuredExercises = response
+          .map((e) => FeaturedExercisesModel.fromJson(e))
+          .toList();
+      return right(featuredExercises);
+    } catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
+}

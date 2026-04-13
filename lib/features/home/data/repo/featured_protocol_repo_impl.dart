@@ -5,12 +5,14 @@ import 'package:k_rehab/features/home/data/repo/featured_protocol_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FeaturedProtocolRepoImpl implements FeaturedProtocolRepo {
-  final supabase = Supabase.instance.client;
+  final SupabaseClient supabaseClient;
+
+  FeaturedProtocolRepoImpl({required this.supabaseClient});
   @override
   Future<Either<Failure, List<FeaturedProtocolModel>>>
   getFeaturedProtocols() async {
     try {
-      final response = await supabase
+      final response = await supabaseClient
           .from('featured protocols')
           .select('title, image_path');
 

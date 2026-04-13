@@ -6,6 +6,9 @@ import 'package:k_rehab/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:k_rehab/features/auth/logic/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/logic/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/logic/register/register_cubit.dart';
+import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
+import 'package:k_rehab/features/home/data/repo/featured_exercises_repo_impl.dart';
+import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 import 'package:k_rehab/features/profile/data/repo/repo_impl.dart';
@@ -70,10 +73,18 @@ void setupServiceLocator() {
 
   // Home Feature Registrations
   getIt.registerLazySingleton<FeaturedProtocolRepo>(
-    () => FeaturedProtocolRepoImpl(),
+    () => FeaturedProtocolRepoImpl(supabaseClient: getIt<SupabaseClient>()),
   );
 
   getIt.registerFactory<FeaturedProtocolCubit>(
     () => FeaturedProtocolCubit(getIt<FeaturedProtocolRepo>()),
+  );
+
+  getIt.registerLazySingleton<FeaturedExercisesRepo>(
+    () => FeaturedExercisesRepoImpl(supabaseClient: getIt<SupabaseClient>()),
+  );
+
+  getIt.registerFactory<FeaturedExercisesCubit>(
+    () => FeaturedExercisesCubit(getIt<FeaturedExercisesRepo>()),
   );
 }
