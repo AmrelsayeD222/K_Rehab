@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 
@@ -41,10 +42,10 @@ class ExerciseCard extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               child: Opacity(
                 opacity: 0.8,
-                child: Image.asset(
-                  imagePath,
+                child: CachedNetworkImage(
+                  imageUrl: imagePath,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
+                  errorWidget: (context, error, stackTrace) =>
                       const Icon(Icons.fitness_center, color: Colors.grey),
                 ),
               ),
@@ -57,7 +58,10 @@ class ExerciseCard extends StatelessWidget {
                 children: [
                   // Tag
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0x33005DC3),
                       borderRadius: BorderRadius.circular(4),
@@ -78,10 +82,10 @@ class ExerciseCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                       fontFamily: 'Manrope',
-                       fontWeight: FontWeight.bold,
-                       fontSize: 15,
-                       color: Colors.white,
+                      fontFamily: 'Manrope',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -98,10 +102,7 @@ class ExerciseCard extends StatelessWidget {
               ),
             ),
             // Arrow/Icon
-            const Icon(
-              Icons.chevron_right,
-               color: Colors.white54,
-            ),
+            const Icon(Icons.chevron_right, color: Colors.white54),
           ],
         ),
       ),

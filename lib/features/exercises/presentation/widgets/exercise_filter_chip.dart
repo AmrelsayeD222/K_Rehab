@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 
-class ExerciseFilterChip extends StatelessWidget {
+class ExercisesCategoryChip extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const ExerciseFilterChip({
+  const ExercisesCategoryChip({
     super.key,
     required this.label,
     required this.isSelected,

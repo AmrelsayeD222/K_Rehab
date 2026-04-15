@@ -18,7 +18,7 @@ class ExercisesGrid extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Recommended Exercises',
+              'Featured Exercises',
               style: AppTextStyles.heading2,
             ).animate().fadeIn(duration: 400.ms, delay: 700.ms),
             TextButton(
@@ -43,7 +43,7 @@ class ExercisesGrid extends StatelessWidget {
               );
             } else if (state is FeaturedExercisesSuccess) {
               final exercises = state.featuredExercises;
-              
+
               return GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -71,10 +71,14 @@ class ExercisesGrid extends StatelessWidget {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: CachedNetworkImageProvider(exercises[index].imagePath),
-                                    fit: BoxFit.cover, 
+                                    image: CachedNetworkImageProvider(
+                                      exercises[index].imagePath,
+                                    ),
+                                    fit: BoxFit.cover,
                                   ),
-                                  color: AppColors.primary.withValues(alpha: .05),
+                                  color: AppColors.primary.withValues(
+                                    alpha: .05,
+                                  ),
                                   borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(24),
                                   ),
@@ -101,7 +105,7 @@ class ExercisesGrid extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          exercises[index].description, 
+                                          exercises[index].description,
                                           style: AppTextStyles.caption.copyWith(
                                             fontSize: 11,
                                           ),
@@ -119,7 +123,9 @@ class ExercisesGrid extends StatelessWidget {
                                           color: Colors.orangeAccent.withValues(
                                             alpha: .1,
                                           ),
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(
+                                            4,
+                                          ),
                                         ),
                                         child: Text(
                                           exercises[index].level,
@@ -143,7 +149,10 @@ class ExercisesGrid extends StatelessWidget {
                         duration: 400.ms,
                         delay: Duration(milliseconds: 200 + (index * 100)),
                       )
-                      .scale(begin: const Offset(0.95, 0.95), curve: Curves.easeOut);
+                      .scale(
+                        begin: const Offset(0.95, 0.95),
+                        curve: Curves.easeOut,
+                      );
                 },
               );
             } else if (state is FeaturedExercisesFailure) {

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import '../widgets/stat_card.dart';
-import '../widgets/technique_step_item.dart';
+import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
+import 'package:k_rehab/features/exercises/presentation/widgets/stat_card.dart';
+import 'package:k_rehab/features/exercises/presentation/widgets/technique_step_item.dart';
+import 'package:k_rehab/features/exercises/presentation/widgets/exercise_warning_box.dart';
 
 class ExerciseDetailsView extends StatelessWidget {
-  const ExerciseDetailsView({super.key});
+  final ExerciseModel exercise;
+  const ExerciseDetailsView({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {
@@ -45,59 +49,54 @@ class ExerciseDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Hero Media
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Icon(Icons.fitness_center, color: Colors.grey),
+            Container(
+              width: double.infinity,
+              height: 250,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        AppColors.background,
-                        AppColors.background.withValues(alpha: 0),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 24,
-                  bottom: 24,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                    child: const Text(
-                      'GIF',
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF00382F),
-                        fontSize: 10,
-                        letterSpacing: 1.0,
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: exercise.gifUrl.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: exercise.gifUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => CachedNetworkImage(
+                        imageUrl: exercise.imageUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ],
+                      errorWidget: (context, url, error) => CachedNetworkImage(
+                        imageUrl: exercise.imageUrl,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => const Icon(
+                          Icons.fitness_center,
+                          color: Colors.grey,
+                          size: 64,
+                        ),
+                      ),
+                    )
+                  : exercise.imageUrl.isNotEmpty
+                      ? CachedNetworkImage(
+                          imageUrl: exercise.imageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.fitness_center,
+                            color: Colors.grey,
+                            size: 64,
+                          ),
+                        )
+                      : const Icon(
+                          Icons.fitness_center,
+                          color: Colors.grey,
+                          size: 64,
+                        ),
             ),
 
             Padding(
@@ -109,9 +108,9 @@ class ExerciseDetailsView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Title and tags
-                  const Text(
-                    'Straight Leg Raise',
-                    style: TextStyle(
+                  Text(
+                    exercise.title,
+                    style: const TextStyle(
                       fontFamily: 'Manrope',
                       fontWeight: FontWeight.w800,
                       fontSize: 22,
@@ -130,9 +129,9 @@ class ExerciseDetailsView extends StatelessWidget {
                           color: AppColors.primary.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(9999),
                         ),
-                        child: const Text(
-                          'KNEE REHAB',
-                          style: TextStyle(
+                        child: Text(
+                          exercise.category.toUpperCase(),
+                          style: const TextStyle(
                             fontFamily: 'Manrope',
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF26DEC2),
@@ -148,14 +147,12 @@ class ExerciseDetailsView extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(
-                            0x33005DC3,
-                          ).withValues(alpha: 0.2), // rgba(0,93,195,0.2)
+                          color: const Color(0x33005DC3).withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(9999),
                         ),
-                        child: const Text(
-                          'MODERATE DIFFICULTY',
-                          style: TextStyle(
+                        child: Text(
+                          exercise.difficulty.toUpperCase(),
+                          style: const TextStyle(
                             fontFamily: 'Manrope',
                             fontWeight: FontWeight.bold,
                             color: Color(0xFFACC7FF),
@@ -168,90 +165,58 @@ class ExerciseDetailsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   // Stats Grid
-                  const Row(
+                  Row(
                     children: [
                       Expanded(
-                        child: StatCard(label: 'SETS', value: '3'),
+                        child: StatCard(
+                          label: 'SETS',
+                          value: exercise.sets?.toString() ?? '-',
+                        ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
-                        child: StatCard(label: 'REPS', value: '12'),
+                        child: StatCard(
+                          label: 'REPS',
+                          value: exercise.reps?.toString() ?? '-',
+                        ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
-                        child: StatCard(label: 'HOLD', value: '5s'),
+                        child: StatCard(
+                          label: 'HOLD',
+                          value: exercise.holdSeconds != null
+                              ? '${exercise.holdSeconds}s'
+                              : '-',
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 24),
                   // Warning Box
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF59E0B).withValues(alpha: 0.1),
-                      border: const Border(
-                        left: BorderSide(color: Color(0xFFF59E0B), width: 4),
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.warning_amber_rounded,
-                          color: Color(0xFFF59E0B),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Text(
-                            'Stop immediately if you feel sharp or worsening pain in the lower back or surgical site.',
-                            style: TextStyle(
-                              fontFamily: 'Manrope',
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFFF59E0B),
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  const ExerciseWarningBox(),
                   const SizedBox(height: 32),
                   // Technique Guide
-                  const Text(
-                    'Technique Guide',
-                    style: TextStyle(
-                      fontFamily: 'Manrope',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
+                  if (exercise.steps.isNotEmpty) ...[
+                    const Text(
+                      'Technique Guide',
+                      style: TextStyle(
+                        fontFamily: 'Manrope',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  const TechniqueStepItem(
-                    stepNumber: 1,
-                    description:
-                        'Lie flat on your back on a firm surface. Bend the knee of your non-operative leg to 90 degrees, keeping that foot flat on the floor.',
-                  ),
-                  const SizedBox(height: 16),
-                  const TechniqueStepItem(
-                    stepNumber: 2,
-                    description:
-                        'Tighten the thigh muscle (quadriceps) of your straight leg by pushing the back of your knee down into the surface.',
-                  ),
-                  const SizedBox(height: 16),
-                  const TechniqueStepItem(
-                    stepNumber: 3,
-                    description:
-                        'Slowly lift the straight leg about 12 inches off the floor. Keep the knee locked completely straight throughout the motion.',
-                  ),
-                  const SizedBox(height: 16),
-                  const TechniqueStepItem(
-                    stepNumber: 4,
-                    description:
-                        'Pause for 5 seconds at the top, then slowly lower the leg back to the starting position with control.',
-                  ),
+                    const SizedBox(height: 24),
+                    ...exercise.steps.map(
+                      (step) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: TechniqueStepItem(
+                          stepNumber: step.step,
+                          description: step.description,
+                        ),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 48), // Padding at the bottom
                 ],
               ),

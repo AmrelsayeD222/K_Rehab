@@ -50,7 +50,7 @@ class MainViewState extends State<MainView> {
       child: Scaffold(
         body: PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
+
           onPageChanged: (index) {
             setState(() {
               currentIndex = index;
