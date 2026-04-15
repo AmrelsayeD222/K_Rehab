@@ -23,7 +23,7 @@ class RecoveryFeatureItem extends StatelessWidget {
         height: 40,
         child: SvgPicture.asset(iconPath),
       ),
-      title: Text(title, style: AppTextStyles.featureItemTitle),
+      title: Text(title, style: AppTextStyles.bodyText2),
     );
   }
 }

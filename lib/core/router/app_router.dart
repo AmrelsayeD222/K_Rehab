@@ -11,6 +11,8 @@ import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.
 import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:k_rehab/core/router/main_view.dart';
+import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
+import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
 
 import 'package:k_rehab/core/services/cache_helper.dart';
 
@@ -20,6 +22,7 @@ abstract class AppRouter {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String mainView = '/mainView';
+  static const String exerciseDetails = '/exerciseDetails';
   static GoRouter router() => GoRouter(
     initialLocation: CacheHelper.getData(key: 'isLoggedIn') == true
         ? mainView
@@ -73,6 +76,13 @@ abstract class AppRouter {
         ),
       ),
       GoRoute(path: mainView, builder: (context, state) => const MainView()),
+      GoRoute(
+        path: exerciseDetails,
+        builder: (context, state) {
+          final exercise = state.extra as ExerciseModel;
+          return ExerciseDetailsView(exercise: exercise);
+        },
+      ),
     ],
   );
 }

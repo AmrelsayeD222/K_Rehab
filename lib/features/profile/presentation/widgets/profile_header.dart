@@ -131,14 +131,11 @@ class ProfileHeader extends StatelessWidget {
           color: const Color(0xFF007AFF).withValues(alpha: 0.6),
         ),
       ),
-      child: const Text(
+      child: Text(
         'PREMIUM MEMBER',
-        style: TextStyle(
+        style: AppTextStyles.tag.copyWith(
           color: Color(0xFF5BA8FF),
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
           letterSpacing: 1.2,
-          fontFamily: 'Inter',
         ),
       ),
     );

@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_card.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_filter_chip.dart';
-import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({super.key});
@@ -42,14 +43,7 @@ class ExercisesView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'EXERCISES',
-                  style: AppTextStyles.heading1.copyWith(
-                    fontFamily: 'Manrope',
-                    fontSize: 24,
-                    letterSpacing: -0.6,
-                  ),
-                ),
+                Text('EXERCISES', style: AppTextStyles.mainHeading),
                 const SizedBox(height: 24),
                 // Filters
                 BlocBuilder<ExerciseCubit, ExerciseState>(
@@ -95,10 +89,12 @@ class ExercisesView extends StatelessWidget {
                         );
 
                         if (exercises.isEmpty) {
-                          return const Center(
+                          return Center(
                             child: Text(
                               'No exercises found for this category',
-                              style: TextStyle(color: Colors.white70),
+                              style: AppTextStyles.caption.copyWith(
+                                color: Colors.white70,
+                              ),
                             ),
                           );
                         }
@@ -116,12 +112,9 @@ class ExercisesView extends StatelessWidget {
                               title: exercise.title,
                               subtitle: exercise.subtitle,
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ExerciseDetailsView(exercise: exercise),
-                                  ),
+                                context.push(
+                                  AppRouter.exerciseDetails,
+                                  extra: exercise,
                                 );
                               },
                             );
@@ -129,10 +122,7 @@ class ExercisesView extends StatelessWidget {
                         );
                       } else if (state is ExerciseFailure) {
                         return Center(
-                          child: Text(
-                            state.error,
-                            style: const TextStyle(color: Colors.red),
-                          ),
+                          child: Text(state.error, style: AppTextStyles.error),
                         );
                       }
                       return const SizedBox();

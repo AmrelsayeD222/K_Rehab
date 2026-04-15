@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:k_rehab/core/manager/navigation_cubit.dart';
+
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+
 import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,13 +25,12 @@ class ExercisesGrid extends StatelessWidget {
               style: AppTextStyles.heading2,
             ).animate().fadeIn(duration: 400.ms, delay: 700.ms),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<NavigationCubit>().changeTab(1);
+              },
               child: const Text(
                 'See All',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.cardTitle,
               ),
             ).animate().fadeIn(duration: 400.ms, delay: 750.ms),
           ],
@@ -92,10 +94,8 @@ class ExercisesGrid extends StatelessWidget {
                                 children: [
                                   Text(
                                     exercises[index].title,
-                                    style: AppTextStyles.bodyText2.copyWith(
-                                      fontWeight: FontWeight.bold,
+                                    style: AppTextStyles.cardTitle.copyWith(
                                       color: AppColors.textLight,
-                                      fontSize: 15,
                                     ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -106,9 +106,7 @@ class ExercisesGrid extends StatelessWidget {
                                       Expanded(
                                         child: Text(
                                           exercises[index].description,
-                                          style: AppTextStyles.caption.copyWith(
-                                            fontSize: 11,
-                                          ),
+                                          style: AppTextStyles.cardSubtitle,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -129,10 +127,8 @@ class ExercisesGrid extends StatelessWidget {
                                         ),
                                         child: Text(
                                           exercises[index].level,
-                                          style: AppTextStyles.caption.copyWith(
+                                          style: AppTextStyles.tag.copyWith(
                                             color: Colors.orangeAccent,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),

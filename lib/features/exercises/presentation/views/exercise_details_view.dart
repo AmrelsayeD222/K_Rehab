@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/stat_card.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/technique_step_item.dart';
@@ -33,16 +34,7 @@ class ExerciseDetailsView extends StatelessWidget {
             ),
           ),
         ),
-        title: const Text(
-          'EXERCISE',
-          style: TextStyle(
-            fontFamily: 'Manrope',
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            color: Colors.white,
-            letterSpacing: -0.4,
-          ),
-        ),
+        title: const Text('EXERCISE', style: AppTextStyles.navLabel),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -66,9 +58,8 @@ class ExerciseDetailsView extends StatelessWidget {
                       placeholder: (context, url) => CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
                       ),
                       errorWidget: (context, url, error) => CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
@@ -81,22 +72,22 @@ class ExerciseDetailsView extends StatelessWidget {
                       ),
                     )
                   : exercise.imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: exercise.imageUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => const Center(
-                              child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => const Icon(
-                            Icons.fitness_center,
-                            color: Colors.grey,
-                            size: 64,
-                          ),
-                        )
-                      : const Icon(
-                          Icons.fitness_center,
-                          color: Colors.grey,
-                          size: 64,
-                        ),
+                  ? CachedNetworkImage(
+                      imageUrl: exercise.imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.fitness_center,
+                        color: Colors.grey,
+                        size: 64,
+                      ),
+                    )
+                  : const Icon(
+                      Icons.fitness_center,
+                      color: Colors.grey,
+                      size: 64,
+                    ),
             ),
 
             Padding(
@@ -110,12 +101,7 @@ class ExerciseDetailsView extends StatelessWidget {
                   // Title and tags
                   Text(
                     exercise.title,
-                    style: const TextStyle(
-                      fontFamily: 'Manrope',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 22,
-                      color: Colors.white,
-                    ),
+                    style: AppTextStyles.mainHeading.copyWith(fontSize: 22),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -131,11 +117,8 @@ class ExerciseDetailsView extends StatelessWidget {
                         ),
                         child: Text(
                           exercise.category.toUpperCase(),
-                          style: const TextStyle(
-                            fontFamily: 'Manrope',
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF26DEC2),
-                            fontSize: 11,
+                          style: AppTextStyles.tag.copyWith(
+                            color: const Color(0xFF26DEC2),
                             letterSpacing: 0.55,
                           ),
                         ),
@@ -152,11 +135,8 @@ class ExerciseDetailsView extends StatelessWidget {
                         ),
                         child: Text(
                           exercise.difficulty.toUpperCase(),
-                          style: const TextStyle(
-                            fontFamily: 'Manrope',
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFACC7FF),
-                            fontSize: 11,
+                          style: AppTextStyles.tag.copyWith(
+                            color: const Color(0xFFACC7FF),
                             letterSpacing: 0.55,
                           ),
                         ),
@@ -199,12 +179,7 @@ class ExerciseDetailsView extends StatelessWidget {
                   if (exercise.steps.isNotEmpty) ...[
                     const Text(
                       'Technique Guide',
-                      style: TextStyle(
-                        fontFamily: 'Manrope',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
+                      style: AppTextStyles.sectionHeader,
                     ),
                     const SizedBox(height: 24),
                     ...exercise.steps.map(

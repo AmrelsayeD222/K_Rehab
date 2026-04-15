@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ExercisesCategoryChip extends StatelessWidget {
   final String label;
@@ -30,11 +31,9 @@ class ExercisesCategoryChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
+          style: AppTextStyles.bodyText2.copyWith(
             color: isSelected ? AppColors.primary : const Color(0xFFBACAC5),
-            fontSize: 14,
             fontWeight: FontWeight.w600,
-            fontFamily: 'Manrope',
           ),
         ),
       ),

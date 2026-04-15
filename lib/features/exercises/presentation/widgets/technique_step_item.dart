@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class TechniqueStepItem extends StatelessWidget {
   final int stepNumber;
@@ -28,9 +29,7 @@ class TechniqueStepItem extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             stepNumber.toString(),
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              fontWeight: FontWeight.bold,
+            style: AppTextStyles.cardTitle.copyWith(
               color: AppColors.primary,
               fontSize: 14,
             ),
@@ -40,11 +39,8 @@ class TechniqueStepItem extends StatelessWidget {
         Expanded(
           child: Text(
             description,
-            style: const TextStyle(
-              fontFamily: 'Manrope',
-              color: Color(0xFFBACAC5),
-              fontSize: 14,
-              height: 1.5,
+            style: AppTextStyles.bodyText2.copyWith(
+              color: const Color(0xFFBACAC5),
             ),
           ),
         ),

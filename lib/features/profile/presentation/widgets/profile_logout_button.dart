@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
@@ -46,13 +47,11 @@ class ProfileLogoutButton extends StatelessWidget {
               },
             ),
             const SizedBox(width: 10),
-            const Text(
+            Text(
               'Log Out',
-              style: TextStyle(
+              style: AppTextStyles.bodyText1.copyWith(
                 color: _logoutColor,
-                fontSize: 16,
                 fontWeight: FontWeight.w700,
-                fontFamily: 'Inter',
               ),
             ),
           ],

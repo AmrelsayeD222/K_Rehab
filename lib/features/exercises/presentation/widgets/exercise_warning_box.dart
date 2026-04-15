@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ExerciseWarningBox extends StatelessWidget {
   const ExerciseWarningBox({super.key});
@@ -14,23 +15,17 @@ class ExerciseWarningBox extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.warning_amber_rounded,
-            color: Color(0xFFF59E0B),
-          ),
+          Icon(Icons.warning_amber_rounded, color: Color(0xFFF59E0B)),
           SizedBox(width: 16),
           Expanded(
             child: Text(
               'Stop immediately if you feel sharp or worsening pain at the exercise site or surgical area.',
-              style: TextStyle(
-                fontFamily: 'Manrope',
+              style: AppTextStyles.bodyText2.copyWith(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFFF59E0B),
-                fontSize: 14,
-                height: 1.5,
               ),
             ),
           ),

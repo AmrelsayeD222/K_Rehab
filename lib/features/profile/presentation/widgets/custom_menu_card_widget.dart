@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class CustomMenuCardWidget extends StatelessWidget {
   const CustomMenuCardWidget({
@@ -42,9 +43,8 @@ class CustomMenuCardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: AppTextStyles.cardTitle.copyWith(
                   color: AppColors.textPrimary,
-                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),

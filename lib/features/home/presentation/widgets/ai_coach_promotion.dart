@@ -40,11 +40,10 @@ class AiCoachPromotion extends StatelessWidget {
                     color: AppColors.primary.withValues(alpha: .1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text(
+                  child: Text(
                     'AI Recovery Coach',
-                    style: TextStyle(
+                    style: AppTextStyles.tag.copyWith(
                       color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
                   ),
@@ -52,11 +51,7 @@ class AiCoachPromotion extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   'Get personalized guidance\nfor your recovery journey',
-                  style: AppTextStyles.bodyText2.copyWith(
-                    color: AppColors.textLight,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
+                  style: AppTextStyles.sectionHeader.copyWith(fontSize: 16),
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
@@ -65,9 +60,8 @@ class AiCoachPromotion extends StatelessWidget {
                     children: [
                       Text(
                         'Start Chatting',
-                        style: TextStyle(
+                        style: AppTextStyles.cardTitle.copyWith(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProfileSegmentedToggle extends StatefulWidget {
   const ProfileSegmentedToggle({
@@ -54,11 +55,12 @@ class _ProfileSegmentedToggleState extends State<ProfileSegmentedToggle> {
         alignment: Alignment.center,
         child: Text(
           widget.options[index],
-          style: TextStyle(
-            color: isSelected ? const Color(0xFF111111) : AppColors.textSecondary,
+          style: AppTextStyles.tag.copyWith(
+            color: isSelected
+                ? const Color(0xFF111111)
+                : AppColors.textSecondary,
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            fontFamily: 'Inter',
           ),
         ),
       ),
