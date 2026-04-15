@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
@@ -30,13 +31,9 @@ class ProfileLogoutButton extends StatelessWidget {
             BlocBuilder<LogOutCubit, LogOutState>(
               builder: (context, state) {
                 if (state is LogOutLoading) {
-                  return const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: _logoutColor,
-                      strokeWidth: 2,
-                    ),
+                  return const KLoadingWidget(
+                    isSmall: true,
+                    color: _logoutColor,
                   );
                 }
                 return const Icon(

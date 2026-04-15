@@ -4,6 +4,8 @@ import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/home/presentation/widgets/protocol_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/featured_protocol_cubit.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
+import 'package:k_rehab/core/widgets/k_error_widget.dart';
 
 class FeaturedProtocolsCarousel extends StatelessWidget {
   const FeaturedProtocolsCarousel({super.key});
@@ -25,7 +27,7 @@ class FeaturedProtocolsCarousel extends StatelessWidget {
           child: BlocBuilder<FeaturedProtocolCubit, FeaturedProtocolState>(
             builder: (context, state) {
               if (state is FeaturedProtocolLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const KLoadingWidget();
               } else if (state is FeaturedProtocolSuccess) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -35,7 +37,12 @@ class FeaturedProtocolsCarousel extends StatelessWidget {
                       ProtocolCard(model: state.protocols[index], index: index),
                 );
               } else if (state is FeaturedProtocolFailure) {
-                return Center(child: Text(state.error));
+                return KErrorWidget(
+                  error: state.error,
+                  onRetry: () => context
+                      .read<FeaturedProtocolCubit>()
+                      .getFeaturedProtocols(),
+                );
               }
               return const SizedBox();
             },

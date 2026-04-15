@@ -8,6 +8,8 @@ import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
+import 'package:k_rehab/core/widgets/k_error_widget.dart';
 
 class ExercisesGrid extends StatelessWidget {
   const ExercisesGrid({super.key});
@@ -41,7 +43,7 @@ class ExercisesGrid extends StatelessWidget {
             if (state is FeaturedExercisesLoading) {
               return const Padding(
                 padding: EdgeInsets.symmetric(vertical: 40.0),
-                child: Center(child: CircularProgressIndicator()),
+                child: KLoadingWidget(),
               );
             } else if (state is FeaturedExercisesSuccess) {
               final exercises = state.featuredExercises;
@@ -152,7 +154,11 @@ class ExercisesGrid extends StatelessWidget {
                 },
               );
             } else if (state is FeaturedExercisesFailure) {
-              return Center(child: Text(state.error));
+              return KErrorWidget(
+                error: state.error,
+                onRetry: () =>
+                    context.read<FeaturedExercisesCubit>().getFeaturedExercises(),
+              );
             }
             return const SizedBox();
           },

@@ -9,6 +9,9 @@ import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_card.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_filter_chip.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
+import 'package:k_rehab/core/widgets/k_error_widget.dart';
+import 'package:k_rehab/core/widgets/k_empty_state_widget.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({super.key});
@@ -81,7 +84,7 @@ class ExercisesView extends StatelessWidget {
                   child: BlocBuilder<ExerciseCubit, ExerciseState>(
                     builder: (context, state) {
                       if (state is ExerciseLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const KLoadingWidget();
                       } else if (state is ExerciseSuccess) {
                         final exercises = _filteredExercises(
                           state.exercises,
@@ -89,13 +92,10 @@ class ExercisesView extends StatelessWidget {
                         );
 
                         if (exercises.isEmpty) {
-                          return Center(
-                            child: Text(
-                              'No exercises found for this category',
-                              style: AppTextStyles.caption.copyWith(
-                                color: Colors.white70,
-                              ),
-                            ),
+                          return KEmptyStateWidget(
+                            title: 'No Exercises Found',
+                            subtitle: 'Try selecting a different category or check back later.',
+                            icon: Icons.fitness_center_rounded,
                           );
                         }
 
@@ -121,8 +121,9 @@ class ExercisesView extends StatelessWidget {
                           },
                         );
                       } else if (state is ExerciseFailure) {
-                        return Center(
-                          child: Text(state.error, style: AppTextStyles.error),
+                        return KErrorWidget(
+                          error: state.error,
+                          onRetry: () => context.read<ExerciseCubit>().getExercises(),
                         );
                       }
                       return const SizedBox();

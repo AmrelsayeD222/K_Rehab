@@ -9,6 +9,7 @@ import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_state.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -67,9 +68,7 @@ class ProfileHeader extends StatelessWidget {
           child: BlocBuilder<ProfileImageCubit, ProfileImageState>(
             builder: (context, state) {
               if (state is ProfileImageLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
+                return const KLoadingWidget();
               }
 
               ImageProvider? imageProvider;

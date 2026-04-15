@@ -6,6 +6,7 @@ import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/stat_card.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/technique_step_item.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_warning_box.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 
 class ExerciseDetailsView extends StatelessWidget {
   final ExerciseModel exercise;
@@ -59,7 +60,7 @@ class ExerciseDetailsView extends StatelessWidget {
                         imageUrl: exercise.imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
+                            const KLoadingWidget(),
                       ),
                       errorWidget: (context, url, error) => CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
@@ -76,7 +77,7 @@ class ExerciseDetailsView extends StatelessWidget {
                       imageUrl: exercise.imageUrl,
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
+                          const KLoadingWidget(),
                       errorWidget: (context, url, error) => const Icon(
                         Icons.fitness_center,
                         color: Colors.grey,

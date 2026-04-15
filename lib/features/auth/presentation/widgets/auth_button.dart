@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 
 class AuthButton extends StatelessWidget {
   const AuthButton({
@@ -27,14 +28,7 @@ class AuthButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: isLoading
-            ? const SizedBox(
-                height: 24,
-                width: 24,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2,
-                ),
-              )
+            ? const KLoadingWidget(isSmall: true)
             : Text(text, style: AppTextStyles.buttonText),
       ),
     );
