@@ -15,6 +15,7 @@ class ProtocolCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
           width: 300,
+          height: MediaQuery.of(context).size.height * 0.22,
           margin: const EdgeInsets.only(right: 16, bottom: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),

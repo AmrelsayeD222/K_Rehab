@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/features/home/data/models/featured_exercises_model.dart';
 import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
@@ -19,6 +21,8 @@ class FeaturedExercisesRepoImpl implements FeaturedExercisesRepo {
       return right(featuredExercises);
     } on PostgrestException catch (e) {
       return left(SupabaseDatabaseFailure.fromPostgrestException(e));
+    } on SocketException catch (e) {
+      return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
     }

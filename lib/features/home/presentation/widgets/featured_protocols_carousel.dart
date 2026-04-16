@@ -22,31 +22,38 @@ class FeaturedProtocolsCarousel extends StatelessWidget {
             style: AppTextStyles.heading2,
           ).animate().fadeIn(duration: 400.ms, delay: 100.ms),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.23,
-          child: BlocBuilder<FeaturedProtocolCubit, FeaturedProtocolState>(
-            builder: (context, state) {
-              if (state is FeaturedProtocolLoading) {
-                return const KLoadingWidget();
-              } else if (state is FeaturedProtocolSuccess) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: state.protocols.length,
-                  itemBuilder: (context, index) =>
-                      ProtocolCard(model: state.protocols[index], index: index),
-                );
-              } else if (state is FeaturedProtocolFailure) {
-                return KErrorWidget(
-                  error: state.error,
-                  onRetry: () => context
-                      .read<FeaturedProtocolCubit>()
-                      .getFeaturedProtocols(),
-                );
-              }
-              return const SizedBox();
-            },
-          ),
+        BlocBuilder<FeaturedProtocolCubit, FeaturedProtocolState>(
+          builder: (context, state) {
+            if (state is FeaturedProtocolLoading) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: KLoadingWidget(),
+              );
+            } else if (state is FeaturedProtocolSuccess) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    state.protocols.length,
+                    (index) => ProtocolCard(
+                      model: state.protocols[index],
+                      index: index,
+                    ),
+                  ),
+                ),
+              );
+            } else if (state is FeaturedProtocolFailure) {
+              return KErrorWidget(
+                error: state.error,
+                onRetry: () => context
+                    .read<FeaturedProtocolCubit>()
+                    .getFeaturedProtocols(),
+              );
+            }
+            return const SizedBox();
+          },
         ),
       ],
     );

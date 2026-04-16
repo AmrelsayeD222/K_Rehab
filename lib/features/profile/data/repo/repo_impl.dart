@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
@@ -20,6 +21,8 @@ class ProfileRepoImpl implements ProfileRepo {
       return right(null);
     } on AuthException catch (e) {
       return left(SupabaseAuthFailure.fromAuthException(e));
+    } on SocketException catch (e) {
+      return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseAuthFailure(e.toString()));
     }
@@ -38,6 +41,8 @@ class ProfileRepoImpl implements ProfileRepo {
       return right(null);
     } on StorageException catch (e) {
       return left(SupabaseDatabaseFailure.fromStorageException(e));
+    } on SocketException catch (e) {
+      return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
     }
@@ -51,8 +56,6 @@ class ProfileRepoImpl implements ProfileRepo {
           .getPublicUrl('profiles${client.auth.currentUser!.id}');
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       return right('$baseUrl?v=$timestamp');
-    } on StorageException catch (e) {
-      return left(SupabaseDatabaseFailure.fromStorageException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
     }

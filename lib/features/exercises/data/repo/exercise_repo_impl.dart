@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/exercise_model.dart';
@@ -14,11 +16,14 @@ class ExerciseRepoImpl implements ExerciseRepo {
   Future<Either<Failure, List<ExerciseModel>>> fetchExercises() async {
     try {
       final response = await supabaseClient.from('exercises').select();
-      final List<ExerciseModel> exercises =
-          response.map((e) => ExerciseModel.fromJson(e)).toList();
+      final List<ExerciseModel> exercises = response
+          .map((e) => ExerciseModel.fromJson(e))
+          .toList();
       return right(exercises);
     } on PostgrestException catch (e) {
       return left(SupabaseDatabaseFailure.fromPostgrestException(e));
+    } on SocketException catch (e) {
+      return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
     }

@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:k_rehab/features/auth/data/models/sign_up_params.dart';
@@ -33,8 +35,10 @@ class AuthRepoImpl extends AuthRepo {
       );
     } on AuthException catch (e) {
       return Left(SupabaseAuthFailure.fromAuthException(e));
+    } on SocketException catch (e) {
+      return Left(NetworkFailure.fromSocketException(e));
     } catch (e) {
-      return Left(SupabaseAuthFailure(e.toString()));
+      return Left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 
@@ -45,6 +49,8 @@ class AuthRepoImpl extends AuthRepo {
       return const Right(null);
     } on PostgrestException catch (e) {
       return Left(SupabaseDatabaseFailure.fromPostgrestException(e));
+    } on SocketException catch (e) {
+      return Left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return Left(SupabaseDatabaseFailure(e.toString()));
     }
@@ -66,6 +72,8 @@ class AuthRepoImpl extends AuthRepo {
       );
     } on AuthException catch (e) {
       return Left(SupabaseAuthFailure.fromAuthException(e));
+    } on SocketException catch (e) {
+      return Left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return Left(SupabaseAuthFailure(e.toString()));
     }

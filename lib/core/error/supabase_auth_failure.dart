@@ -5,7 +5,6 @@ class SupabaseAuthFailure extends Failure {
   SupabaseAuthFailure(super.errorMessage);
 
   factory SupabaseAuthFailure.fromAuthException(AuthException exception) {
-    // 1. Handle specialized network exceptions from Supabase
     if (exception is AuthRetryableFetchException) {
       return SupabaseAuthFailure(
         'No internet connection. Please check your network and try again',
@@ -13,11 +12,8 @@ class SupabaseAuthFailure extends Failure {
     }
 
     final String? code = exception.code;
-
-    // ✅ FIX: null-safe statusCode handling (no fake 0 value)
     final int? statusCode = int.tryParse(exception.statusCode ?? '');
 
-    // 2. Connection / unknown error state
     if (code == null && statusCode == null) {
       return SupabaseAuthFailure(
         'No internet connection. Please check your network and try again',
@@ -87,7 +83,9 @@ class SupabaseAuthFailure extends Failure {
           );
 
         case 'user_banned':
-          return SupabaseAuthFailure('This user account is temporarily banned');
+          return SupabaseAuthFailure(
+            'This user account is temporarily banned',
+          );
 
         case 'invalid_otp':
           return SupabaseAuthFailure(
@@ -104,7 +102,6 @@ class SupabaseAuthFailure extends Failure {
             'Too many incorrect attempts. Please try again after 15 minutes',
           );
 
-        case 'unexpected_failure':
         default:
           return SupabaseAuthFailure(
             'An unexpected error occurred. Please try again',
@@ -112,7 +109,6 @@ class SupabaseAuthFailure extends Failure {
       }
     }
 
-    // 3. HTTP status fallback (null-safe)
     switch (statusCode) {
       case 403:
         return SupabaseAuthFailure(

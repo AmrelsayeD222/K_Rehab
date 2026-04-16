@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/features/home/data/models/featured_protocol_model.dart';
 import 'package:k_rehab/features/home/data/repo/featured_protocol_repo.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
@@ -24,6 +26,8 @@ class FeaturedProtocolRepoImpl implements FeaturedProtocolRepo {
       return Right(protocols);
     } on PostgrestException catch (e) {
       return Left(SupabaseDatabaseFailure.fromPostgrestException(e));
+    } on SocketException catch (e) {
+      return Left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return Left(SupabaseDatabaseFailure(e.toString()));
     }
