@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/features/home/data/models/featured_exercises_model.dart';
 import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
+import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FeaturedExercisesRepoImpl implements FeaturedExercisesRepo {
@@ -16,8 +17,10 @@ class FeaturedExercisesRepoImpl implements FeaturedExercisesRepo {
           .map((e) => FeaturedExercisesModel.fromJson(e))
           .toList();
       return right(featuredExercises);
+    } on PostgrestException catch (e) {
+      return left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 }

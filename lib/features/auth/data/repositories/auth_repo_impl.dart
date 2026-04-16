@@ -31,7 +31,7 @@ class AuthRepoImpl extends AuthRepo {
       return Left(
         SupabaseAuthFailure('User registration failed: No user returned'),
       );
-    } on AuthApiException catch (e) {
+    } on AuthException catch (e) {
       return Left(SupabaseAuthFailure.fromAuthException(e));
     } catch (e) {
       return Left(SupabaseAuthFailure(e.toString()));
@@ -43,6 +43,8 @@ class AuthRepoImpl extends AuthRepo {
     try {
       await client.from('profiles').insert(userModel.toJson());
       return const Right(null);
+    } on PostgrestException catch (e) {
+      return Left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } catch (e) {
       return Left(SupabaseDatabaseFailure(e.toString()));
     }
@@ -62,7 +64,7 @@ class AuthRepoImpl extends AuthRepo {
       return Left(
         SupabaseAuthFailure('User login failed: No session returned'),
       );
-    } on AuthApiException catch (e) {
+    } on AuthException catch (e) {
       return Left(SupabaseAuthFailure.fromAuthException(e));
     } catch (e) {
       return Left(SupabaseAuthFailure(e.toString()));

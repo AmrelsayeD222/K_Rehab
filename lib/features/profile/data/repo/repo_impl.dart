@@ -19,9 +19,9 @@ class ProfileRepoImpl implements ProfileRepo {
       await client.auth.signOut();
       return right(null);
     } on AuthException catch (e) {
-      return left(SupabaseAuthFailure(e.message));
+      return left(SupabaseAuthFailure.fromAuthException(e));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseAuthFailure(e.toString()));
     }
   }
 
@@ -30,12 +30,16 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       await client.storage
           .from('profiles')
-          .upload('profiles${client.auth.currentUser!.id}', image, fileOptions: const FileOptions(upsert: true));
+          .upload(
+            'profiles${client.auth.currentUser!.id}',
+            image,
+            fileOptions: const FileOptions(upsert: true),
+          );
       return right(null);
     } on StorageException catch (e) {
-      return left(SupabaseDatabaseFailure(e.message));
+      return left(SupabaseDatabaseFailure.fromStorageException(e));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 
@@ -48,9 +52,9 @@ class ProfileRepoImpl implements ProfileRepo {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       return right('$baseUrl?v=$timestamp');
     } on StorageException catch (e) {
-      return left(SupabaseDatabaseFailure(e.message));
+      return left(SupabaseDatabaseFailure.fromStorageException(e));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 
@@ -62,9 +66,9 @@ class ProfileRepoImpl implements ProfileRepo {
         final name = user.userMetadata?['name'] as String?;
         return right(name ?? 'Unknown User');
       }
-      return left(ServerFailure(message: 'User not logged in'));
+      return left(SupabaseAuthFailure('User not logged in'));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 }

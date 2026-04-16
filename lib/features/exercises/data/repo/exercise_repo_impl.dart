@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/exercise_model.dart';
 import 'exercise_repo.dart';
@@ -16,8 +17,10 @@ class ExerciseRepoImpl implements ExerciseRepo {
       final List<ExerciseModel> exercises =
           response.map((e) => ExerciseModel.fromJson(e)).toList();
       return right(exercises);
+    } on PostgrestException catch (e) {
+      return left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
 }

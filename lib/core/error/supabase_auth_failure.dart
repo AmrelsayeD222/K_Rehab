@@ -1,22 +1,42 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'failure.dart';
 
 class SupabaseAuthFailure extends Failure {
   SupabaseAuthFailure(super.errorMessage);
 
-  factory SupabaseAuthFailure.fromAuthException(AuthApiException exception) {
+  factory SupabaseAuthFailure.fromAuthException(AuthException exception) {
+    // 1. Handle specialized network exceptions from Supabase
+    if (exception is AuthRetryableFetchException) {
+      return SupabaseAuthFailure(
+        'No internet connection. Please check your network and try again',
+      );
+    }
+
     final String? code = exception.code;
-    final int statusCode = int.parse(exception.statusCode ?? '0');
+
+    // ✅ FIX: null-safe statusCode handling (no fake 0 value)
+    final int? statusCode = int.tryParse(exception.statusCode ?? '');
+
+    // 2. Connection / unknown error state
+    if (code == null && statusCode == null) {
+      return SupabaseAuthFailure(
+        'No internet connection. Please check your network and try again',
+      );
+    }
 
     if (code != null) {
       switch (code) {
+        case 'network_error':
+          return SupabaseAuthFailure(
+            'No internet connection. Please check your network and try again',
+          );
+
         case 'invalid_credentials':
         case 'bad_jwt':
           return SupabaseAuthFailure('Invalid email or password');
 
         case 'user_not_found':
-          return SupabaseAuthFailure('User not found');
+          return SupabaseAuthFailure('No account found with this email');
 
         case 'user_already_exists':
         case 'email_exists':
@@ -69,16 +89,30 @@ class SupabaseAuthFailure extends Failure {
         case 'user_banned':
           return SupabaseAuthFailure('This user account is temporarily banned');
 
+        case 'invalid_otp':
+          return SupabaseAuthFailure(
+            'Incorrect verification code. Please try again',
+          );
+
+        case 'expired_otp':
+          return SupabaseAuthFailure(
+            'Verification code has expired. Please request a new one',
+          );
+
+        case 'too_many_attempts':
+          return SupabaseAuthFailure(
+            'Too many incorrect attempts. Please try again after 15 minutes',
+          );
+
         case 'unexpected_failure':
+        default:
           return SupabaseAuthFailure(
             'An unexpected error occurred. Please try again',
           );
-
-        default:
-          return SupabaseAuthFailure('Authentication error: $code');
       }
     }
 
+    // 3. HTTP status fallback (null-safe)
     switch (statusCode) {
       case 403:
         return SupabaseAuthFailure(
