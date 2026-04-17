@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/auth/logic/login/login_cubit.dart';
+import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_header.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_social_section.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_toggle_row.dart';

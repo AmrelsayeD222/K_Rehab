@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:k_rehab/features/auth/logic/login/login_cubit.dart';
+import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/views/login_view.dart';
 import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/features/auth/logic/create_user/create_user_cubit.dart';
-import 'package:k_rehab/features/auth/logic/register/register_cubit.dart';
+import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
+import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 
 import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
