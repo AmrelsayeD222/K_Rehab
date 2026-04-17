@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
@@ -8,6 +10,8 @@ import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/core/widgets/k_error_widget.dart';
 
@@ -30,10 +34,7 @@ class ExercisesGrid extends StatelessWidget {
               onPressed: () {
                 context.read<NavigationCubit>().changeTab(1);
               },
-              child: const Text(
-                'See All',
-                style: AppTextStyles.cardTitle,
-              ),
+              child: const Text('See All', style: AppTextStyles.cardTitle),
             ).animate().fadeIn(duration: 400.ms, delay: 750.ms),
           ],
         ),
@@ -59,87 +60,129 @@ class ExercisesGrid extends StatelessWidget {
                 ),
                 itemCount: exercises.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.cardBackground,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: .05),
+                  return GestureDetector(
+                        onTap: () {
+                          GoRouter.of(context).push(
+                            AppRouter.exerciseDetails,
+                            extra: exercises[index],
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.cardBackground,
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: .05),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: CachedNetworkImageProvider(
-                                      exercises[index].imagePath,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  color: AppColors.primary.withValues(
-                                    alpha: .05,
-                                  ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
                                   borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(24),
                                   ),
+                                  child: exercises[index].imageUrl.isNotEmpty
+                                      ? CachedNetworkImage(
+                                          imageUrl: exercises[index].imageUrl,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              Container(
+                                                color: AppColors.primary
+                                                    .withValues(alpha: .05),
+                                                child: const Center(
+                                                  child: SizedBox(
+                                                    width: 24,
+                                                    height: 24,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          strokeWidth: 2,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              Container(
+                                                color: AppColors.primary
+                                                    .withValues(alpha: .05),
+                                                child: const Center(
+                                                  child: Icon(
+                                                    Icons
+                                                        .image_not_supported_outlined,
+                                                    color: Colors.white24,
+                                                    size: 40,
+                                                  ),
+                                                ),
+                                              ),
+                                        )
+                                      : Container(
+                                          width: double.infinity,
+                                          color: AppColors.primary.withValues(
+                                            alpha: .05,
+                                          ),
+                                          child: const Center(
+                                            child: Icon(
+                                              Icons
+                                                  .image_not_supported_outlined,
+                                              color: Colors.white24,
+                                              size: 40,
+                                            ),
+                                          ),
+                                        ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    exercises[index].title,
-                                    style: AppTextStyles.cardTitle.copyWith(
-                                      color: AppColors.textLight,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                  vertical: 12,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      exercises[index].title,
+                                      style: AppTextStyles.cardTitle.copyWith(
+                                        color: AppColors.textLight,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          exercises[index].description,
-                                          style: AppTextStyles.cardSubtitle,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+
+                                    Text(
+                                      "${exercises[index].sets} sets × ${exercises[index].reps} reps",
+                                      style: AppTextStyles.cardSubtitle,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                        vertical: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.orangeAccent.withValues(
+                                          alpha: .1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        exercises[index].difficulty
+                                            .toUpperCase(),
+                                        style: AppTextStyles.tag.copyWith(
+                                          color: Colors.orangeAccent,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      const SizedBox(width: 4),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 6,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.orangeAccent.withValues(
-                                            alpha: .1,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            4,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          exercises[index].level,
-                                          style: AppTextStyles.tag.copyWith(
-                                            color: Colors.orangeAccent,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       )
                       .animate()
@@ -154,10 +197,12 @@ class ExercisesGrid extends StatelessWidget {
                 },
               );
             } else if (state is FeaturedExercisesFailure) {
+              log(state.error.toString());
               return KErrorWidget(
                 error: state.error,
-                onRetry: () =>
-                    context.read<FeaturedExercisesCubit>().getFeaturedExercises(),
+                onRetry: () => context
+                    .read<FeaturedExercisesCubit>()
+                    .getFeaturedExercises(),
               );
             }
             return const SizedBox();

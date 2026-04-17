@@ -11,6 +11,7 @@ class FeaturedProtocolCubit extends Cubit<FeaturedProtocolState> {
     : super(FeaturedProtocolInitial());
 
   Future<void> getFeaturedProtocols() async {
+    if (isClosed) return;
     emit(FeaturedProtocolLoading());
     final result = await featuredProtocolRepo.getFeaturedProtocols();
     if (isClosed) return;

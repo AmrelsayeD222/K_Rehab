@@ -12,7 +12,7 @@ final class FeaturedExercisesInitial extends FeaturedExercisesState {}
 final class FeaturedExercisesLoading extends FeaturedExercisesState {}
 
 final class FeaturedExercisesSuccess extends FeaturedExercisesState {
-  final List<FeaturedExercisesModel> featuredExercises;
+  final List<ExerciseModel> featuredExercises;
   const FeaturedExercisesSuccess({required this.featuredExercises});
 }
 

@@ -77,14 +77,13 @@ class ExerciseCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   // Title
-                  Text(
-                    title,
-                    style: AppTextStyles.cardTitle,
-                  ),
+                  Text(title, style: AppTextStyles.cardTitle),
                   const SizedBox(height: 4),
                   // Subtitle
                   Text(
                     subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.cardSubtitle.copyWith(
                       fontSize: 12,
                       color: const Color(0xFFBACAC5),

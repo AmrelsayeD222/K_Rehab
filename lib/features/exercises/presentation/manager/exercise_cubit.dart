@@ -12,6 +12,7 @@ class ExerciseCubit extends Cubit<ExerciseState> {
   List<ExerciseModel> _allExercises = [];
 
   Future<void> getExercises() async {
+    if (isClosed) return;
     emit(ExerciseLoading());
     final result = await exerciseRepo.fetchExercises();
     if (isClosed) return;

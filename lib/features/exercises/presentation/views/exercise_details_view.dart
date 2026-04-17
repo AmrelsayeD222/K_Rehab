@@ -59,8 +59,7 @@ class ExerciseDetailsView extends StatelessWidget {
                       placeholder: (context, url) => CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const KLoadingWidget(),
+                        placeholder: (context, url) => const KLoadingWidget(),
                       ),
                       errorWidget: (context, url, error) => CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
@@ -76,8 +75,7 @@ class ExerciseDetailsView extends StatelessWidget {
                   ? CachedNetworkImage(
                       imageUrl: exercise.imageUrl,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          const KLoadingWidget(),
+                      placeholder: (context, url) => const KLoadingWidget(),
                       errorWidget: (context, url, error) => const Icon(
                         Icons.fitness_center,
                         color: Colors.grey,
@@ -104,6 +102,7 @@ class ExerciseDetailsView extends StatelessWidget {
                     exercise.title,
                     style: AppTextStyles.mainHeading.copyWith(fontSize: 22),
                   ),
+                  Text(exercise.subtitle, style: AppTextStyles.cardSubtitle),
                   const SizedBox(height: 16),
                   Row(
                     children: [
