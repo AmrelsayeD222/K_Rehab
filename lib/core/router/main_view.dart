@@ -13,7 +13,7 @@ import 'package:k_rehab/features/profile/presentation/manager/profile_image/prof
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
 
-import 'package:k_rehab/features/protocols/protocols_view.dart';
+import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});

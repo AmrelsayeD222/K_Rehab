@@ -23,6 +23,8 @@ abstract class AppRouter {
   static const String signup = '/signup';
   static const String mainView = '/mainView';
   static const String exerciseDetails = '/exerciseDetails';
+  static const String protocolDetails = '/protocolDetails';
+
   static GoRouter router() => GoRouter(
     initialLocation: CacheHelper.getData(key: 'isLoggedIn') == true
         ? mainView
