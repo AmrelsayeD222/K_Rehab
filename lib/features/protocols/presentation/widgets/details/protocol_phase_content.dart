@@ -17,123 +17,197 @@ class ProtocolPhaseContent extends StatelessWidget {
           children: [
             const Icon(Icons.circle, size: 12, color: AppColors.primary),
             const SizedBox(width: 8),
-            Text(
-              '${phase.phaseName.toUpperCase()} ${phase.phaseTitle}',
-              style: AppTextStyles.heading2.copyWith(color: AppColors.primary),
+            Expanded(
+              child: Text(
+                '${phase.phaseName.toUpperCase()} ${phase.phaseTitle}',
+                style: AppTextStyles.heading2.copyWith(
+                  color: AppColors.primary,
+                ),
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
-        _buildSection('Rehab Goals', phase.rehabGoals),
-        _buildSection('Criteria to Progress', phase.criteriaToProgress),
-        _buildSection('Impairments', phase.impairments),
-        _buildInterventionsSection(phase.interventions),
-        _buildSection('Goals', phase.goals),
-        const SizedBox(height: 16),
-        Text(
-          'Rationale',
-          style: AppTextStyles.sectionHeader.copyWith(color: AppColors.primary),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          phase.rationale,
-          style: AppTextStyles.bodyText2.copyWith(color: AppColors.textSecondary),
-        ),
         const SizedBox(height: 24),
-        Divider(color: Colors.white.withOpacity(0.1)),
+        _buildSectionRow('Rehab Goals', phase.rehabGoals),
+        _buildSectionRow('Criteria to Progress', phase.criteriaToProgress),
+        _buildSectionRow('Impairments', phase.impairments),
+        _buildInterventionsRow(phase.interventions),
+        _buildSectionRow('Goals', phase.goals),
+        _buildRationaleRow('Rationale', phase.rationale),
+        const SizedBox(height: 24),
+        Divider(color: Colors.white.withValues(alpha: 0.1)),
       ],
     );
   }
 
-  Widget _buildSection(String title, List<String> items) {
+  Widget _buildSectionRow(String title, List<String> items) {
     if (items.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: AppTextStyles.bodyText1.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 3,
+            child: Text(
+              title,
+              style: AppTextStyles.bodyText2.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          const SizedBox(height: 8),
-          ...items.map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 6.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 6.0, right: 8.0),
-                      child: Icon(Icons.circle, size: 6, color: AppColors.primary),
-                    ),
-                    Expanded(
-                      child: Text(
-                        item,
-                        style: AppTextStyles.bodyText2.copyWith(color: AppColors.textLight),
+          const SizedBox(width: 16),
+          Expanded(
+            flex: 6,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: items
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 6.0, right: 8.0),
+                            child: Icon(
+                              Icons.circle,
+                              size: 6,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              item,
+                              style: AppTextStyles.bodyText2.copyWith(
+                                color: AppColors.textLight,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              )),
+                  )
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildInterventionsSection(List<DummyIntervention> interventions) {
+  Widget _buildInterventionsRow(List<DummyIntervention> interventions) {
     if (interventions.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Interventions',
-            style: AppTextStyles.bodyText1.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            flex: 3,
+            child: Text(
+              'Interventions',
+              style: AppTextStyles.bodyText2.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          const SizedBox(height: 8),
-          ...interventions.map((intervention) => Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      intervention.name,
-                      style: AppTextStyles.bodyText2.copyWith(
-                        color: AppColors.textLight,
-                        fontWeight: FontWeight.w600,
+          const SizedBox(width: 16),
+          Expanded(
+            flex: 6,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: interventions
+                  .map(
+                    (intervention) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            intervention.name,
+                            style: AppTextStyles.bodyText2.copyWith(
+                              color: AppColors.textLight,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          ...intervention.items.map(
+                            (item) => Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 4.0,
+                                left: 8.0,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 6.0,
+                                      right: 6.0,
+                                    ),
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 10,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      item,
+                                      style: AppTextStyles.caption.copyWith(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    ...intervention.items.map((item) => Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0, left: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(top: 6.0, right: 6.0),
-                                child: Icon(Icons.remove, size: 10, color: AppColors.textSecondary),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  item,
-                                  style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
-                  ],
-                ),
-              )),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRationaleRow(String title, String text) {
+    if (text.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              title,
+              style: AppTextStyles.bodyText2.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            flex: 6,
+            child: Text(
+              text,
+              style: AppTextStyles.bodyText2.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ),
         ],
       ),
     );

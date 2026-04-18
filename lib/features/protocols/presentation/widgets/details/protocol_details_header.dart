@@ -13,10 +13,7 @@ class ProtocolDetailsHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Rehabilitation Protocol',
-          style: AppTextStyles.heading1,
-        ),
+        const Text('Rehabilitation Protocol', style: AppTextStyles.heading1),
         const SizedBox(height: 16),
         Wrap(
           spacing: 8.0,
@@ -30,13 +27,13 @@ class ProtocolDetailsHeader extends StatelessWidget {
   Widget _buildTag(String tag) {
     Color bgColor;
     if (tag.toLowerCase().contains('rehab')) {
-      bgColor = AppColors.primary.withOpacity(0.2);
+      bgColor = AppColors.primary.withValues(alpha: 0.2);
     } else if (tag.toLowerCase().contains('sessions')) {
-      bgColor = Colors.blue.withOpacity(0.2);
+      bgColor = Colors.blue.withValues(alpha: 0.2);
     } else if (tag.toLowerCase().contains('intermediate')) {
-      bgColor = Colors.orange.withOpacity(0.2);
+      bgColor = Colors.orange.withValues(alpha: 0.2);
     } else {
-      bgColor = Colors.purple.withOpacity(0.2);
+      bgColor = Colors.purple.withValues(alpha: 0.2);
     }
 
     Color textColor;
@@ -56,10 +53,7 @@ class ProtocolDetailsHeader extends StatelessWidget {
         color: bgColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(
-        tag,
-        style: AppTextStyles.tag.copyWith(color: textColor),
-      ),
+      child: Text(tag, style: AppTextStyles.tag.copyWith(color: textColor)),
     );
   }
 }
