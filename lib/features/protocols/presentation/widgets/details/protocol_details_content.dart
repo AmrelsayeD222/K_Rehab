@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol_details.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol_phase_content.dart';
 
 class ProtocolDetailsContent extends StatelessWidget {
@@ -10,7 +10,7 @@ class ProtocolDetailsContent extends StatelessWidget {
   });
 
   final int selectedTabIndex;
-  final DummyProtocolDetails details;
+  final ProtocolDetailsModel details;
 
   @override
   Widget build(BuildContext context) {

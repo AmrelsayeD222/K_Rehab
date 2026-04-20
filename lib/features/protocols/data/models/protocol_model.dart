@@ -1,3 +1,5 @@
+import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
+
 class ProtocolModel {
   final String id;
   final String title;
@@ -8,6 +10,7 @@ class ProtocolModel {
   final String sessions;
   final bool isFree;
   final bool isFeatured;
+  final ProtocolDetailsModel? details;
 
   ProtocolModel({
     required this.id,
@@ -19,6 +22,7 @@ class ProtocolModel {
     required this.sessions,
     required this.isFree,
     required this.isFeatured,
+    this.details,
   });
 
   factory ProtocolModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,9 @@ class ProtocolModel {
       sessions: json['sessions'] ?? '',
       isFree: json['isFree'] ?? true,
       isFeatured: json['is_featured'] ?? false,
+      details: json['details'] != null
+          ? ProtocolDetailsModel.fromJson(json['details'])
+          : null,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol_details.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
 class ProtocolDetailsTabs extends StatelessWidget {
   const ProtocolDetailsTabs({
@@ -11,7 +11,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  final List<DummyProtocolPhase> phases;
+  final List<ProtocolPhaseModel> phases;
   final int selectedIndex;
   final ValueChanged<int> onTabChanged;
 

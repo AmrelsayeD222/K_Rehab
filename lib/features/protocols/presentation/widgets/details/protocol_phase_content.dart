@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol_details.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol_section_row.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol_interventions_row.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol_rationale_row.dart';
@@ -9,7 +9,7 @@ import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol
 class ProtocolPhaseContent extends StatelessWidget {
   const ProtocolPhaseContent({super.key, required this.phase});
 
-  final DummyProtocolPhase phase;
+  final ProtocolPhaseModel phase;
 
   @override
   Widget build(BuildContext context) {
@@ -46,4 +46,3 @@ class ProtocolPhaseContent extends StatelessWidget {
     );
   }
 }
-

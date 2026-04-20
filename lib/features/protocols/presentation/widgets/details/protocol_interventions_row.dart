@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol_details.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
 class ProtocolInterventionsRow extends StatelessWidget {
   const ProtocolInterventionsRow({
@@ -9,7 +9,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
     required this.interventions,
   });
 
-  final List<DummyIntervention> interventions;
+  final List<ProtocolInterventionModel> interventions;
 
   @override
   Widget build(BuildContext context) {
