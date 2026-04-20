@@ -13,6 +13,7 @@ import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.d
 import 'package:k_rehab/core/router/main_view.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
 
 import 'package:k_rehab/core/services/cache_helper.dart';
@@ -88,7 +89,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: protocolDetails,
-        builder: (context, state) => const ProtocolDetailsView(),
+        builder: (context, state) {
+          final protocol = state.extra as ProtocolModel;
+          return ProtocolDetailsView(protocol: protocol);
+        },
       ),
     ],
   );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_content.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_image_header.dart';
 
 class ProtocolCardItem extends StatelessWidget {
-  final DummyProtocol protocol;
+  final ProtocolModel protocol;
   final VoidCallback onTap;
 
   const ProtocolCardItem({

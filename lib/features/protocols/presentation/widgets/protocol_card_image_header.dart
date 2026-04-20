@@ -1,13 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 
 class ProtocolCardImageHeader extends StatelessWidget {
   const ProtocolCardImageHeader({super.key, required this.protocol});
 
-  final DummyProtocol protocol;
+  final ProtocolModel protocol;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,27 @@ class ProtocolCardImageHeader extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(protocol.imagePath, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: protocol.imagePath,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                color: AppColors.cardBackground,
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: AppColors.cardBackground,
+                child: const Icon(
+                  Icons.broken_image_rounded,
+                  color: Colors.white24,
+                  size: 48,
+                ),
+              ),
+            ),
           ),
           Positioned.fill(
             child: Container(
@@ -26,7 +47,6 @@ class ProtocolCardImageHeader extends StatelessWidget {
               ),
             ),
           ),
-          // Glassmorphism Phase Tag
           Positioned(
             top: 16,
             left: 16,
@@ -38,30 +58,45 @@ class ProtocolCardImageHeader extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  SvgPicture.asset(
-                    'assets/protocol/clinically_previewed.svg',
-                    width: 14,
-                    height: 14,
-                    colorFilter: ColorFilter.mode(
-                      AppColors.primary,
-                      BlendMode.srcIn,
+                  if (protocol.isClinicallyReviewed) ...[
+                    SvgPicture.asset(
+                      'assets/protocol/clinically_previewed.svg',
+                      width: 14,
+                      height: 14,
+                      colorFilter: ColorFilter.mode(
+                        AppColors.primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    protocol.phase,
-                    style: AppTextStyles.tag.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+                    const SizedBox(width: 4),
+                    Text(
+                      'Clinically Reviewed',
+                      style: AppTextStyles.tag.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
                     ),
-                  ),
+                  ] else ...[
+                    const Icon(
+                      Icons.history_edu_rounded,
+                      color: Colors.white60,
+                      size: 14,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Pending Review',
+                      style: AppTextStyles.tag.copyWith(
+                        color: Colors.white60,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
           ),
-
-          // Title Overlay
           Positioned(
             bottom: 0,
             left: 20,

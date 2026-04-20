@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
-import 'package:k_rehab/features/home/data/models/featured_protocol_model.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/home/data/repo/featured_protocol_repo.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,15 +12,16 @@ class FeaturedProtocolRepoImpl implements FeaturedProtocolRepo {
 
   FeaturedProtocolRepoImpl({required this.supabaseClient});
   @override
-  Future<Either<Failure, List<FeaturedProtocolModel>>>
+  Future<Either<Failure, List<ProtocolModel>>>
   getFeaturedProtocols() async {
     try {
       final response = await supabaseClient
           .from('protocols')
-          .select('title, image_path');
+          .select()
+          .eq('is_featured', true);
 
-      final List<FeaturedProtocolModel> protocols = (response as List)
-          .map((e) => FeaturedProtocolModel.fromJson(e))
+      final List<ProtocolModel> protocols = (response as List)
+          .map((e) => ProtocolModel.fromJson(e))
           .toList();
 
       return Right(protocols);

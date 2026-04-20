@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_stat_item.dart';
 
 class ProtocolCardContent extends StatelessWidget {
   const ProtocolCardContent({super.key, required this.protocol});
 
-  final DummyProtocol protocol;
+  final ProtocolModel protocol;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,6 @@ class ProtocolCardContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          // Stats Row
           Row(
             children: [
               ProtocolStatItem(
@@ -38,9 +37,9 @@ class ProtocolCardContent extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                'Free',
+                protocol.isFree ? 'Free' : 'Paid',
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: AppColors.primary,
+                  color: protocol.isFree ? AppColors.primary : Colors.amber,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),

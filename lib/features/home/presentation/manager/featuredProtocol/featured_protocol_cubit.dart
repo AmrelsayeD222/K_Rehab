@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/features/home/data/models/featured_protocol_model.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/home/data/repo/featured_protocol_repo.dart';
 
 part 'featured_protocol_state.dart';

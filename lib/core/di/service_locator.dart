@@ -26,6 +26,10 @@ import 'package:k_rehab/features/exercises/data/repo/exercise_repo.dart';
 import 'package:k_rehab/features/exercises/data/repo/exercise_repo_impl.dart';
 import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
 
+import 'package:k_rehab/features/protocols/data/repo/protocol_repo.dart';
+import 'package:k_rehab/features/protocols/data/repo/protocol_repo_impl.dart';
+import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
+
 final getIt = GetIt.instance;
 
 void setupServiceLocator() {
@@ -101,5 +105,14 @@ void setupServiceLocator() {
 
   getIt.registerFactory<ExerciseCubit>(
     () => ExerciseCubit(getIt<ExerciseRepo>()),
+  );
+
+  // Protocols Feature Registrations
+  getIt.registerLazySingleton<ProtocolRepo>(
+    () => ProtocolRepoImpl(supabaseClient: getIt<SupabaseClient>()),
+  );
+
+  getIt.registerFactory<ProtocolCubit>(
+    () => ProtocolCubit(getIt<ProtocolRepo>()),
   );
 }

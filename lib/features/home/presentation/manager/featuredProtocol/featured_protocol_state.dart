@@ -12,11 +12,18 @@ final class FeaturedProtocolInitial extends FeaturedProtocolState {}
 final class FeaturedProtocolLoading extends FeaturedProtocolState {}
 
 final class FeaturedProtocolSuccess extends FeaturedProtocolState {
-  final List<FeaturedProtocolModel> protocols;
+  final List<ProtocolModel> protocols;
   const FeaturedProtocolSuccess({required this.protocols});
+
+  @override
+  List<Object> get props => [protocols];
 }
 
 final class FeaturedProtocolFailure extends FeaturedProtocolState {
   final String error;
+
   const FeaturedProtocolFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }
