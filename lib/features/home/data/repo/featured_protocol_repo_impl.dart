@@ -16,7 +16,7 @@ class FeaturedProtocolRepoImpl implements FeaturedProtocolRepo {
   getFeaturedProtocols() async {
     try {
       final response = await supabaseClient
-          .from('featured protocols')
+          .from('protocols')
           .select('title, image_path');
 
       final List<FeaturedProtocolModel> protocols = (response as List)

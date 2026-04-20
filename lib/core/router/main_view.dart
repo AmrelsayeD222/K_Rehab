@@ -23,7 +23,7 @@ class MainView extends StatefulWidget {
 }
 
 class MainViewState extends State<MainView> {
-  final PageController _pageController = PageController();
+  late final PageController _pageController;
   final List<Widget> views = [
     const HomeView(),
     const ExercisesView(),
@@ -32,7 +32,13 @@ class MainViewState extends State<MainView> {
     const ProfileView(),
   ];
 
-  // Removed local currentIndex state as it's now managed by NavigationCubit.
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      initialPage: getIt<NavigationCubit>().state,
+    );
+  }
 
   @override
   void dispose() {

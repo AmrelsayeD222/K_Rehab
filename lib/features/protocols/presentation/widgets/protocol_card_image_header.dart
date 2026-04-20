@@ -1,14 +1,11 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
 
 class ProtocolCardImageHeader extends StatelessWidget {
-  const ProtocolCardImageHeader({
-    super.key,
-    required this.protocol,
-  });
+  const ProtocolCardImageHeader({super.key, required this.protocol});
 
   final DummyProtocol protocol;
 
@@ -19,24 +16,13 @@ class ProtocolCardImageHeader extends StatelessWidget {
       width: double.infinity,
       child: Stack(
         children: [
-          // Background Image
           Positioned.fill(
             child: Image.asset(protocol.imagePath, fit: BoxFit.cover),
           ),
-          // Gradient Overlay
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.1),
-                    AppColors.cardBackground.withValues(alpha: 0.8),
-                    AppColors.cardBackground,
-                  ],
-                  stops: const [0.0, 0.7, 1.0],
-                ),
+                color: Colors.black.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -44,24 +30,25 @@ class ProtocolCardImageHeader extends StatelessWidget {
           Positioned(
             top: 16,
             left: 16,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.4),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      width: 0.5,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/protocol/clinically_previewed.svg',
+                    width: 14,
+                    height: 14,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.primary,
+                      BlendMode.srcIn,
                     ),
                   ),
-                  child: Text(
+                  const SizedBox(width: 4),
+                  Text(
                     protocol.phase,
                     style: AppTextStyles.tag.copyWith(
                       color: AppColors.primary,
@@ -69,10 +56,11 @@ class ProtocolCardImageHeader extends StatelessWidget {
                       letterSpacing: 0.5,
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
+
           // Title Overlay
           Positioned(
             bottom: 0,
@@ -85,7 +73,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
                 fontWeight: FontWeight.w800,
                 letterSpacing: -0.5,
               ),
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),

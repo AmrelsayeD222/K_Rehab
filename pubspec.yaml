@@ -42,6 +42,8 @@ flutter:
     - assets/auth/
     - assets/bottomNaviBar/
     - assets/home/
+    - assets/protocol/
+    
 
   # fonts:
   #   - family: Schyler

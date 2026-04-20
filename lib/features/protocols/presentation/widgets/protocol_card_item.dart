@@ -23,13 +23,6 @@ class ProtocolCardItem extends StatelessWidget {
           color: AppColors.cardBackground,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -43,4 +36,3 @@ class ProtocolCardItem extends StatelessWidget {
     );
   }
 }
-

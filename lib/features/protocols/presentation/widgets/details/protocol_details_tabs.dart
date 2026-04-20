@@ -40,7 +40,9 @@ class ProtocolDetailsTabs extends StatelessWidget {
               child: Text(
                 tabs[index],
                 style: AppTextStyles.bodyText1.copyWith(
-                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),

@@ -5,7 +5,8 @@ import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_item.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocols_header.dart';
-import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 
 class ProtocolsView extends StatelessWidget {
   const ProtocolsView({super.key});
@@ -15,7 +16,7 @@ class ProtocolsView extends StatelessWidget {
       title: 'ACL Reconstruction',
       subtitle:
           'Post-operative rehabilitation protocol for ACL reconstruction.',
-      phase: 'PHASE 1',
+      phase: 'Clinically previewed',
       imagePath: 'assets/home/knee_icon.jpg',
       duration: '4 WEEKS',
       sessions: '12 SESSIONS',
@@ -23,7 +24,7 @@ class ProtocolsView extends StatelessWidget {
     DummyProtocol(
       title: 'Lumbar Disc Herniation',
       subtitle: 'Conservative management for lower back pain and sciatica.',
-      phase: 'ACUTE PHASE',
+      phase: 'Clinically previewed',
       imagePath: 'assets/home/back_icon.jpg',
       duration: '6 WEEKS',
       sessions: '18 SESSIONS',
@@ -31,7 +32,7 @@ class ProtocolsView extends StatelessWidget {
     DummyProtocol(
       title: 'Rotator Cuff Repair',
       subtitle: 'Gradual mobility and strengthening post shoulder surgery.',
-      phase: 'PHASE 2',
+      phase: 'Clinically previewed',
       imagePath: 'assets/home/shoulder_icon.jpg',
       duration: '8 WEEKS',
       sessions: '24 SESSIONS',
@@ -39,7 +40,7 @@ class ProtocolsView extends StatelessWidget {
     DummyProtocol(
       title: 'Ankle Sprain (Grade II)',
       subtitle: 'Sports recovery protocol for lateral ankle sprains.',
-      phase: 'RETURN TO PLAY',
+      phase: 'Clinically previewed',
       imagePath: 'assets/home/ankle_icon.jpg',
       duration: '3 WEEKS',
       sessions: '9 SESSIONS',
@@ -67,16 +68,9 @@ class ProtocolsView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final protocol = _protocols[index];
                     return ProtocolCardItem(
-                      protocol: protocol,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProtocolDetailsView(),
-                          ),
-                        );
-                      },
-                    )
+                          protocol: protocol,
+                          onTap: () => context.push(AppRouter.protocolDetails),
+                        )
                         .animate()
                         .fadeIn(
                           duration: 500.ms,

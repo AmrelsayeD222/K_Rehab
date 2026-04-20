@@ -5,10 +5,7 @@ import 'package:k_rehab/features/protocols/data/models/dummy_protocol.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_stat_item.dart';
 
 class ProtocolCardContent extends StatelessWidget {
-  const ProtocolCardContent({
-    super.key,
-    required this.protocol,
-  });
+  const ProtocolCardContent({super.key, required this.protocol});
 
   final DummyProtocol protocol;
 
@@ -40,16 +37,12 @@ class ProtocolCardContent extends StatelessWidget {
                 text: protocol.sessions,
               ),
               const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.arrow_forward_rounded,
+              Text(
+                'Free',
+                style: AppTextStyles.cardTitle.copyWith(
                   color: AppColors.primary,
-                  size: 20,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
               ),
             ],
