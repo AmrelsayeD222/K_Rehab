@@ -35,23 +35,29 @@ class _MedicalDisclaimerViewState extends State<MedicalDisclaimerView> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 24),
-              const DisclaimerLogoHeader(),
-              const SizedBox(height: 32),
-              const Text('Before You Begin', style: AppTextStyles.heading1),
-              const SizedBox(height: 24),
-              const DisclaimerImageSection(),
-              const SizedBox(height: 24),
-              const DisclaimerCard(),
-              const SizedBox(height: 20),
-              DisclaimerCheckbox(value: _agreed, onChanged: _onCheckboxChanged),
-              const Spacer(),
-              DisclaimerButton(enabled: _agreed, onPressed: _onContinue),
-              const SizedBox(height: 24),
-            ],
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 24),
+                const DisclaimerLogoHeader(),
+                const SizedBox(height: 32),
+                const Text('Before You Begin', style: AppTextStyles.heading1),
+                const SizedBox(height: 24),
+                const DisclaimerImageSection(),
+                const SizedBox(height: 24),
+                const DisclaimerCard(),
+                const SizedBox(height: 20),
+                DisclaimerCheckbox(
+                  value: _agreed,
+                  onChanged: _onCheckboxChanged,
+                ),
+                const SizedBox(height: 30),
+                DisclaimerButton(enabled: _agreed, onPressed: _onContinue),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),

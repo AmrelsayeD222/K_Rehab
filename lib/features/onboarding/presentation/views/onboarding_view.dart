@@ -57,9 +57,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                         child: PageView.builder(
                           controller: _pageController,
                           onPageChanged: (index) {
-                            context
-                                .read<OnboardingCubit>()
-                                .onPageChanged(index);
+                            context.read<OnboardingCubit>().onPageChanged(
+                              index,
+                            );
                           },
                           itemCount: kOnboardingPages.length,
                           itemBuilder: (_, index) => OnboardingPageContent(
@@ -67,6 +67,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 16),
                       SmoothPageIndicator(
                         controller: _pageController,
                         count: kOnboardingPages.length,
@@ -85,28 +86,30 @@ class _OnboardingViewState extends State<OnboardingView> {
                         onPressed: () =>
                             context.read<OnboardingCubit>().nextPage(),
                       ).animate().scale(
-                            duration: 300.ms,
-                            curve: Curves.easeOut,
-                          ),
+                        duration: 300.ms,
+                        curve: Curves.easeOut,
+                      ),
                       const SizedBox(height: 24),
                     ],
                   ),
                   if (currentIndex > 0)
                     Positioned(
-                      top: 8,
-                      left: 8,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new,
-                          color: AppColors.primary,
-                          size: 20,
-                        ),
-                        onPressed: () =>
-                            context.read<OnboardingCubit>().previousPage(),
-                      )
-                          .animate()
-                          .fadeIn(duration: 250.ms)
-                          .slideX(begin: -0.3, curve: Curves.easeOut),
+                      top: 10,
+                      left: 10,
+                      child:
+                          IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: AppColors.primary,
+                                  size: 20,
+                                ),
+                                onPressed: () => context
+                                    .read<OnboardingCubit>()
+                                    .previousPage(),
+                              )
+                              .animate()
+                              .fadeIn(duration: 250.ms)
+                              .slideX(begin: -0.3, curve: Curves.easeOut),
                     ),
                 ],
               );
