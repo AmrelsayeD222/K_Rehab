@@ -10,11 +10,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   int get currentIndex => _currentIndex;
 
   void onPageChanged(int index) {
+    if (isClosed) return;
     _currentIndex = index;
     emit(OnboardingPageUpdated(_currentIndex));
   }
 
   void nextPage() {
+    if (isClosed) return;
     if (_currentIndex < kOnboardingPages.length - 1) {
       _currentIndex++;
       emit(OnboardingPageUpdated(_currentIndex));
@@ -24,6 +26,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   void previousPage() {
+    if (isClosed) return;
     if (_currentIndex > 0) {
       _currentIndex--;
       emit(OnboardingPageUpdated(_currentIndex));

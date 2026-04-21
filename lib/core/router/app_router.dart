@@ -7,7 +7,7 @@ import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 
-import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:k_rehab/core/router/main_view.dart';

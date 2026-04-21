@@ -10,7 +10,7 @@ import 'package:k_rehab/features/auth/presentation/manager/register/register_cub
 import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
 import 'package:k_rehab/features/home/data/repo/featured_exercises_repo_impl.dart';
 import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
-import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 import 'package:k_rehab/features/profile/data/repo/repo_impl.dart';
 import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';

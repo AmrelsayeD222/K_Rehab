@@ -1,5 +1,5 @@
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/features/onboarding/domain/entities/onboarding_page_model.dart';
+import 'package:k_rehab/features/onboarding/data/models/onboarding_page_model.dart';
 
 const List<OnboardingPageModel> kOnboardingPages = [
   OnboardingPageModel(

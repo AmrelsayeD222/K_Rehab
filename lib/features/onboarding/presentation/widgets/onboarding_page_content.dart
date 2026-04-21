@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:k_rehab/features/onboarding/domain/entities/onboarding_page_model.dart';
+import 'package:k_rehab/features/onboarding/data/models/onboarding_page_model.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_feature_item.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_hero_image.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/recovery_text_section.dart';

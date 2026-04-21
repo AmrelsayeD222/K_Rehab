@@ -6,7 +6,7 @@ import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/onboarding/data/onboarding_pages_data.dart';
-import 'package:k_rehab/features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/onboarding_button.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/onboarding_page_content.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
