@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
@@ -15,24 +14,18 @@ class ProtocolsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<ProtocolCubit>()..fetchProtocols(),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 24.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ProtocolsHeader(),
-                const SizedBox(height: 32),
-                const Expanded(child: _ProtocolsList()),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ProtocolsHeader(),
+              const SizedBox(height: 32),
+              const Expanded(child: _ProtocolsList()),
+            ],
           ),
         ),
       ),

@@ -12,7 +12,10 @@ import 'package:k_rehab/features/home/presentation/views/home_view.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
-
+import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
+import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/featured_protocol_cubit.dart';
+import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
+import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dart';
 
 class MainView extends StatefulWidget {
@@ -55,6 +58,16 @@ class MainViewState extends State<MainView> {
           create: (_) => getIt<ProfileImageCubit>()..getProfileImage(),
         ),
         BlocProvider(create: (_) => getIt<UserInfoCubit>()..getUserInfo()),
+        BlocProvider(
+          create: (context) =>
+              getIt<FeaturedProtocolCubit>()..getFeaturedProtocols(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
+        ),
+        BlocProvider(create: (context) => getIt<ExerciseCubit>()..getExercises()),
+        BlocProvider(create: (context) => getIt<ProtocolCubit>()..fetchProtocols()),
       ],
       child: BlocConsumer<NavigationCubit, int>(
         listener: (context, index) {

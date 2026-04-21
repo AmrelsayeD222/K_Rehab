@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/core/di/service_locator.dart';
+
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
@@ -36,102 +36,99 @@ class ExercisesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ExerciseCubit>()..getExercises(),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('EXERCISES', style: AppTextStyles.mainHeading),
-                const SizedBox(height: 24),
-                // Filters
-                BlocBuilder<ExerciseCubit, ExerciseState>(
-                  buildWhen: (previous, current) =>
-                      current is ExerciseSuccess || current is ExerciseLoading,
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('EXERCISES', style: AppTextStyles.mainHeading),
+              const SizedBox(height: 24),
+              // Filters
+              BlocBuilder<ExerciseCubit, ExerciseState>(
+                buildWhen: (previous, current) =>
+                    current is ExerciseSuccess || current is ExerciseLoading,
+                builder: (context, state) {
+                  final selectedIndex = state is ExerciseSuccess
+                      ? state.filterIndex
+                      : 0;
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      children: List.generate(_filters.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: ExercisesCategoryChip(
+                            label: _filters[index],
+                            isSelected: selectedIndex == index,
+                            onTap: () {
+                              context.read<ExerciseCubit>().changeFilter(index);
+                            },
+                          ),
+                        );
+                      }),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              // List
+              Expanded(
+                child: BlocBuilder<ExerciseCubit, ExerciseState>(
                   builder: (context, state) {
-                    final selectedIndex = state is ExerciseSuccess
-                        ? state.filterIndex
-                        : 0;
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children: List.generate(_filters.length, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: ExercisesCategoryChip(
-                              label: _filters[index],
-                              isSelected: selectedIndex == index,
-                              onTap: () {
-                                context.read<ExerciseCubit>().changeFilter(
-                                  index,
-                                );
-                              },
-                            ),
-                          );
-                        }),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                // List
-                Expanded(
-                  child: BlocBuilder<ExerciseCubit, ExerciseState>(
-                    builder: (context, state) {
-                      if (state is ExerciseLoading) {
-                        return const KLoadingWidget();
-                      } else if (state is ExerciseSuccess) {
-                        final exercises = _filteredExercises(
-                          state.exercises,
-                          state.filterIndex,
-                        );
+                    if (state is ExerciseLoading) {
+                      return const KLoadingWidget();
+                    } else if (state is ExerciseSuccess) {
+                      final exercises = _filteredExercises(
+                        state.exercises,
+                        state.filterIndex,
+                      );
 
-                        if (exercises.isEmpty) {
-                          return KEmptyStateWidget(
-                            title: 'No Exercises Found',
-                            subtitle: 'Try selecting a different category or check back later.',
-                            icon: Icons.fitness_center_rounded,
-                          );
-                        }
-
-                        return ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: exercises.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 16),
-                          itemBuilder: (context, index) {
-                            final exercise = exercises[index];
-                            return ExerciseCard(
-                              imagePath: exercise.imageUrl,
-                              tag: exercise.tag,
-                              title: exercise.title,
-                              subtitle: exercise.subtitle,
-                              onTap: () {
-                                context.push(
-                                  AppRouter.exerciseDetails,
-                                  extra: exercise,
-                                );
-                              },
-                            );
-                          },
-                        );
-                      } else if (state is ExerciseFailure) {
-                        return KErrorWidget(
-                          error: state.error,
-                          onRetry: () => context.read<ExerciseCubit>().getExercises(),
+                      if (exercises.isEmpty) {
+                        return KEmptyStateWidget(
+                          title: 'No Exercises Found',
+                          subtitle:
+                              'Try selecting a different category or check back later.',
+                          icon: Icons.fitness_center_rounded,
                         );
                       }
-                      return const SizedBox();
-                    },
-                  ),
+
+                      return ListView.separated(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: exercises.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 16),
+                        itemBuilder: (context, index) {
+                          final exercise = exercises[index];
+                          return ExerciseCard(
+                            imagePath: exercise.imageUrl,
+                            tag: exercise.tag,
+                            title: exercise.title,
+                            subtitle: exercise.subtitle,
+                            onTap: () {
+                              context.push(
+                                AppRouter.exerciseDetails,
+                                extra: exercise,
+                              );
+                            },
+                          );
+                        },
+                      );
+                    } else if (state is ExerciseFailure) {
+                      return KErrorWidget(
+                        error: state.error,
+                        onRetry: () =>
+                            context.read<ExerciseCubit>().getExercises(),
+                      );
+                    }
+                    return const SizedBox();
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
