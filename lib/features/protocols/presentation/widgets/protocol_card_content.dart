@@ -25,17 +25,28 @@ class ProtocolCardContent extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ProtocolStatItem(
-                icon: Icons.calendar_today_rounded,
-                text: protocol.duration,
+              Expanded(
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: ProtocolStatItem(
+                        icon: Icons.calendar_today_rounded,
+                        text: protocol.duration,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Flexible(
+                      child: ProtocolStatItem(
+                        icon: Icons.fitness_center_rounded,
+                        text: protocol.sessions,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(width: 24),
-              ProtocolStatItem(
-                icon: Icons.fitness_center_rounded,
-                text: protocol.sessions,
-              ),
-              const Spacer(),
+              const SizedBox(width: 8),
               Text(
                 protocol.isFree ? 'Free' : 'Paid',
                 style: AppTextStyles.cardTitle.copyWith(

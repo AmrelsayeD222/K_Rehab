@@ -57,12 +57,17 @@ class AiCoachPromotion extends StatelessWidget {
                 GestureDetector(
                   onTap: () {},
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Start Chatting',
-                        style: AppTextStyles.cardTitle.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 14,
+                      Flexible(
+                        child: Text(
+                          'Start Chatting',
+                          style: AppTextStyles.cardTitle.copyWith(
+                            color: AppColors.primary,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       const SizedBox(width: 8),

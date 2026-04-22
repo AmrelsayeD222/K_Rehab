@@ -47,6 +47,8 @@ class CustomMenuCardWidget extends StatelessWidget {
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w500,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             trailing ??

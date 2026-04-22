@@ -28,13 +28,11 @@ class CategoriesList extends StatelessWidget {
             style: AppTextStyles.heading2,
           ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.13,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Row(
+            children: List.generate(categories.length, (index) {
               final category = categories[index];
               return Padding(
                     padding: const EdgeInsets.only(right: 20.0),
@@ -64,7 +62,7 @@ class CategoriesList extends StatelessWidget {
                     delay: Duration(milliseconds: 400 + (index * 80)),
                   )
                   .slideY(begin: 0.1, curve: Curves.easeOut);
-            },
+            }),
           ),
         ),
       ],

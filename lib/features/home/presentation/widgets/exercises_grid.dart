@@ -26,10 +26,13 @@ class ExercisesGrid extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Featured Exercises',
-              style: AppTextStyles.heading2,
-            ).animate().fadeIn(duration: 400.ms, delay: 700.ms),
+            Expanded(
+              child: Text(
+                'Featured Exercises',
+                style: AppTextStyles.heading2,
+                overflow: TextOverflow.ellipsis,
+              ).animate().fadeIn(duration: 400.ms, delay: 700.ms),
+            ),
             TextButton(
               onPressed: () {
                 context.read<NavigationCubit>().changeTab(1);
@@ -135,8 +138,8 @@ class ExercisesGrid extends StatelessWidget {
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                  vertical: 12,
+                                  horizontal: 8.0,
+                                  vertical: 8,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,6 +172,9 @@ class ExercisesGrid extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: Text(
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+
                                         exercises[index].difficulty
                                             .toUpperCase(),
                                         style: AppTextStyles.tag.copyWith(
