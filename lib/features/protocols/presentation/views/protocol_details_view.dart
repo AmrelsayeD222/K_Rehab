@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
@@ -42,27 +43,51 @@ class _ProtocolDetailsViewState extends State<ProtocolDetailsView> {
               ),
             )
           : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProtocolDetailsTabs(
-                      phases: details.phases,
-                      selectedIndex: _selectedTabIndex,
-                      onTabChanged: (index) {
-                        setState(() {
-                          _selectedTabIndex = index;
-                        });
-                      },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: widget.protocol.id,
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                            widget.protocol.imagePath,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(32),
+                          bottomRight: Radius.circular(32),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    ProtocolDetailsContent(
-                      selectedTabIndex: _selectedTabIndex,
-                      details: details,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProtocolDetailsTabs(
+                          phases: details.phases,
+                          selectedIndex: _selectedTabIndex,
+                          onTabChanged: (index) {
+                            setState(() {
+                              _selectedTabIndex = index;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        ProtocolDetailsContent(
+                          selectedTabIndex: _selectedTabIndex,
+                          details: details,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
     );

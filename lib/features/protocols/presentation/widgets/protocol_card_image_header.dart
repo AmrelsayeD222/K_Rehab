@@ -12,107 +12,113 @@ class ProtocolCardImageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CachedNetworkImage(
-              imageUrl: protocol.imagePath,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(
-                color: AppColors.cardBackground,
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: AppColors.primary,
+    return Hero(
+      tag: protocol.id,
+      child: Material(
+        type: MaterialType.transparency,
+        child: SizedBox(
+          height: 180,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CachedNetworkImage(
+                  imageUrl: protocol.imagePath,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    color: AppColors.cardBackground,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: AppColors.cardBackground,
+                    child: const Icon(
+                      Icons.broken_image_rounded,
+                      color: Colors.white24,
+                      size: 48,
+                    ),
                   ),
                 ),
               ),
-              errorWidget: (context, url, error) => Container(
-                color: AppColors.cardBackground,
-                child: const Icon(
-                  Icons.broken_image_rounded,
-                  color: Colors.white24,
-                  size: 48,
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.5),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.5),
+              Positioned(
+                top: 16,
+                left: 16,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.4),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      if (protocol.isClinicallyReviewed) ...[
+                        SvgPicture.asset(
+                          'assets/protocol/clinically_previewed.svg',
+                          width: 14,
+                          height: 14,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.primary,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Clinically Reviewed',
+                          style: AppTextStyles.tag.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ] else ...[
+                        const Icon(
+                          Icons.history_edu_rounded,
+                          color: Colors.white60,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Pending Review',
+                          style: AppTextStyles.tag.copyWith(
+                            color: Colors.white60,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            top: 16,
-            left: 16,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.4),
-                borderRadius: BorderRadius.circular(20),
+              Positioned(
+                bottom: 0,
+                left: 20,
+                right: 20,
+                child: Text(
+                  protocol.title,
+                  style: AppTextStyles.cardTitle.copyWith(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              child: Row(
-                children: [
-                  if (protocol.isClinicallyReviewed) ...[
-                    SvgPicture.asset(
-                      'assets/protocol/clinically_previewed.svg',
-                      width: 14,
-                      height: 14,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.primary,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Clinically Reviewed',
-                      style: AppTextStyles.tag.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ] else ...[
-                    const Icon(
-                      Icons.history_edu_rounded,
-                      color: Colors.white60,
-                      size: 14,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Pending Review',
-                      style: AppTextStyles.tag.copyWith(
-                        color: Colors.white60,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+            ],
           ),
-          Positioned(
-            bottom: 0,
-            left: 20,
-            right: 20,
-            child: Text(
-              protocol.title,
-              style: AppTextStyles.cardTitle.copyWith(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.5,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -20,26 +20,32 @@ class ProtocolCard extends StatelessWidget {
         AppRouter.protocolDetails,
         extra: model,
       ),
-      child: Container(
-            width: 300,
-            height: MediaQuery.of(context).size.height * 0.22,
-            margin: const EdgeInsets.only(right: 16, bottom: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(model.imagePath),
-                fit: BoxFit.cover,
+      child: Hero(
+        tag: model.id,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+                width: 300,
+                height: MediaQuery.of(context).size.height * 0.22,
+                margin: const EdgeInsets.only(right: 16, bottom: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(model.imagePath),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [_buildTitle(), _buildActionButton()],
+                  ),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_buildTitle(), _buildActionButton()],
-              ),
-            ),
-          )
+        ),
+      )
           .animate()
           .fadeIn(
             duration: 400.ms,

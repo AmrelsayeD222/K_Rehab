@@ -104,10 +104,7 @@ class ExercisesView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final exercise = exercises[index];
                           return ExerciseCard(
-                            imagePath: exercise.imageUrl,
-                            tag: exercise.tag,
-                            title: exercise.title,
-                            subtitle: exercise.subtitle,
+                            exercise: exercise,
                             onTap: () {
                               context.push(
                                 AppRouter.exerciseDetails,

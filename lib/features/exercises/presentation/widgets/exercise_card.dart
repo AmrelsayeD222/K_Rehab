@@ -2,20 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 
 class ExerciseCard extends StatelessWidget {
-  final String imagePath;
-  final String tag;
-  final String title;
-  final String subtitle;
+  final ExerciseModel exercise;
   final VoidCallback? onTap;
 
   const ExerciseCard({
     super.key,
-    required this.imagePath,
-    required this.tag,
-    required this.title,
-    required this.subtitle,
+    required this.exercise,
     this.onTap,
   });
 
@@ -33,21 +28,24 @@ class ExerciseCard extends StatelessWidget {
         child: Row(
           children: [
             // Image
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Opacity(
-                opacity: 0.8,
-                child: CachedNetworkImage(
-                  imageUrl: imagePath,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, error, stackTrace) =>
-                      const Icon(Icons.fitness_center, color: Colors.grey),
+            Hero(
+              tag: exercise.id,
+              child: Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Opacity(
+                  opacity: 0.8,
+                  child: CachedNetworkImage(
+                    imageUrl: exercise.imageUrl,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, error, stackTrace) =>
+                        const Icon(Icons.fitness_center, color: Colors.grey),
+                  ),
                 ),
               ),
             ),
@@ -68,7 +66,7 @@ class ExerciseCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      tag.toUpperCase(),
+                      exercise.tag.toUpperCase(),
                       style: AppTextStyles.tag.copyWith(
                         color: const Color(0xFFACC7FF),
                         letterSpacing: 0.5,
@@ -77,11 +75,11 @@ class ExerciseCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   // Title
-                  Text(title, style: AppTextStyles.cardTitle),
+                  Text(exercise.title, style: AppTextStyles.cardTitle),
                   const SizedBox(height: 4),
                   // Subtitle
                   Text(
-                    subtitle,
+                    exercise.subtitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.cardSubtitle.copyWith(

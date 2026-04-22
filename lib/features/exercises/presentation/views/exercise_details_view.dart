@@ -42,51 +42,54 @@ class ExerciseDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Hero Media
-            Container(
-              width: double.infinity,
-              height: 250,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+            Hero(
+              tag: exercise.id,
+              child: Container(
+                width: double.infinity,
+                height: 250,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
                 ),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: exercise.gifUrl.isNotEmpty
-                  ? CachedNetworkImage(
-                      imageUrl: exercise.gifUrl,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => CachedNetworkImage(
+                clipBehavior: Clip.antiAlias,
+                child: exercise.gifUrl.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl: exercise.gifUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => CachedNetworkImage(
+                          imageUrl: exercise.imageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const KLoadingWidget(),
+                        ),
+                        errorWidget: (context, url, error) => CachedNetworkImage(
+                          imageUrl: exercise.imageUrl,
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.fitness_center,
+                            color: Colors.grey,
+                            size: 64,
+                          ),
+                        ),
+                      )
+                    : exercise.imageUrl.isNotEmpty
+                    ? CachedNetworkImage(
                         imageUrl: exercise.imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => const KLoadingWidget(),
-                      ),
-                      errorWidget: (context, url, error) => CachedNetworkImage(
-                        imageUrl: exercise.imageUrl,
-                        fit: BoxFit.cover,
                         errorWidget: (context, url, error) => const Icon(
                           Icons.fitness_center,
                           color: Colors.grey,
                           size: 64,
                         ),
-                      ),
-                    )
-                  : exercise.imageUrl.isNotEmpty
-                  ? CachedNetworkImage(
-                      imageUrl: exercise.imageUrl,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const KLoadingWidget(),
-                      errorWidget: (context, url, error) => const Icon(
+                      )
+                    : const Icon(
                         Icons.fitness_center,
                         color: Colors.grey,
                         size: 64,
                       ),
-                    )
-                  : const Icon(
-                      Icons.fitness_center,
-                      color: Colors.grey,
-                      size: 64,
-                    ),
+              ),
             ),
 
             Padding(

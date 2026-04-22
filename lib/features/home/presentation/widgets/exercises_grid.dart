@@ -82,60 +82,63 @@ class ExercisesGrid extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(24),
-                                  ),
-                                  child: exercises[index].imageUrl.isNotEmpty
-                                      ? CachedNetworkImage(
-                                          imageUrl: exercises[index].imageUrl,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              Container(
-                                                color: AppColors.primary
-                                                    .withValues(alpha: .05),
-                                                child: const Center(
-                                                  child: SizedBox(
-                                                    width: 24,
-                                                    height: 24,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                          strokeWidth: 2,
-                                                        ),
+                                child: Hero(
+                                  tag: exercises[index].id,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(24),
+                                    ),
+                                    child: exercises[index].imageUrl.isNotEmpty
+                                        ? CachedNetworkImage(
+                                            imageUrl: exercises[index].imageUrl,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                                  color: AppColors.primary
+                                                      .withValues(alpha: .05),
+                                                  child: const Center(
+                                                    child: SizedBox(
+                                                      width: 24,
+                                                      height: 24,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                            strokeWidth: 2,
+                                                          ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                                color: AppColors.primary
-                                                    .withValues(alpha: .05),
-                                                child: const Center(
-                                                  child: Icon(
-                                                    Icons
-                                                        .image_not_supported_outlined,
-                                                    color: Colors.white24,
-                                                    size: 40,
+                                            errorWidget: (context, url, error) =>
+                                                Container(
+                                                  color: AppColors.primary
+                                                      .withValues(alpha: .05),
+                                                  child: const Center(
+                                                    child: Icon(
+                                                      Icons
+                                                          .image_not_supported_outlined,
+                                                      color: Colors.white24,
+                                                      size: 40,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                        )
-                                      : Container(
-                                          width: double.infinity,
-                                          color: AppColors.primary.withValues(
-                                            alpha: .05,
-                                          ),
-                                          child: const Center(
-                                            child: Icon(
-                                              Icons
-                                                  .image_not_supported_outlined,
-                                              color: Colors.white24,
-                                              size: 40,
+                                          )
+                                        : Container(
+                                            width: double.infinity,
+                                            color: AppColors.primary.withValues(
+                                              alpha: .05,
                                             ),
-                                          ),
-                                        ),
-                                ),
-                              ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons
+                                                    .image_not_supported_outlined,
+                                               color: Colors.white24,
+                                               size: 40,
+                                             ),
+                                           ),
+                                         ),
+                                 ),
+                               ),
+                             ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 8.0,
