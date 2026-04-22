@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:k_rehab/features/home/presentation/widgets/exercises_grid.dart';
 
 import 'package:k_rehab/features/home/presentation/widgets/home_appbar.dart';
 import 'package:k_rehab/features/home/presentation/widgets/featured_protocols_carousel.dart';
 import 'package:k_rehab/features/home/presentation/widgets/categories_list.dart';
 import 'package:k_rehab/features/home/presentation/widgets/ai_coach_promotion.dart';
-import 'package:k_rehab/features/home/presentation/widgets/exercises_grid.dart';
+
 
 import 'package:k_rehab/core/theme/app_colors.dart';
 

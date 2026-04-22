@@ -5,7 +5,7 @@ import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
+
 import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_card.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_filter_chip.dart';
@@ -15,24 +15,6 @@ import 'package:k_rehab/core/widgets/k_empty_state_widget.dart';
 
 class ExercisesView extends StatelessWidget {
   const ExercisesView({super.key});
-
-  static const List<String> _filters = [
-    'All',
-    'Knee',
-    'Back',
-    'Shoulder',
-    'Hip',
-    'Ankle',
-  ];
-
-  List<ExerciseModel> _filteredExercises(
-    List<ExerciseModel> allExercises,
-    int selectedFilterIndex,
-  ) {
-    if (selectedFilterIndex == 0) return allExercises;
-    final selectedFilter = _filters[selectedFilterIndex];
-    return allExercises.where((e) => e.tag.contains(selectedFilter)).toList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,22 +29,23 @@ class ExercisesView extends StatelessWidget {
               Text('EXERCISES', style: AppTextStyles.mainHeading),
               const SizedBox(height: 24),
               // Filters
-              BlocBuilder<ExerciseCubit, ExerciseState>(
-                buildWhen: (previous, current) =>
-                    current is ExerciseSuccess || current is ExerciseLoading,
-                builder: (context, state) {
-                  final selectedIndex = state is ExerciseSuccess
-                      ? state.filterIndex
-                      : 0;
+              BlocSelector<ExerciseCubit, ExerciseState, int>(
+                selector: (state) {
+                  if (state is ExerciseSuccess) {
+                    return state.filterIndex;
+                  }
+                  return 0;
+                },
+                builder: (context, selectedIndex) {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: Row(
-                      children: List.generate(_filters.length, (index) {
+                      children: List.generate(ExerciseCubit.filters.length, (index) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: ExercisesCategoryChip(
-                            label: _filters[index],
+                            label: ExerciseCubit.filters[index],
                             isSelected: selectedIndex == index,
                             onTap: () {
                               context.read<ExerciseCubit>().changeFilter(index);
@@ -82,10 +65,7 @@ class ExercisesView extends StatelessWidget {
                     if (state is ExerciseLoading) {
                       return const KLoadingWidget();
                     } else if (state is ExerciseSuccess) {
-                      final exercises = _filteredExercises(
-                        state.exercises,
-                        state.filterIndex,
-                      );
+                      final exercises = state.filteredExercises;
 
                       if (exercises.isEmpty) {
                         return KEmptyStateWidget(

@@ -9,6 +9,15 @@ class ExerciseCubit extends Cubit<ExerciseState> {
   final ExerciseRepo exerciseRepo;
   ExerciseCubit(this.exerciseRepo) : super(ExerciseInitial());
 
+  static const List<String> filters = [
+    'All',
+    'Knee',
+    'Back',
+    'Shoulder',
+    'Hip',
+    'Ankle',
+  ];
+
   List<ExerciseModel> _allExercises = [];
 
   Future<void> getExercises() async {
@@ -20,14 +29,29 @@ class ExerciseCubit extends Cubit<ExerciseState> {
       (failure) => emit(ExerciseFailure(error: failure.errorMessage)),
       (exercises) {
         _allExercises = exercises;
-        emit(ExerciseSuccess(exercises: exercises, filterIndex: 0));
+        emit(ExerciseSuccess(
+          exercises: exercises,
+          filteredExercises: exercises,
+          filterIndex: 0,
+        ));
       },
     );
   }
 
   void changeFilter(int index) {
     if (state is ExerciseSuccess) {
-      emit(ExerciseSuccess(exercises: _allExercises, filterIndex: index));
+      final filtered = _applyFilter(_allExercises, index);
+      emit(ExerciseSuccess(
+        exercises: _allExercises,
+        filteredExercises: filtered,
+        filterIndex: index,
+      ));
     }
+  }
+
+  List<ExerciseModel> _applyFilter(List<ExerciseModel> exercises, int index) {
+    if (index == 0) return exercises;
+    final filter = filters[index];
+    return exercises.where((e) => e.tag.contains(filter)).toList();
   }
 }

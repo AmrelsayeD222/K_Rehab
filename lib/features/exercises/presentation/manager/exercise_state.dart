@@ -13,11 +13,16 @@ class ExerciseLoading extends ExerciseState {}
 
 class ExerciseSuccess extends ExerciseState {
   final List<ExerciseModel> exercises;
+  final List<ExerciseModel> filteredExercises;
   final int filterIndex;
-  const ExerciseSuccess({required this.exercises, this.filterIndex = 0});
+  const ExerciseSuccess({
+    required this.exercises,
+    required this.filteredExercises,
+    this.filterIndex = 0,
+  });
 
   @override
-  List<Object> get props => [exercises, filterIndex];
+  List<Object> get props => [exercises, filteredExercises, filterIndex];
 }
 
 class ExerciseFailure extends ExerciseState {
