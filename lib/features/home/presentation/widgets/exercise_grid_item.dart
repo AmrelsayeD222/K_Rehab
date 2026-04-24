@@ -17,7 +17,10 @@ class ExerciseGridItem extends StatelessWidget {
       onTap: () {
         context.push(
           AppRouter.exerciseDetails,
-          extra: exercise,
+          extra: {
+            'exercise': exercise,
+            'heroTag': 'home_exercise_${exercise.id}',
+          },
         );
       },
       child: Container(
@@ -33,7 +36,7 @@ class ExerciseGridItem extends StatelessWidget {
           children: [
             Expanded(
               child: Hero(
-                tag: exercise.id,
+                tag: 'home_exercise_${exercise.id}',
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(24),

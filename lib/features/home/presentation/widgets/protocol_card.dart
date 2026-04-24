@@ -18,10 +18,10 @@ class ProtocolCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push(
         AppRouter.protocolDetails,
-        extra: model,
+        extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
       ),
       child: Hero(
-        tag: model.id,
+        tag: 'home_protocol_${model.id}',
         child: Material(
           type: MaterialType.transparency,
           child: Container(

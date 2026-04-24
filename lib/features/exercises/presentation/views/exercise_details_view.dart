@@ -10,7 +10,13 @@ import 'package:k_rehab/features/exercises/presentation/widgets/details/exercise
 
 class ExerciseDetailsView extends StatelessWidget {
   final ExerciseModel exercise;
-  const ExerciseDetailsView({super.key, required this.exercise});
+  final String heroTag;
+
+  const ExerciseDetailsView({
+    super.key,
+    required this.exercise,
+    required this.heroTag,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,10 @@ class ExerciseDetailsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ExerciseDetailsHeader(exercise: exercise),
+            ExerciseDetailsHeader(
+              exercise: exercise,
+              heroTag: heroTag,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 24.0,

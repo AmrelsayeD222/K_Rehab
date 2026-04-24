@@ -83,15 +83,25 @@ abstract class AppRouter {
       GoRoute(
         path: exerciseDetails,
         builder: (context, state) {
-          final exercise = state.extra as ExerciseModel;
-          return ExerciseDetailsView(exercise: exercise);
+          final args = state.extra as Map<String, dynamic>;
+          final exercise = args['exercise'] as ExerciseModel;
+          final heroTag = args['heroTag'] as String;
+          return ExerciseDetailsView(
+            exercise: exercise,
+            heroTag: heroTag,
+          );
         },
       ),
       GoRoute(
         path: protocolDetails,
         builder: (context, state) {
-          final protocol = state.extra as ProtocolModel;
-          return ProtocolDetailsView(protocol: protocol);
+          final args = state.extra as Map<String, dynamic>;
+          final protocol = args['protocol'] as ProtocolModel;
+          final heroTag = args['heroTag'] as String;
+          return ProtocolDetailsView(
+            protocol: protocol,
+            heroTag: heroTag,
+          );
         },
       ),
     ],

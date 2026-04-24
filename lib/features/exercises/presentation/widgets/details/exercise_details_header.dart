@@ -5,13 +5,18 @@ import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 
 class ExerciseDetailsHeader extends StatelessWidget {
   final ExerciseModel exercise;
+  final String heroTag;
 
-  const ExerciseDetailsHeader({super.key, required this.exercise});
+  const ExerciseDetailsHeader({
+    super.key,
+    required this.exercise,
+    required this.heroTag,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: exercise.id,
+      tag: heroTag,
       child: Container(
         width: double.infinity,
         height: 250,

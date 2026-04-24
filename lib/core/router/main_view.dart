@@ -12,42 +12,18 @@ import 'package:k_rehab/features/home/presentation/views/home_view.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
-import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
-import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/featured_protocol_cubit.dart';
-import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.dart';
-import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dart';
 
-class MainView extends StatefulWidget {
+class MainView extends StatelessWidget {
   const MainView({super.key});
 
-  @override
-  MainViewState createState() => MainViewState();
-}
-
-class MainViewState extends State<MainView> {
-  late final PageController _pageController;
-  final List<Widget> views = [
-    const HomeView(),
-    const ExercisesView(),
-    const ProtocolsView(),
-    const AiCoachView(),
-    const ProfileView(),
+  static const List<Widget> _views = [
+    HomeView(),
+    ExercisesView(),
+    ProtocolsView(),
+    AiCoachView(),
+    ProfileView(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(
-      initialPage: getIt<NavigationCubit>().state,
-    );
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,129 +34,118 @@ class MainViewState extends State<MainView> {
           create: (_) => getIt<ProfileImageCubit>()..getProfileImage(),
         ),
         BlocProvider(create: (_) => getIt<UserInfoCubit>()..getUserInfo()),
-        BlocProvider(
-          create: (context) =>
-              getIt<FeaturedProtocolCubit>()..getFeaturedProtocols(),
-        ),
-        BlocProvider(
-          create: (context) =>
-              getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
-        ),
-        BlocProvider(create: (context) => getIt<ExerciseCubit>()..getExercises()),
-        BlocProvider(create: (context) => getIt<ProtocolCubit>()..fetchProtocols()),
       ],
-      child: BlocConsumer<NavigationCubit, int>(
-        listener: (context, index) {
-          // Sync PageController when index changes from outside (e.g., via Cubit)
-          if (_pageController.hasClients &&
-              _pageController.page?.round() != index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeOutCubic,
-            );
-          }
-        },
+      child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
           return DoubleBackExitWrapper(
             currentIndex: currentIndex,
             onBackToHome: () => context.read<NavigationCubit>().changeTab(0),
             child: Scaffold(
-              body: PageView(
-                controller: _pageController,
-                onPageChanged: (index) {
-                  context.read<NavigationCubit>().changeTab(index);
-                },
-                children: views,
+              body: IndexedStack(
+                index: currentIndex,
+                children: _views,
               ),
-              bottomNavigationBar: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, -5),
-                    ),
-                  ],
-                ),
-                child: BottomNavigationBar(
-                  currentIndex: currentIndex,
-                  onTap: (index) {
-                    context.read<NavigationCubit>().changeTab(index);
-                  },
-                  type: BottomNavigationBarType.fixed,
-                  backgroundColor: AppColors.cardBackground,
-                  selectedItemColor: AppColors.primary,
-                  unselectedItemColor: AppColors.textSecondary.withValues(
-                    alpha: 0.5,
-                  ),
-                  selectedLabelStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12,
-                  ),
-                  items: [
-                    const BottomNavigationBarItem(
-                      icon: Icon(Icons.home_rounded),
-                      activeIcon: Icon(Icons.home_rounded),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        AssetPaths.exercisesIcon,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          currentIndex == 1
-                              ? AppColors.primary
-                              : AppColors.textSecondary.withValues(alpha: 0.5),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Exercises',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        AssetPaths.protocolsIcon,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          currentIndex == 2
-                              ? AppColors.primary
-                              : AppColors.textSecondary.withValues(alpha: 0.5),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Protocols',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        AssetPaths.aiCoachIcon,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          currentIndex == 3
-                              ? AppColors.primary
-                              : AppColors.textSecondary.withValues(alpha: 0.5),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'AI Coach',
-                    ),
-                    const BottomNavigationBarItem(
-                      icon: Icon(Icons.person_rounded),
-                      activeIcon: Icon(Icons.person_rounded),
-                      label: 'Profile',
-                    ),
-                  ],
-                ),
+              bottomNavigationBar: _MainBottomNavBar(
+                currentIndex: currentIndex,
               ),
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _MainBottomNavBar extends StatelessWidget {
+  final int currentIndex;
+
+  const _MainBottomNavBar({required this.currentIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
+      child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          context.read<NavigationCubit>().changeTab(index);
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.cardBackground,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.textSecondary.withValues(
+          alpha: 0.5,
+        ),
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            activeIcon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetPaths.exercisesIcon,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                currentIndex == 1
+                    ? AppColors.primary
+                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Exercises',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetPaths.protocolsIcon,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                currentIndex == 2
+                    ? AppColors.primary
+                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Protocols',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetPaths.aiCoachIcon,
+              width: 24,
+              height: 24,
+              colorFilter: ColorFilter.mode(
+                currentIndex == 3
+                    ? AppColors.primary
+                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'AI Coach',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.person_rounded),
+            activeIcon: Icon(Icons.person_rounded),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

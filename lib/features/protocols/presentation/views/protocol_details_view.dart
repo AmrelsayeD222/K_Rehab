@@ -10,7 +10,13 @@ import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol
 class ProtocolDetailsView extends StatefulWidget {
   final ProtocolModel protocol;
 
-  const ProtocolDetailsView({super.key, required this.protocol});
+  final String heroTag;
+
+  const ProtocolDetailsView({
+    super.key,
+    required this.protocol,
+    required this.heroTag,
+  });
 
   @override
   State<ProtocolDetailsView> createState() => _ProtocolDetailsViewState();
@@ -47,7 +53,7 @@ class _ProtocolDetailsViewState extends State<ProtocolDetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Hero(
-                    tag: widget.protocol.id,
+                    tag: widget.heroTag,
                     child: Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.25,
