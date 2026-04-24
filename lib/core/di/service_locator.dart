@@ -1,7 +1,5 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
-import 'package:k_rehab/core/services/secure_storage_service.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
@@ -35,10 +33,7 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
   getIt.registerFactory<NavigationCubit>(() => NavigationCubit());
 
-  const secureStorage = FlutterSecureStorage();
-  getIt.registerLazySingleton<SecureStorageService>(
-    () => SecureStorageService(secureStorage),
-  );
+
 
   getIt.registerLazySingleton<AuthRepo>(
     () => AuthRepoImpl(client: getIt<SupabaseClient>()),

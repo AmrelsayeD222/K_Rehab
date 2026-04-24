@@ -21,7 +21,7 @@ dependencies:
   flutter_animate: ^4.5.2
   supabase_flutter: ^2.12.0
   get_it: ^9.2.1
-  flutter_secure_storage: ^10.0.0
+
   image_picker: ^1.2.1
   shared_preferences: ^2.5.5
   cached_network_image: ^3.4.1

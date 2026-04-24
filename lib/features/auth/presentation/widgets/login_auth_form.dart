@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/core/utils/app_validators.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_button.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_text_field.dart';
@@ -21,16 +22,14 @@ class LoginFormSection extends StatelessWidget {
           controller: loginCubit.emailController,
           hintText: 'Email Address',
           keyboardType: TextInputType.emailAddress,
-          validator: (value) =>
-              (value == null || !value.contains('@')) ? 'Invalid email' : null,
+          validator: AppValidators.validateEmail,
         ),
         const SizedBox(height: 16),
         AuthTextField(
           controller: loginCubit.passwordController,
           hintText: 'Password',
           isPassword: true,
-          validator: (value) =>
-              (value == null || value.length < 6) ? 'Password too short' : null,
+          validator: AppValidators.validatePassword,
         ),
         const SizedBox(height: 12),
         Align(

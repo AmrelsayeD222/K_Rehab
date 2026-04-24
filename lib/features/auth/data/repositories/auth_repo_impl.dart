@@ -4,7 +4,7 @@ import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
-import 'package:k_rehab/features/auth/data/models/sign_up_params.dart';
+import 'package:k_rehab/features/auth/data/models/auth_params.dart';
 import 'package:k_rehab/features/auth/data/models/user_model.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -28,9 +28,9 @@ class AuthRepoImpl extends AuthRepo {
           name: user.userMetadata?['name'] ?? params.name,
           createdAt: DateTime.parse(user.createdAt),
         );
-        
+
         await client.from('profiles').insert(userModel.toJson());
-        
+
         return Right(userModel);
       }
       return Left(
@@ -38,20 +38,6 @@ class AuthRepoImpl extends AuthRepo {
       );
     } on AuthException catch (e) {
       return Left(SupabaseAuthFailure.fromAuthException(e));
-    } on SocketException catch (e) {
-      return Left(NetworkFailure.fromSocketException(e));
-    } catch (e) {
-      return Left(SupabaseDatabaseFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> createProfile(UserModel userModel) async {
-    try {
-      await client.from('profiles').insert(userModel.toJson());
-      return const Right(null);
-    } on PostgrestException catch (e) {
-      return Left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } on SocketException catch (e) {
       return Left(NetworkFailure.fromSocketException(e));
     } catch (e) {

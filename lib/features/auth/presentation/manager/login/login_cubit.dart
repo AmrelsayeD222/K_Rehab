@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/features/auth/data/models/sign_up_params.dart';
+import 'package:k_rehab/features/auth/data/models/auth_params.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 
 part 'login_state.dart';
@@ -26,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
     if (isClosed) return;
     result.fold(
       (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),
-      (_) => emit(const LoginSuccess(token: '')),
+      (_) => emit(LoginSuccess()),
     );
   }
 
