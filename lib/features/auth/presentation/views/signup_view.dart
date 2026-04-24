@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
-import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 
 import 'package:k_rehab/features/auth/presentation/widgets/auth_header.dart';
@@ -19,17 +18,13 @@ class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerCubit = context.read<RegisterCubit>();
-    return BlocListener<CreateUserCubit, CreateUserState>(
+    return BlocListener<RegisterCubit, RegisterState>(
       listener: (context, state) {
-        if (state is CreateUserSuccess) {
+        if (state is RegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Account Created Successfully!')),
           );
           context.go(AppRouter.mainView);
-        } else if (state is CreateUserFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         }
       },
       child: Scaffold(

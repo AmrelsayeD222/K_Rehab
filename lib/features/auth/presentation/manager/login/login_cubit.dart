@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/core/services/secure_storage_service.dart';
 import 'package:k_rehab/features/auth/data/models/sign_up_params.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 
@@ -9,12 +8,11 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final AuthRepo authRepo;
-  final SecureStorageService secureStorageService;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  LoginCubit({required this.authRepo, required this.secureStorageService})
+  LoginCubit({required this.authRepo})
     : super(LoginInitial());
 
   Future<void> login() async {
@@ -28,11 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
     if (isClosed) return;
     result.fold(
       (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),
-      (token) async {
-        await secureStorageService.saveToken(token);
-        if (isClosed) return;
-        emit(LoginSuccess(token: token));
-      },
+      (_) => emit(const LoginSuccess(token: '')),
     );
   }
 

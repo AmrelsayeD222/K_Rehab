@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_button.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_text_field.dart';
@@ -47,8 +46,6 @@ class SignupFormSection extends StatelessWidget {
                 context,
               ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
               log(state.errorMessage);
-            } else if (state is RegisterSuccess) {
-              context.read<CreateUserCubit>().createUser(state.userModel);
             }
           },
           builder: (context, state) {

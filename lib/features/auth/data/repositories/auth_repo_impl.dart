@@ -28,6 +28,9 @@ class AuthRepoImpl extends AuthRepo {
           name: user.userMetadata?['name'] ?? params.name,
           createdAt: DateTime.parse(user.createdAt),
         );
+        
+        await client.from('profiles').insert(userModel.toJson());
+        
         return Right(userModel);
       }
       return Left(
@@ -57,7 +60,7 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failure, String>> login(AuthParams params) async {
+  Future<Either<Failure, void>> login(AuthParams params) async {
     try {
       final response = await client.auth.signInWithPassword(
         email: params.email,
@@ -65,7 +68,7 @@ class AuthRepoImpl extends AuthRepo {
       );
       final session = response.session;
       if (session != null) {
-        return Right(session.accessToken);
+        return const Right(null);
       }
       return Left(
         SupabaseAuthFailure('User login failed: No session returned'),

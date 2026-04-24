@@ -4,7 +4,6 @@ import 'package:k_rehab/core/manager/navigation_cubit.dart';
 import 'package:k_rehab/core/services/secure_storage_service.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo_impl.dart';
-import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:k_rehab/features/home/data/repo/featured_exercises_repo.dart';
@@ -34,7 +33,7 @@ final getIt = GetIt.instance;
 
 void setupServiceLocator() {
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-  getIt.registerLazySingleton<NavigationCubit>(() => NavigationCubit());
+  getIt.registerFactory<NavigationCubit>(() => NavigationCubit());
 
   const secureStorage = FlutterSecureStorage();
   getIt.registerLazySingleton<SecureStorageService>(
@@ -55,22 +54,12 @@ void setupServiceLocator() {
     () => RegisterCubit(authRepo: getIt<AuthRepo>()),
   );
 
-  getIt.registerFactory<CreateUserCubit>(
-    () => CreateUserCubit(authRepo: getIt<AuthRepo>()),
-  );
-
   getIt.registerFactory<LoginCubit>(
-    () => LoginCubit(
-      authRepo: getIt<AuthRepo>(),
-      secureStorageService: getIt<SecureStorageService>(),
-    ),
+    () => LoginCubit(authRepo: getIt<AuthRepo>()),
   );
 
   getIt.registerFactory<LogOutCubit>(
-    () => LogOutCubit(
-      profileRepo: getIt<ProfileRepo>(),
-      secureStorageService: getIt<SecureStorageService>(),
-    ),
+    () => LogOutCubit(profileRepo: getIt<ProfileRepo>()),
   );
 
   getIt.registerFactory<ProfileImageCubit>(

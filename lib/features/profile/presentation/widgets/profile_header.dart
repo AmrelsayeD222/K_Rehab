@@ -71,25 +71,41 @@ class ProfileHeader extends StatelessWidget {
                 return const KLoadingWidget();
               }
 
-              ImageProvider? imageProvider;
               if (state is ProfileImageLoaded) {
                 if (state.localImage != null) {
-                  imageProvider = FileImage(state.localImage!);
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: FileImage(state.localImage!),
+                  );
                 } else if (state.imageUrl != null) {
-                  imageProvider = CachedNetworkImageProvider(state.imageUrl!);
-                }
-              }
-
-              return CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: imageProvider,
-                child: imageProvider == null
-                    ? const Icon(
+                  return CachedNetworkImage(
+                    imageUrl: state.imageUrl!,
+                    imageBuilder: (context, imageProvider) => CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: imageProvider,
+                    ),
+                    placeholder: (context, url) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Icon(
                         Icons.person_rounded,
                         size: 52,
                         color: AppColors.textSecondary,
-                      )
-                    : null,
+                      ),
+                    ),
+                  );
+                }
+              }
+
+              return const CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 52,
+                  color: AppColors.textSecondary,
+                ),
               );
             },
           ),

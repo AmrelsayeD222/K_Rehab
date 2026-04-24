@@ -4,7 +4,6 @@ import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dar
 import 'package:k_rehab/features/auth/presentation/views/login_view.dart';
 import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/features/auth/presentation/manager/create_user/create_user_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 
 import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
@@ -16,7 +15,7 @@ import 'package:k_rehab/features/exercises/presentation/views/exercise_details_v
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
 
-import 'package:k_rehab/core/services/cache_helper.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppRouter {
   static const String disclaimer = '/';
@@ -28,11 +27,11 @@ abstract class AppRouter {
   static const String protocolDetails = '/protocolDetails';
 
   static GoRouter router() => GoRouter(
-    initialLocation: CacheHelper.getData(key: 'isLoggedIn') == true
+    initialLocation: Supabase.instance.client.auth.currentSession != null
         ? mainView
         : disclaimer,
     redirect: (context, state) {
-      final isLoggedIn = CacheHelper.getData(key: 'isLoggedIn') ?? false;
+      final isLoggedIn = Supabase.instance.client.auth.currentSession != null;
 
       final isAuthRoute =
           state.matchedLocation == login ||
@@ -71,11 +70,8 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: signup,
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => getIt<RegisterCubit>()),
-            BlocProvider(create: (_) => getIt<CreateUserCubit>()),
-          ],
+        builder: (context, state) => BlocProvider(
+          create: (_) => getIt<RegisterCubit>(),
           child: const SignupView(),
         ),
       ),
@@ -86,10 +82,7 @@ abstract class AppRouter {
           final args = state.extra as Map<String, dynamic>;
           final exercise = args['exercise'] as ExerciseModel;
           final heroTag = args['heroTag'] as String;
-          return ExerciseDetailsView(
-            exercise: exercise,
-            heroTag: heroTag,
-          );
+          return ExerciseDetailsView(exercise: exercise, heroTag: heroTag);
         },
       ),
       GoRoute(
@@ -98,10 +91,7 @@ abstract class AppRouter {
           final args = state.extra as Map<String, dynamic>;
           final protocol = args['protocol'] as ProtocolModel;
           final heroTag = args['heroTag'] as String;
-          return ProtocolDetailsView(
-            protocol: protocol,
-            heroTag: heroTag,
-          );
+          return ProtocolDetailsView(protocol: protocol, heroTag: heroTag);
         },
       ),
     ],
