@@ -32,23 +32,24 @@ class ExercisesView extends StatelessWidget {
                 Text('EXERCISES', style: AppTextStyles.mainHeading),
                 const SizedBox(height: 24),
                 // Filters
-                BlocSelector<ExerciseCubit, ExerciseState, int>(
+                BlocSelector<ExerciseCubit, ExerciseState, (int, List<String>)>(
                   selector: (state) {
                     if (state is ExerciseSuccess) {
-                      return state.filterIndex;
+                      return (state.filterIndex, state.filters);
                     }
-                    return 0;
+                    return (0, ['All']);
                   },
-                  builder: (context, selectedIndex) {
+                  builder: (context, selection) {
+                    final (selectedIndex, currentFilters) = selection;
                     return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Row(
-                        children: List.generate(ExerciseCubit.filters.length, (index) {
+                        children: List.generate(currentFilters.length, (index) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 8.0),
                             child: ExercisesCategoryChip(
-                              label: ExerciseCubit.filters[index],
+                              label: currentFilters[index],
                               isSelected: selectedIndex == index,
                               onTap: () {
                                 context.read<ExerciseCubit>().changeFilter(index);

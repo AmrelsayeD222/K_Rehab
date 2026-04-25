@@ -9,16 +9,8 @@ class ExerciseCubit extends Cubit<ExerciseState> {
   final ExerciseRepo exerciseRepo;
   ExerciseCubit(this.exerciseRepo) : super(ExerciseInitial());
 
-  static const List<String> filters = [
-    'All',
-    'Knee',
-    'Back',
-    'Shoulder',
-    'Hip',
-    'Ankle',
-  ];
-
   List<ExerciseModel> _allExercises = [];
+  List<String> _filters = ['All'];
 
   Future<void> getExercises() async {
     if (isClosed) return;
@@ -29,9 +21,11 @@ class ExerciseCubit extends Cubit<ExerciseState> {
       (failure) => emit(ExerciseFailure(error: failure.errorMessage)),
       (exercises) {
         _allExercises = exercises;
+        _filters = ['All', ..._extractUniqueTags(exercises)];
         emit(ExerciseSuccess(
           exercises: exercises,
           filteredExercises: exercises,
+          filters: _filters,
           filterIndex: 0,
         ));
       },
@@ -44,14 +38,21 @@ class ExerciseCubit extends Cubit<ExerciseState> {
       emit(ExerciseSuccess(
         exercises: _allExercises,
         filteredExercises: filtered,
+        filters: _filters,
         filterIndex: index,
       ));
     }
   }
 
+  List<String> _extractUniqueTags(List<ExerciseModel> exercises) {
+    final tags = exercises.map((e) => e.tag).where((t) => t.isNotEmpty).toSet().toList();
+    tags.sort();
+    return tags.cast<String>();
+  }
+
   List<ExerciseModel> _applyFilter(List<ExerciseModel> exercises, int index) {
     if (index == 0) return exercises;
-    final filter = filters[index];
+    final filter = _filters[index];
     return exercises.where((e) => e.tag.contains(filter)).toList();
   }
 }
