@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
-import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
 
 class ProfileLogoutButton extends StatelessWidget {
   const ProfileLogoutButton({super.key});
@@ -15,7 +16,7 @@ class ProfileLogoutButton extends StatelessWidget {
       width: double.infinity,
       child: TextButton(
         onPressed: () {
-          context.read<LogOutCubit>().logout();
+          context.read<ProfileCubit>().logout();
         },
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -28,9 +29,9 @@ class ProfileLogoutButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<LogOutCubit, LogOutState>(
+            BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
-                if (state is LogOutLoading) {
+                if (state is ProfileLogoutLoading) {
                   return const KLoadingWidget(
                     isSmall: true,
                     color: _logoutColor,

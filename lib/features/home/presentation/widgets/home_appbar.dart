@@ -4,9 +4,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
-import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_state.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
+import 'package:k_rehab/features/auth/data/models/user_model.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -17,50 +17,78 @@ class HomeAppBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          BlocBuilder<UserInfoCubit, UserInfoState>(
-            builder: (context, state) {
-              final name = state is UserInfoLoaded ? state.userName : '';
-              return Text(
-                name.isNotEmpty ? 'Hey, $name 👋' : 'Welcome 👋',
-                style: AppTextStyles.heading2.copyWith(fontSize: 22),
-              ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1);
-            },
-          ),
-          BlocBuilder<ProfileImageCubit, ProfileImageState>(
-            builder: (context, state) {
-              ImageProvider? imageProvider;
-              if (state is ProfileImageLoaded) {
-                if (state.localImage != null) {
-                  imageProvider = FileImage(state.localImage!);
-                } else if (state.imageUrl != null) {
-                  imageProvider = CachedNetworkImageProvider(state.imageUrl!);
-                }
-              }
-
-              return CircleAvatar(
-                radius: 24,
-                backgroundColor: AppColors.primary.withValues(alpha: .3),
-                child: CircleAvatar(
-                  radius: 22,
-                  backgroundColor: AppColors.cardBackground,
-                  backgroundImage: imageProvider,
-                  child: imageProvider == null
-                      ? const Icon(
-                              Icons.person_2_rounded,
-                              color: AppColors.textPrimary,
-                              size: 26,
-                            )
-                            .animate()
-                            .fadeIn(duration: 400.ms)
-                            .scale(begin: const Offset(0.8, 0.8))
-                      : null,
-                ),
-              );
-            },
-          ),
+        children: const [
+          _HomeWelcomeText(),
+          _HomeProfileAvatar(),
         ],
       ),
+    );
+  }
+}
+
+class _HomeWelcomeText extends StatelessWidget {
+  const _HomeWelcomeText();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        String name = '';
+        if (state is ProfileSuccess) {
+          name = state.user.name;
+        } else if (state is ProfileImageUploading) {
+          name = state.user.name;
+        }
+
+        return Text(
+          name.isNotEmpty ? 'Hey, $name 👋' : 'Welcome 👋',
+          style: AppTextStyles.heading2.copyWith(fontSize: 22),
+        ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1);
+      },
+    );
+  }
+}
+
+class _HomeProfileAvatar extends StatelessWidget {
+  const _HomeProfileAvatar();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        UserModel? user;
+        if (state is ProfileSuccess) {
+          user = state.user;
+        } else if (state is ProfileImageUploading) {
+          user = state.user;
+        }
+
+        final imageUrl = user?.profileImageUrl;
+        ImageProvider? imageProvider;
+        if (imageUrl != null && imageUrl.isNotEmpty) {
+          imageProvider = CachedNetworkImageProvider(imageUrl);
+        }
+
+        return CircleAvatar(
+          radius: 24,
+          backgroundColor: AppColors.primary.withValues(alpha: .3),
+          child: CircleAvatar(
+            radius: 22,
+            backgroundColor: AppColors.cardBackground,
+            backgroundImage: imageProvider,
+            child: imageProvider == null
+                ? const Icon(
+                        Icons.person_2_rounded,
+                        color: AppColors.textPrimary,
+                        size: 26,
+                      )
+                      .animate()
+                      .fadeIn(duration: 400.ms)
+                      .scale(begin: const Offset(0.8, 0.8))
+                : null,
+          ),
+        );
+      },
     );
   }
 }

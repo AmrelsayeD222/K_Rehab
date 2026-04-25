@@ -9,8 +9,7 @@ import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/aiCoach/ai_coach_view.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercises_view.dart';
 import 'package:k_rehab/features/home/presentation/views/home_view.dart';
-import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/views/profile_view.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dart';
 
@@ -31,9 +30,8 @@ class MainView extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<NavigationCubit>()),
         BlocProvider(
-          create: (_) => getIt<ProfileImageCubit>()..getProfileImage(),
+          create: (_) => getIt<ProfileCubit>()..getUserData(),
         ),
-        BlocProvider(create: (_) => getIt<UserInfoCubit>()..getUserInfo()),
       ],
       child: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {

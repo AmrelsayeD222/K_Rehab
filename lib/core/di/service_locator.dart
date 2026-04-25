@@ -11,9 +11,7 @@ import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/feat
 import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 import 'package:k_rehab/features/profile/data/repo/repo_impl.dart';
-import 'package:k_rehab/features/profile/presentation/manager/logout/log_out_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/manager/profile_image/profile_image_cubit.dart';
-import 'package:k_rehab/features/profile/presentation/manager/user_info/user_info_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -53,16 +51,8 @@ void setupServiceLocator() {
     () => LoginCubit(authRepo: getIt<AuthRepo>()),
   );
 
-  getIt.registerFactory<LogOutCubit>(
-    () => LogOutCubit(profileRepo: getIt<ProfileRepo>()),
-  );
-
-  getIt.registerFactory<ProfileImageCubit>(
-    () => ProfileImageCubit(profileRepo: getIt<ProfileRepo>()),
-  );
-
-  getIt.registerFactory<UserInfoCubit>(
-    () => UserInfoCubit(profileRepo: getIt<ProfileRepo>()),
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(profileRepo: getIt<ProfileRepo>()),
   );
 
   // Home Feature Registrations

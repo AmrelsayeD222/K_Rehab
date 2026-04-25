@@ -5,6 +5,7 @@ import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
+import 'package:k_rehab/features/auth/data/models/user_model.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -34,7 +35,7 @@ class ProfileRepoImpl implements ProfileRepo {
       await client.storage
           .from('profiles')
           .upload(
-            'profiles${client.auth.currentUser!.id}',
+            'profiles/${client.auth.currentUser!.id}',
             image,
             fileOptions: const FileOptions(upsert: true),
           );
@@ -49,25 +50,24 @@ class ProfileRepoImpl implements ProfileRepo {
   }
 
   @override
-  Future<Either<Failure, String>> getProfileImage() async {
-    try {
-      final baseUrl = client.storage
-          .from('profiles')
-          .getPublicUrl('profiles${client.auth.currentUser!.id}');
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      return right('$baseUrl?v=$timestamp');
-    } catch (e) {
-      return left(SupabaseDatabaseFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> getUserName() async {
+  Future<Either<Failure, UserModel>> getUserData() async {
     try {
       final user = client.auth.currentUser;
       if (user != null) {
-        final name = user.userMetadata?['name'] as String?;
-        return right(name ?? 'Unknown User');
+        // Get fresh avatar URL with timestamp to bypass cache
+        final baseUrl = client.storage
+            .from('profiles')
+            .getPublicUrl('profiles/${user.id}');
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+        return right(
+          UserModel(
+            id: user.id,
+            name: user.userMetadata?['name'] ?? 'Unknown User',
+            email: user.email ?? 'No Email',
+            profileImageUrl: '$baseUrl?v=$timestamp',
+          ),
+        );
       }
       return left(SupabaseAuthFailure('User not logged in'));
     } catch (e) {

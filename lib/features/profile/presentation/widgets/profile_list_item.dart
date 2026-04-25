@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
-import 'package:k_rehab/features/profile/presentation/models/profile_menu_item_data.dart';
-
 class ProfileListItem extends StatelessWidget {
   const ProfileListItem({
     super.key,
@@ -13,16 +11,6 @@ class ProfileListItem extends StatelessWidget {
     this.onTap,
     this.iconColor,
   });
-
-  /// A helper constructor to create an item from our data model
-  ProfileListItem.fromData({
-    super.key,
-    required ProfileMenuItemData data,
-    this.onTap,
-  }) : icon = data.icon,
-       title = data.title,
-       trailing = data.trailing,
-       iconColor = data.iconColor;
 
   final IconData icon;
   final String title;
@@ -39,7 +27,7 @@ class ProfileListItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
           children: [
-            _buildIconBox(),
+            _ProfileIconBox(icon: icon, iconColor: iconColor),
             const SizedBox(width: 14),
             Expanded(
               child: Text(
@@ -61,8 +49,16 @@ class ProfileListItem extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildIconBox() {
+class _ProfileIconBox extends StatelessWidget {
+  final IconData icon;
+  final Color? iconColor;
+
+  const _ProfileIconBox({required this.icon, this.iconColor});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 36,
       height: 36,
