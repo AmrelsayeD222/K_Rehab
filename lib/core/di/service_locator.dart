@@ -25,6 +25,7 @@ import 'package:k_rehab/features/exercises/presentation/manager/exercise_cubit.d
 import 'package:k_rehab/features/protocols/data/repo/protocol_repo.dart';
 import 'package:k_rehab/features/protocols/data/repo/protocol_repo_impl.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
+import 'package:k_rehab/features/protocols/presentation/manager/protocol_details_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -93,5 +94,9 @@ void setupServiceLocator() {
 
   getIt.registerFactory<ProtocolCubit>(
     () => ProtocolCubit(getIt<ProtocolRepo>()),
+  );
+
+  getIt.registerFactory<ProtocolDetailsCubit>(
+    () => ProtocolDetailsCubit(getIt<ProtocolRepo>()),
   );
 }
