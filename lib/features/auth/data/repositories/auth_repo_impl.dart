@@ -67,4 +67,7 @@ class AuthRepoImpl extends AuthRepo {
       return Left(SupabaseAuthFailure(e.toString()));
     }
   }
+
+  @override
+  bool get isLoggedIn => client.auth.currentSession != null;
 }

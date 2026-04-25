@@ -16,6 +16,23 @@ import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dar
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<NavigationCubit>()),
+        BlocProvider(
+          create: (_) => getIt<ProfileCubit>()..getUserData(),
+        ),
+      ],
+      child: const _MainViewContent(),
+    );
+  }
+}
+
+class _MainViewContent extends StatelessWidget {
+  const _MainViewContent();
+
   static const List<Widget> _views = [
     HomeView(),
     ExercisesView(),
@@ -26,30 +43,22 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => getIt<NavigationCubit>()),
-        BlocProvider(
-          create: (_) => getIt<ProfileCubit>()..getUserData(),
-        ),
-      ],
-      child: BlocBuilder<NavigationCubit, int>(
-        builder: (context, currentIndex) {
-          return DoubleBackExitWrapper(
-            currentIndex: currentIndex,
-            onBackToHome: () => context.read<NavigationCubit>().changeTab(0),
-            child: Scaffold(
-              body: IndexedStack(
-                index: currentIndex,
-                children: _views,
-              ),
-              bottomNavigationBar: _MainBottomNavBar(
-                currentIndex: currentIndex,
-              ),
+    return BlocBuilder<NavigationCubit, int>(
+      builder: (context, currentIndex) {
+        return DoubleBackExitWrapper(
+          currentIndex: currentIndex,
+          onBackToHome: () => context.read<NavigationCubit>().changeTab(0),
+          child: Scaffold(
+            body: IndexedStack(
+              index: currentIndex,
+              children: _views,
             ),
-          );
-        },
-      ),
+            bottomNavigationBar: _MainBottomNavBar(
+              currentIndex: currentIndex,
+            ),
+          ),
+        );
+      },
     );
   }
 }
