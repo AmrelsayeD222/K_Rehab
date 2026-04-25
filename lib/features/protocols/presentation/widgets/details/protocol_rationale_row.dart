@@ -16,6 +16,7 @@ class ProtocolRationaleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (text.isEmpty) return const SizedBox.shrink();
 
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -26,7 +27,7 @@ class ProtocolRationaleRow extends StatelessWidget {
             child: Text(
               title,
               style: AppTextStyles.bodyText2.copyWith(
-                color: AppColors.primary,
+                color: colors.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -37,7 +38,7 @@ class ProtocolRationaleRow extends StatelessWidget {
             child: Text(
               text,
               style: AppTextStyles.bodyText2.copyWith(
-                color: AppColors.textSecondary,
+                color: colors.textSecondary,
               ),
             ),
           ),

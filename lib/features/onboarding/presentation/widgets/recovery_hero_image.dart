@@ -23,7 +23,7 @@ class RecoveryHeroImage extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: context.appColors.primary.withValues(alpha: 0.1),
                   blurRadius: 40,
                   spreadRadius: 20,
                 ),

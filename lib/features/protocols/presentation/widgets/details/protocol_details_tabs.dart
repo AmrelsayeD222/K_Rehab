@@ -17,6 +17,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final tabs = ['All', ...phases.map((p) => p.phaseName)];
 
     return SingleChildScrollView(
@@ -32,7 +33,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: isSelected ? AppColors.primary : Colors.transparent,
+                    color: isSelected ? colors.primary : Colors.transparent,
                     width: 2,
                   ),
                 ),
@@ -40,9 +41,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
               child: Text(
                 tabs[index],
                 style: AppTextStyles.bodyText1.copyWith(
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
+                  color: isSelected ? colors.primary : colors.textSecondary,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),

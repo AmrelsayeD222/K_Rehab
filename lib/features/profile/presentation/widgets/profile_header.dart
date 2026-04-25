@@ -16,6 +16,7 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         UserModel? user;
@@ -31,7 +32,7 @@ class ProfileHeader extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               user?.name ?? '...',
-              style: AppTextStyles.heading1,
+              style: AppTextStyles.heading1.copyWith(color: colors.textPrimary),
             ),
             const SizedBox(height: 8),
             const _PremiumBadge(),
@@ -60,6 +61,7 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -68,12 +70,8 @@ class _ProfileAvatar extends StatelessWidget {
           height: 96,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: AppColors.primary, width: 2.5),
-            gradient: const LinearGradient(
-              colors: [Color(0xFF1C212B), Color(0xFF2A3142)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            border: Border.all(color: colors.primary, width: 2.5),
+            color: colors.cardBackground,
           ),
           child: state is ProfileImageUploading
               ? const KLoadingWidget()
@@ -87,9 +85,9 @@ class _ProfileAvatar extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: AppColors.primary,
+                color: colors.primary,
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.background, width: 2),
+                border: Border.all(color: colors.background, width: 2),
               ),
               child: const Icon(
                 Icons.camera_alt_rounded,
@@ -123,23 +121,23 @@ class _AvatarContent extends StatelessWidget {
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
-        errorWidget: (context, url, error) => const CircleAvatar(
+        errorWidget: (context, url, error) => CircleAvatar(
           backgroundColor: Colors.transparent,
           child: Icon(
             Icons.person_rounded,
             size: 52,
-            color: AppColors.textSecondary,
+            color: context.appColors.textSecondary,
           ),
         ),
       );
     }
 
-    return const CircleAvatar(
+    return CircleAvatar(
       backgroundColor: Colors.transparent,
       child: Icon(
         Icons.person_rounded,
         size: 52,
-        color: AppColors.textSecondary,
+        color: context.appColors.textSecondary,
       ),
     );
   }

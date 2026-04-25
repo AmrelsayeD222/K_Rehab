@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/technique_step_item.dart';
@@ -15,9 +16,11 @@ class ExerciseTechniqueGuide extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Technique Guide',
-          style: AppTextStyles.sectionHeader,
+          style: AppTextStyles.sectionHeader.copyWith(
+            color: context.appColors.textPrimary,
+          ),
         ),
         const SizedBox(height: 16),
         ...exercise.steps.map((step) {

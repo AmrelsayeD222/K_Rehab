@@ -20,6 +20,8 @@ class CustomMenuCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
+    final color = iconColor ?? colors.primary;
     return InkWell(
       onTap: onTap ?? () {},
       borderRadius: BorderRadius.circular(16),
@@ -30,21 +32,17 @@ class CustomMenuCardWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: (iconColor ?? AppColors.primary).withValues(alpha: 0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(
-                icon,
-                color: iconColor ?? AppColors.primary,
-                size: 20,
-              ),
+              child: Icon(icon, color: color, size: 20),
             ),
             const SizedBox(width: 14),
             Expanded(
               child: Text(
                 title,
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: AppColors.textPrimary,
+                  color: colors.textPrimary,
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,
@@ -52,9 +50,9 @@ class CustomMenuCardWidget extends StatelessWidget {
               ),
             ),
             trailing ??
-                const Icon(
+                Icon(
                   Icons.chevron_right_rounded,
-                  color: AppColors.textSecondary,
+                  color: colors.textSecondary,
                   size: 20,
                 ),
           ],

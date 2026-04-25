@@ -44,12 +44,12 @@ class _DoubleBackExitWrapperState extends State<DoubleBackExitWrapper> {
           _lastBackPressTime = now;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text(
+              content: Text(
                 'اضغط مرة أخرى للخروج',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: context.appColors.textLight),
               ),
-              backgroundColor: AppColors.cardBackground,
+              backgroundColor: context.appColors.cardBackground,
               duration: widget.duration,
               behavior: SnackBarBehavior.floating,
               margin: const EdgeInsets.only(

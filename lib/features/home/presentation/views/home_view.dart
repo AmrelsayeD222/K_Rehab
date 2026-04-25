@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/features/home/presentation/manager/featuredExercises/featured_exercises_cubit.dart';
 import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/featured_protocol_cubit.dart';
 import 'package:k_rehab/features/home/presentation/widgets/exercises_grid.dart';
@@ -22,11 +22,11 @@ class HomeView extends StatelessWidget {
           create: (_) => getIt<FeaturedProtocolCubit>()..getFeaturedProtocols(),
         ),
         BlocProvider(
-          create: (_) => getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
+          create: (_) =>
+              getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
         ),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.background,
         body: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

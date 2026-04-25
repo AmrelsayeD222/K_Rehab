@@ -10,10 +10,11 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: colors.cardBackground,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -22,7 +23,7 @@ class StatCard extends StatelessWidget {
           Text(
             label.toUpperCase(),
             style: AppTextStyles.tag.copyWith(
-              color: const Color(0xFFBACAC5),
+              color: colors.textSecondary,
               letterSpacing: 1.0,
             ),
           ),
@@ -30,7 +31,7 @@ class StatCard extends StatelessWidget {
           Text(
             value,
             style: AppTextStyles.mainHeading.copyWith(
-              color: AppColors.primary,
+              color: colors.primary,
               fontSize: 30,
             ),
           ),

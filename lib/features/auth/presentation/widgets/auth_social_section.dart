@@ -19,20 +19,20 @@ class AuthSocialSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       children: [
         Row(
           children: [
-            const Expanded(
-              child: Divider(color: AppColors.textMuted),
-            ),
+            Expanded(child: Divider(color: colors.textMuted)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text('OR', style: AppTextStyles.caption),
+              child: Text(
+                'OR',
+                style: AppTextStyles.caption.copyWith(color: colors.textMuted),
+              ),
             ),
-            const Expanded(
-              child: Divider(color: AppColors.textMuted),
-            ),
+            Expanded(child: Divider(color: colors.textMuted)),
           ],
         ),
         const SizedBox(height: 32),
@@ -46,7 +46,7 @@ class AuthSocialSection extends StatelessWidget {
             const SizedBox(width: 24),
             SocialAuthButton(
               iconPath: appleIconPath,
-              color: AppColors.textPrimary,
+              color: colors.textPrimary,
               onPressed: onApplePressed,
             ),
           ],
@@ -55,4 +55,3 @@ class AuthSocialSection extends StatelessWidget {
     );
   }
 }
-

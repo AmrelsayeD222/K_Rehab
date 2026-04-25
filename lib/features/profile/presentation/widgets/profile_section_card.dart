@@ -10,12 +10,10 @@ class ProfileSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: context.appColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Column(
-        children: children,
-      ),
+      child: Column(children: children),
     );
   }
 }

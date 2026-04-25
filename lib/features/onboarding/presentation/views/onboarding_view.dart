@@ -45,7 +45,6 @@ class _OnboardingViewState extends State<OnboardingView> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
         body: SafeArea(
           child: BlocBuilder<OnboardingCubit, OnboardingState>(
             builder: (context, state) {
@@ -75,8 +74,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                         controller: _pageController,
                         count: kOnboardingPages.length,
                         effect: ExpandingDotsEffect(
-                          activeDotColor: AppColors.primary,
-                          dotColor: AppColors.primary.withValues(alpha: 0.25),
+                          activeDotColor: context.appColors.primary,
+                          dotColor: context.appColors.primary.withValues(alpha: 0.25),
                           dotHeight: 8,
                           dotWidth: 8,
                           expansionFactor: 3,
@@ -101,9 +100,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                       left: 10,
                       child:
                           IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.arrow_back_ios_new,
-                                  color: AppColors.primary,
+                                  color: context.appColors.primary,
                                   size: 20,
                                 ),
                                 onPressed: () => context

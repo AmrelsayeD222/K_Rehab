@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
+import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/core/widgets/k_error_widget.dart';
@@ -14,6 +15,7 @@ class ExercisesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,7 +25,9 @@ class ExercisesGrid extends StatelessWidget {
             Expanded(
               child: Text(
                 'Featured Exercises',
-                style: AppTextStyles.heading2,
+                style: AppTextStyles.heading2.copyWith(
+                  color: colors.textPrimary,
+                ),
                 overflow: TextOverflow.ellipsis,
               ).animate().fadeIn(duration: 400.ms, delay: 700.ms),
             ),
@@ -31,7 +35,10 @@ class ExercisesGrid extends StatelessWidget {
               onPressed: () {
                 context.read<NavigationCubit>().changeTab(1);
               },
-              child: const Text('See All', style: AppTextStyles.cardTitle),
+              child: Text(
+                'See All',
+                style: AppTextStyles.cardTitle.copyWith(color: colors.primary),
+              ),
             ).animate().fadeIn(duration: 400.ms, delay: 750.ms),
           ],
         ),

@@ -16,6 +16,7 @@ class DisclaimerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SizedBox(
@@ -27,16 +28,19 @@ class DisclaimerButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
-            backgroundColor: AppColors.primary,
-            disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
+            backgroundColor: colors.primary,
+            disabledBackgroundColor: colors.primary.withValues(alpha: 0.4),
             elevation: 0,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Next", style: AppTextStyles.buttonText),
+              Text("Next", style: AppTextStyles.buttonText.copyWith(color: colors.textDark)),
               const SizedBox(width: 8),
-              SvgPicture.asset(AssetPaths.arrowIcon),
+              SvgPicture.asset(
+                AssetPaths.arrowIcon,
+                colorFilter: ColorFilter.mode(colors.textDark, BlendMode.srcIn),
+              ),
             ],
           ),
         ),

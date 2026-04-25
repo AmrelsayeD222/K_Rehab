@@ -11,6 +11,7 @@ class ProtocolCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -21,6 +22,7 @@ class ProtocolCardContent extends StatelessWidget {
             style: AppTextStyles.cardSubtitle.copyWith(
               height: 1.5,
               fontSize: 14,
+              color: colors.textSecondary,
             ),
           ),
           const SizedBox(height: 20),
@@ -50,7 +52,7 @@ class ProtocolCardContent extends StatelessWidget {
               Text(
                 protocol.isFree ? 'Free' : 'Paid',
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: protocol.isFree ? AppColors.primary : Colors.amber,
+                  color: protocol.isFree ? colors.primary : Colors.amber,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),

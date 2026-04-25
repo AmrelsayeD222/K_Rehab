@@ -14,6 +14,7 @@ class DisclaimerCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Row(
       children: [
         SizedBox(
@@ -22,19 +23,19 @@ class DisclaimerCheckbox extends StatelessWidget {
           child: Checkbox(
             value: value,
             onChanged: onChanged,
-            activeColor: AppColors.primary,
-            checkColor: AppColors.textDark,
-            side: const BorderSide(color: AppColors.primary, width: 2),
+            activeColor: colors.primary,
+            checkColor: colors.textDark,
+            side: BorderSide(color: colors.primary, width: 2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
             ),
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(
+        Expanded(
           child: Text(
             'I understand and agree to these terms.',
-            style: AppTextStyles.bodyText1,
+            style: AppTextStyles.bodyText1.copyWith(color: colors.textPrimary),
           ),
         ),
       ],

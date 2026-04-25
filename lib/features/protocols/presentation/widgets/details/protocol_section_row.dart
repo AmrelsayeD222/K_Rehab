@@ -17,6 +17,7 @@ class ProtocolSectionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
 
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -27,7 +28,7 @@ class ProtocolSectionRow extends StatelessWidget {
             child: Text(
               title,
               style: AppTextStyles.bodyText2.copyWith(
-                color: AppColors.primary,
+                color: colors.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),

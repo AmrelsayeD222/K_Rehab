@@ -15,11 +15,13 @@ class DisclaimerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: colors.cardBackground,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,8 +32,8 @@ class DisclaimerCard extends StatelessWidget {
               AssetPaths.exclamationIcon,
               width: 16,
               height: 16,
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
+              colorFilter: ColorFilter.mode(
+                colors.primary,
                 BlendMode.srcIn,
               ),
             ),
@@ -40,7 +42,7 @@ class DisclaimerCard extends StatelessWidget {
           Expanded(
             child: Text(
               _disclaimerText,
-              style: AppTextStyles.bodyText2,
+              style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
             ),
           ),
         ],

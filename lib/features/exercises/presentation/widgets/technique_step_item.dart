@@ -14,6 +14,7 @@ class TechniqueStepItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,16 +22,14 @@ class TechniqueStepItem extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(
-              alpha: 0.2,
-            ), // rgba(70,241,211,0.2)
+            color: colors.primary.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
           ),
           alignment: Alignment.center,
           child: Text(
             stepNumber.toString(),
             style: AppTextStyles.cardTitle.copyWith(
-              color: AppColors.primary,
+              color: colors.primary,
               fontSize: 14,
             ),
           ),
@@ -40,7 +39,7 @@ class TechniqueStepItem extends StatelessWidget {
           child: Text(
             description,
             style: AppTextStyles.bodyText2.copyWith(
-              color: const Color(0xFFBACAC5),
+              color: colors.textSecondary,
             ),
           ),
         ),

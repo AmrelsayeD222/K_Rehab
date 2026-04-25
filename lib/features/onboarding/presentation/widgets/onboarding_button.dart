@@ -26,7 +26,7 @@ class OnboardingButton extends StatelessWidget {
           height: 56,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            color: AppColors.primary,
+            color: context.appColors.primary,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

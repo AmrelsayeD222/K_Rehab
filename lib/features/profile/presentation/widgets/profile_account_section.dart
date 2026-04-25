@@ -55,7 +55,7 @@ class _PremiumActiveLabel extends StatelessWidget {
     return Text(
       'Active',
       style: AppTextStyles.tag.copyWith(
-        color: AppColors.primary,
+        color: context.appColors.primary,
         fontSize: 13,
         fontWeight: FontWeight.w600,
       ),

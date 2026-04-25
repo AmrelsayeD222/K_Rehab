@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_item.dart';
@@ -18,10 +18,12 @@ class ProtocolsView extends StatelessWidget {
     return BlocProvider(
       create: (_) => getIt<ProtocolCubit>()..fetchProtocols(),
       child: Scaffold(
-        backgroundColor: AppColors.background,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 24.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
@@ -37,7 +39,6 @@ class ProtocolsView extends StatelessWidget {
   }
 }
 
-
 class _ProtocolsList extends StatelessWidget {
   const _ProtocolsList();
 
@@ -46,9 +47,7 @@ class _ProtocolsList extends StatelessWidget {
     return BlocBuilder<ProtocolCubit, ProtocolState>(
       builder: (context, state) {
         if (state is ProtocolLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else if (state is ProtocolSuccess) {
           return _buildList(context, state);
         } else if (state is ProtocolFailure) {
@@ -61,11 +60,8 @@ class _ProtocolsList extends StatelessWidget {
 
   Widget _buildList(BuildContext context, ProtocolSuccess state) {
     if (state.protocols.isEmpty) {
-      return const Center(
-        child: Text(
-          'No protocols available.',
-          style: TextStyle(color: Colors.white54, fontSize: 16),
-        ),
+      return Center(
+        child: Text('No protocols available.', style: TextStyle(fontSize: 16)),
       );
     }
 
@@ -79,10 +75,7 @@ class _ProtocolsList extends StatelessWidget {
               protocol: protocol,
               onTap: () => context.push(
                 AppRouter.protocolDetails,
-                extra: {
-                  'protocol': protocol,
-                  'heroTag': protocol.id,
-                },
+                extra: {'protocol': protocol, 'heroTag': protocol.id},
               ),
             )
             .animate()
@@ -102,7 +95,7 @@ class _ProtocolsList extends StatelessWidget {
         children: [
           Text(
             error,
-            style: const TextStyle(color: Colors.white70, fontSize: 14),
+            style: const TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),

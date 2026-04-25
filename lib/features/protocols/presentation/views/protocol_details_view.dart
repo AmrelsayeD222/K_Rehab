@@ -28,15 +28,20 @@ class ProtocolDetailsView extends StatelessWidget {
       create: (context) => getIt<ProtocolDetailsCubit>()
         ..fetchProtocolDetails(protocol.id),
       child: Scaffold(
-        backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(
+              Icons.arrow_back,
+              color: context.appColors.textPrimary,
+            ),
             onPressed: () => context.pop(),
           ),
-          title: Text(protocol.title, style: AppTextStyles.heading2),
+          title: Text(
+            protocol.title,
+            style: AppTextStyles.heading2.copyWith(color: context.appColors.textPrimary),
+          ),
           centerTitle: true,
         ),
         body: BlocBuilder<ProtocolDetailsCubit, ProtocolDetailsState>(

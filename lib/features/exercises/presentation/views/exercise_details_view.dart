@@ -20,42 +20,39 @@ class ExerciseDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Scaffold(
-      backgroundColor: AppColors.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: AppColors.background.withValues(alpha: 0.7),
+        backgroundColor: colors.background.withValues(alpha: 0.7),
         elevation: 0,
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: CircleAvatar(
-            backgroundColor: const Color(0xFF33353A).withValues(alpha: 0.5),
+            backgroundColor: colors.cardBackground.withValues(alpha: 0.8),
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back_ios_new,
                 size: 16,
-                color: Colors.white,
+                color: colors.textPrimary,
               ),
               onPressed: () => Navigator.pop(context),
             ),
           ),
         ),
-        title: const Text('EXERCISE', style: AppTextStyles.navLabel),
+        title: Text(
+          'EXERCISE',
+          style: AppTextStyles.navLabel.copyWith(color: colors.textPrimary),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ExerciseDetailsHeader(
-              exercise: exercise,
-              heroTag: heroTag,
-            ),
+            ExerciseDetailsHeader(exercise: exercise, heroTag: heroTag),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 16.0,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

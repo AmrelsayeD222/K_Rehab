@@ -16,25 +16,25 @@ class ExerciseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
-          border: Border.all(color: const Color(0xFF3B4A46)),
+          color: colors.cardBackground,
+          border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Row(
           children: [
-            // Image
             Hero(
               tag: exercise.id,
               child: Container(
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: AppColors.background,
+                  color: colors.background,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 clipBehavior: Clip.antiAlias,
@@ -50,48 +50,43 @@ class ExerciseCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            // Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Tag
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: const Color(0x33005DC3),
+                      color: colors.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
                       exercise.tag.toUpperCase(),
                       style: AppTextStyles.tag.copyWith(
-                        color: const Color(0xFFACC7FF),
+                        color: colors.primary,
                         letterSpacing: 0.5,
                       ),
                     ),
                   ),
                   const SizedBox(height: 4),
-                  // Title
-                  Text(exercise.title, style: AppTextStyles.cardTitle),
+                  Text(
+                    exercise.title,
+                    style: AppTextStyles.cardTitle.copyWith(color: colors.textLight),
+                  ),
                   const SizedBox(height: 4),
-                  // Subtitle
                   Text(
                     exercise.subtitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.cardSubtitle.copyWith(
                       fontSize: 12,
-                      color: const Color(0xFFBACAC5),
+                      color: colors.textSecondary,
                     ),
                   ),
                 ],
               ),
             ),
-            // Arrow/Icon
-            const Icon(Icons.chevron_right, color: Colors.white54),
+            Icon(Icons.chevron_right, color: colors.textSecondary),
           ],
         ),
       ),

@@ -15,20 +15,25 @@ class KEmptyStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: AppColors.textSecondary.withValues(alpha: 0.5), size: 64),
+            Icon(icon, color: colors.textSecondary.withValues(alpha: 0.5), size: 64),
             const SizedBox(height: 16),
-            Text(title, style: AppTextStyles.heading2, textAlign: TextAlign.center),
+            Text(
+              title,
+              style: AppTextStyles.heading2.copyWith(color: colors.textPrimary),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 8),
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: AppTextStyles.caption,
+              style: AppTextStyles.caption.copyWith(color: colors.textSecondary),
             ),
           ],
         ),

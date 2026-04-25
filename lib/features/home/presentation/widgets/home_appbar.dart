@@ -31,6 +31,7 @@ class _HomeWelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         String name = '';
@@ -42,7 +43,10 @@ class _HomeWelcomeText extends StatelessWidget {
 
         return Text(
           name.isNotEmpty ? 'Hey, $name 👋' : 'Welcome 👋',
-          style: AppTextStyles.heading2.copyWith(fontSize: 22),
+          style: AppTextStyles.heading2.copyWith(
+            fontSize: 22,
+            color: colors.textPrimary,
+          ),
         ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1);
       },
     );
@@ -54,6 +58,7 @@ class _HomeProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         UserModel? user;
@@ -71,20 +76,20 @@ class _HomeProfileAvatar extends StatelessWidget {
 
         return CircleAvatar(
           radius: 24,
-          backgroundColor: AppColors.primary.withValues(alpha: .3),
+          backgroundColor: colors.primary.withValues(alpha: .3),
           child: CircleAvatar(
             radius: 22,
-            backgroundColor: AppColors.cardBackground,
+            backgroundColor: colors.cardBackground,
             backgroundImage: imageProvider,
             child: imageProvider == null
-                ? const Icon(
-                        Icons.person_2_rounded,
-                        color: AppColors.textPrimary,
-                        size: 26,
-                      )
-                      .animate()
-                      .fadeIn(duration: 400.ms)
-                      .scale(begin: const Offset(0.8, 0.8))
+                ? Icon(
+                    Icons.person_2_rounded,
+                    color: colors.textPrimary,
+                    size: 26,
+                  )
+                    .animate()
+                    .fadeIn(duration: 400.ms)
+                    .scale(begin: const Offset(0.8, 0.8))
                 : null,
           ),
         );

@@ -16,13 +16,14 @@ class ProtocolCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+          color: colors.cardBackground,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+          border: Border.all(color: colors.textMuted.withValues(alpha: 0.1)),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(

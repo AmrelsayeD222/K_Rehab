@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class RecoveryTextSection extends StatelessWidget {
@@ -13,18 +14,19 @@ class RecoveryTextSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       children: [
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.onboardingTitle,
+          style: AppTextStyles.onboardingTitle.copyWith(color: colors.textPrimary),
         ),
         const SizedBox(height: 10),
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          style: AppTextStyles.onboardingSubtitle,
+          style: AppTextStyles.onboardingSubtitle.copyWith(color: colors.textSecondary),
         ),
       ],
     );

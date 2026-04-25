@@ -18,6 +18,7 @@ class CategoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,7 +26,7 @@ class CategoriesList extends StatelessWidget {
           padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
           child: Text(
             'Categories',
-            style: AppTextStyles.heading2,
+            style: AppTextStyles.heading2.copyWith(color: colors.textPrimary),
           ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
         ),
         SingleChildScrollView(
@@ -48,7 +49,7 @@ class CategoriesList extends StatelessWidget {
                         Text(
                           category['name'] as String,
                           style: AppTextStyles.caption.copyWith(
-                            color: AppColors.textLight,
+                            color: colors.textLight,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),

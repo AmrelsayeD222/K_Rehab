@@ -15,6 +15,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (interventions.isEmpty) return const SizedBox.shrink();
 
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -25,7 +26,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
             child: Text(
               'Interventions',
               style: AppTextStyles.bodyText2.copyWith(
-                color: AppColors.primary,
+                color: colors.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -45,7 +46,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
                           Text(
                             intervention.name,
                             style: AppTextStyles.bodyText2.copyWith(
-                              color: AppColors.textLight,
+                              color: colors.textLight,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -59,22 +60,22 @@ class ProtocolInterventionsRow extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(
+                                  Padding(
+                                    padding: const EdgeInsets.only(
                                       top: 6.0,
                                       right: 6.0,
                                     ),
                                     child: Icon(
                                       Icons.remove,
                                       size: 10,
-                                      color: AppColors.textSecondary,
+                                      color: colors.textSecondary,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       item,
                                       style: AppTextStyles.caption.copyWith(
-                                        color: AppColors.textSecondary,
+                                        color: colors.textSecondary,
                                       ),
                                     ),
                                   ),

@@ -17,6 +17,7 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GestureDetector(
       onTap: isLoading ? null : onPressed,
       child: Container(
@@ -24,12 +25,15 @@ class AuthButton extends StatelessWidget {
         height: 56,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          color: AppColors.primary,
+          color: colors.primary,
         ),
         alignment: Alignment.center,
         child: isLoading
             ? const KLoadingWidget(isSmall: true)
-            : Text(text, style: AppTextStyles.buttonText),
+            : Text(
+                text,
+                style: AppTextStyles.buttonText.copyWith(color: colors.textDark),
+              ),
       ),
     );
   }

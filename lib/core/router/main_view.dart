@@ -70,11 +70,12 @@ class _MainBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -86,11 +87,9 @@ class _MainBottomNavBar extends StatelessWidget {
           context.read<NavigationCubit>().changeTab(index);
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.cardBackground,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.textSecondary.withValues(
-          alpha: 0.5,
-        ),
+        backgroundColor: colors.cardBackground,
+        selectedItemColor: colors.primary,
+        unselectedItemColor: colors.textSecondary.withValues(alpha: 0.5),
         selectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12,
@@ -112,8 +111,8 @@ class _MainBottomNavBar extends StatelessWidget {
               height: 24,
               colorFilter: ColorFilter.mode(
                 currentIndex == 1
-                    ? AppColors.primary
-                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                    ? colors.primary
+                    : colors.textSecondary.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),
@@ -126,8 +125,8 @@ class _MainBottomNavBar extends StatelessWidget {
               height: 24,
               colorFilter: ColorFilter.mode(
                 currentIndex == 2
-                    ? AppColors.primary
-                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                    ? colors.primary
+                    : colors.textSecondary.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),
@@ -140,8 +139,8 @@ class _MainBottomNavBar extends StatelessWidget {
               height: 24,
               colorFilter: ColorFilter.mode(
                 currentIndex == 3
-                    ? AppColors.primary
-                    : AppColors.textSecondary.withValues(alpha: 0.5),
+                    ? colors.primary
+                    : colors.textSecondary.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),

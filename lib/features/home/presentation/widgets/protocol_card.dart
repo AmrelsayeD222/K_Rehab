@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,38 +20,39 @@ class ProtocolCard extends StatelessWidget {
         AppRouter.protocolDetails,
         extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
       ),
-      child: Hero(
-        tag: 'home_protocol_${model.id}',
-        child: Material(
-          type: MaterialType.transparency,
-          child: Container(
-                width: 300,
-                height: MediaQuery.of(context).size.height * 0.22,
-                margin: const EdgeInsets.only(right: 16, bottom: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(model.imagePath),
-                    fit: BoxFit.cover,
+      child:
+          Hero(
+                tag: 'home_protocol_${model.id}',
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Container(
+                    width: 300,
+                    height: MediaQuery.of(context).size.height * 0.22,
+                    margin: const EdgeInsets.only(right: 16, bottom: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(model.imagePath),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [_buildTitle(), _buildActionButton()],
+                      ),
+                    ),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [_buildTitle(), _buildActionButton()],
-                  ),
-                ),
-              ),
-        ),
-      )
-          .animate()
-          .fadeIn(
-            duration: 400.ms,
-            delay: Duration(milliseconds: 200 + (index * 100)),
-          )
-          .slideX(begin: 0.1, curve: Curves.easeOut),
+              )
+              .animate()
+              .fadeIn(
+                duration: 400.ms,
+                delay: Duration(milliseconds: 200 + (index * 100)),
+              )
+              .slideX(begin: 0.1, curve: Curves.easeOut),
     );
   }
 
@@ -59,9 +60,10 @@ class ProtocolCard extends StatelessWidget {
     return Text(
       model.title,
       style: AppTextStyles.heading2.copyWith(
-        color: AppColors.featuredCardBackground,
+        color: Colors.white,
         height: 1.2,
         fontSize: 20,
+        shadows: [const Shadow(color: Colors.black54, blurRadius: 8)],
       ),
     );
   }
@@ -78,7 +80,7 @@ class ProtocolCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: const Icon(
             Icons.arrow_forward_rounded,
-            color: AppColors.featuredCardBackground,
+            color: Color(0xFF2a5051),
             size: 20,
           ),
         ),

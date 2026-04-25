@@ -38,7 +38,7 @@ class LoginFormSection extends StatelessWidget {
             onPressed: () {},
             child: Text(
               'Forgot Password?',
-              style: AppTextStyles.bodyText2.copyWith(color: AppColors.primary),
+              style: AppTextStyles.bodyText2.copyWith(color: context.appColors.primary),
             ),
           ),
         ),

@@ -22,7 +22,6 @@ class MedicalDisclaimerView extends StatelessWidget {
       builder: (context, state) {
         final isAgreed = onboardingCubit.isAgreed;
         return Scaffold(
-          backgroundColor: AppColors.background,
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -34,9 +33,9 @@ class MedicalDisclaimerView extends StatelessWidget {
                     const SizedBox(height: 24),
                     const DisclaimerLogoHeader(),
                     const SizedBox(height: 32),
-                    const Text(
+                    Text(
                       'Before You Begin',
-                      style: AppTextStyles.heading1,
+                      style: AppTextStyles.heading1.copyWith(color: context.appColors.textPrimary),
                     ),
                     const SizedBox(height: 24),
                     const DisclaimerImageSection(),

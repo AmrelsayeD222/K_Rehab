@@ -14,7 +14,7 @@ class ProfileSectionTitle extends StatelessWidget {
       child: Text(
         title,
         style: AppTextStyles.tag.copyWith(
-          color: AppColors.primary,
+          color: context.appColors.primary,
           fontSize: 12,
           letterSpacing: 1.4,
         ),

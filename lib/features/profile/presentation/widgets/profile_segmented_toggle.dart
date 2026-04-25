@@ -7,10 +7,12 @@ class ProfileSegmentedToggle extends StatefulWidget {
     super.key,
     required this.options,
     this.initialIndex = 0,
+    this.onChanged,
   });
 
   final List<String> options;
   final int initialIndex;
+  final ValueChanged<int>? onChanged;
 
   @override
   State<ProfileSegmentedToggle> createState() => _ProfileSegmentedToggleState();
@@ -27,38 +29,41 @@ class _ProfileSegmentedToggleState extends State<ProfileSegmentedToggle> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
       height: 30,
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: const Color(0xFF13161E),
+        color: colors.background,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: List.generate(widget.options.length, _buildOption),
+        children: List.generate(widget.options.length, (index) => _buildOption(index, colors)),
       ),
     );
   }
 
-  Widget _buildOption(int index) {
+  Widget _buildOption(int index, AppColorsExtension colors) {
     final isSelected = _selected == index;
     return GestureDetector(
-      onTap: () => setState(() => _selected = index),
+      onTap: () {
+        setState(() => _selected = index);
+        widget.onChanged?.call(index);
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.transparent,
+          color: isSelected ? colors.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
         ),
         alignment: Alignment.center,
         child: Text(
           widget.options[index],
           style: AppTextStyles.tag.copyWith(
-            color: isSelected
-                ? const Color(0xFF111111)
-                : AppColors.textSecondary,
+            color: isSelected ? colors.textDark : colors.textSecondary,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),

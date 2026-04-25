@@ -9,6 +9,7 @@ class KErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -33,8 +34,8 @@ class KErrorWidget extends StatelessWidget {
                 icon: const Icon(Icons.refresh_rounded),
                 label: const Text('Try Again'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.black,
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.textDark,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,

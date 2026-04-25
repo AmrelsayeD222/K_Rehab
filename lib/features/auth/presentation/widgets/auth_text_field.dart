@@ -41,20 +41,21 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return TextFormField(
-      cursorColor: AppColors.primary,
+      cursorColor: colors.primary,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       controller: widget.controller,
       obscureText: _obscureText,
       keyboardType: widget.keyboardType,
       validator: widget.validator,
-      style: AppTextStyles.bodyText1,
+      style: AppTextStyles.bodyText1.copyWith(color: colors.textPrimary),
       decoration: InputDecoration(
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
-                  color: _obscureText ? AppColors.textMuted : AppColors.primary,
+                  color: _obscureText ? colors.textMuted : colors.primary,
                   size: 22,
                 ),
                 onPressed: _toggleVisibility,
@@ -62,9 +63,9 @@ class _AuthTextFieldState extends State<AuthTextField> {
               )
             : widget.suffixIcon,
         hintText: widget.hintText,
-        hintStyle: AppTextStyles.bodyText2.copyWith(color: AppColors.textMuted),
+        hintStyle: AppTextStyles.bodyText2.copyWith(color: colors.textMuted),
         filled: true,
-        fillColor: AppColors.cardBackground,
+        fillColor: colors.cardBackground,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -75,7 +76,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1),
+          borderSide: BorderSide(color: colors.primary, width: 1),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,

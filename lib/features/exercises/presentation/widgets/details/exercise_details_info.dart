@@ -10,14 +10,18 @@ class ExerciseDetailsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           exercise.title,
-          style: AppTextStyles.mainHeading.copyWith(fontSize: 22),
+          style: AppTextStyles.mainHeading.copyWith(fontSize: 22, color: colors.textPrimary),
         ),
-        Text(exercise.subtitle, style: AppTextStyles.cardSubtitle),
+        Text(
+          exercise.subtitle,
+          style: AppTextStyles.cardSubtitle.copyWith(color: colors.textSecondary),
+        ),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -27,31 +31,28 @@ class ExerciseDetailsInfo extends StatelessWidget {
                 vertical: 4,
               ),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.2),
+                color: colors.primary.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(9999),
               ),
               child: Text(
                 exercise.category.toUpperCase(),
                 style: AppTextStyles.tag.copyWith(
-                  color: const Color(0xFF26DEC2),
+                  color: colors.primary,
                   letterSpacing: 0.55,
                 ),
               ),
             ),
             const SizedBox(width: 8),
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0x33005DC3).withValues(alpha: 0.2),
+                color: colors.primary.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(9999),
               ),
               child: Text(
                 exercise.difficulty.toUpperCase(),
                 style: AppTextStyles.tag.copyWith(
-                  color: const Color(0xFFACC7FF),
+                  color: colors.textSecondary,
                   letterSpacing: 0.55,
                 ),
               ),

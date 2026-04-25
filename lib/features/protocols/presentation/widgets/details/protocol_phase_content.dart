@@ -13,19 +13,18 @@ class ProtocolPhaseContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const Icon(Icons.circle, size: 12, color: AppColors.primary),
+            Icon(Icons.circle, size: 12, color: colors.primary),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 '${phase.phaseName.toUpperCase()} ${phase.phaseTitle}',
-                style: AppTextStyles.heading2.copyWith(
-                  color: AppColors.primary,
-                ),
+                style: AppTextStyles.heading2.copyWith(color: colors.primary),
               ),
             ),
           ],
@@ -41,7 +40,7 @@ class ProtocolPhaseContent extends StatelessWidget {
         ProtocolSectionRow(title: 'Goals', items: phase.goals),
         ProtocolRationaleRow(title: 'Rationale', text: phase.rationale),
         const SizedBox(height: 24),
-        Divider(color: Colors.white.withValues(alpha: 0.1)),
+        Divider(color: colors.textMuted.withValues(alpha: 0.2)),
       ],
     );
   }

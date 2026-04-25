@@ -13,6 +13,7 @@ class ExerciseGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GestureDetector(
       onTap: () {
         context.push(
@@ -25,11 +26,9 @@ class ExerciseGridItem extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+          color: colors.cardBackground,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: .05),
-          ),
+          border: Border.all(color: colors.textMuted.withValues(alpha: .08)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,23 +46,21 @@ class ExerciseGridItem extends StatelessWidget {
                           width: double.infinity,
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Container(
-                            color: AppColors.primary.withValues(alpha: .05),
+                            color: colors.primary.withValues(alpha: .05),
                             child: const Center(
                               child: SizedBox(
                                 width: 24,
                                 height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
+                                child: CircularProgressIndicator(strokeWidth: 2),
                               ),
                             ),
                           ),
                           errorWidget: (context, url, error) => Container(
-                            color: AppColors.primary.withValues(alpha: .05),
+                            color: colors.primary.withValues(alpha: .05),
                             child: const Center(
                               child: Icon(
                                 Icons.image_not_supported_outlined,
-                                color: Colors.white24,
+                                color: Colors.grey,
                                 size: 40,
                               ),
                             ),
@@ -71,11 +68,11 @@ class ExerciseGridItem extends StatelessWidget {
                         )
                       : Container(
                           width: double.infinity,
-                          color: AppColors.primary.withValues(alpha: .05),
+                          color: colors.primary.withValues(alpha: .05),
                           child: const Center(
                             child: Icon(
                               Icons.image_not_supported_outlined,
-                              color: Colors.white24,
+                              color: Colors.grey,
                               size: 40,
                             ),
                           ),
@@ -90,24 +87,21 @@ class ExerciseGridItem extends StatelessWidget {
                 children: [
                   Text(
                     exercise.title,
-                    style: AppTextStyles.cardTitle.copyWith(
-                      color: AppColors.textLight,
-                    ),
+                    style: AppTextStyles.cardTitle.copyWith(color: colors.textLight),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "${exercise.sets ?? '-'} sets × ${exercise.reps ?? '-'} reps",
-                    style: AppTextStyles.cardSubtitle,
+                    style: AppTextStyles.cardSubtitle.copyWith(
+                      color: colors.textSecondary,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: Colors.orangeAccent.withValues(alpha: .1),
                       borderRadius: BorderRadius.circular(4),

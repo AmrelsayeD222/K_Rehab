@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k_rehab/core/manager/theme_cubit.dart';
 import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/custom_menu_card_widget.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_section_card.dart';
@@ -10,6 +12,7 @@ class ProfileAppSettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = context.watch<ThemeCubit>().isDark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,11 +30,12 @@ class ProfileAppSettingsSection extends StatelessWidget {
             ),
             const Divider(height: 1, indent: 64, endIndent: 16),
             CustomMenuCardWidget(
-              icon: Icons.dark_mode_outlined,
+              icon: isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
               title: 'Theme',
-              trailing: const ProfileSegmentedToggle(
-                options: ['Dark', 'Light'],
-                initialIndex: 0,
+              trailing: ProfileSegmentedToggle(
+                options: const ['Dark', 'Light'],
+                initialIndex: isDark ? 0 : 1,
+                onChanged: (_) => context.read<ThemeCubit>().toggleTheme(),
               ),
               onTap: () {},
             ),
@@ -60,13 +64,14 @@ class _NotificationToggleState extends State<_NotificationToggle> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Switch(
       value: _enabled,
       onChanged: (val) => setState(() => _enabled = val),
-      activeThumbColor: AppColors.primary,
-      activeTrackColor: AppColors.primary.withValues(alpha: 0.25),
-      inactiveThumbColor: AppColors.textSecondary,
-      inactiveTrackColor: AppColors.textSecondary.withValues(alpha: 0.15),
+      activeThumbColor: colors.primary,
+      activeTrackColor: colors.primary.withValues(alpha: 0.25),
+      inactiveThumbColor: colors.textSecondary,
+      inactiveTrackColor: colors.textSecondary.withValues(alpha: 0.15),
     );
   }
 }

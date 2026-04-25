@@ -12,6 +12,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Hero(
       tag: protocol.id,
       child: Material(
@@ -26,19 +27,16 @@ class ProtocolCardImageHeader extends StatelessWidget {
                   imageUrl: protocol.imagePath,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Container(
-                    color: AppColors.cardBackground,
+                    color: colors.cardBackground,
                     child: const Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppColors.primary,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                   ),
                   errorWidget: (context, url, error) => Container(
-                    color: AppColors.cardBackground,
+                    color: colors.cardBackground,
                     child: const Icon(
                       Icons.broken_image_rounded,
-                      color: Colors.white24,
+                      color: Colors.grey,
                       size: 48,
                     ),
                   ),
@@ -67,8 +65,8 @@ class ProtocolCardImageHeader extends StatelessWidget {
                           'assets/protocol/clinically_previewed.svg',
                           width: 14,
                           height: 14,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.primary,
+                          colorFilter: ColorFilter.mode(
+                            colors.primary,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -76,7 +74,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
                         Text(
                           'Clinically Reviewed',
                           style: AppTextStyles.tag.copyWith(
-                            color: AppColors.primary,
+                            color: colors.primary,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                           ),
@@ -88,11 +86,12 @@ class ProtocolCardImageHeader extends StatelessWidget {
                           size: 14,
                         ),
                         const SizedBox(width: 4),
-                        Text(
+                        const Text(
                           'Pending Review',
-                          style: AppTextStyles.tag.copyWith(
+                          style: TextStyle(
                             color: Colors.white60,
                             fontWeight: FontWeight.bold,
+                            fontSize: 10,
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -108,6 +107,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
                 child: Text(
                   protocol.title,
                   style: AppTextStyles.cardTitle.copyWith(
+                    color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                     letterSpacing: -0.5,

@@ -16,20 +16,21 @@ class AuthToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
           label,
-          style: AppTextStyles.bodyText2,
+          style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
         ),
         GestureDetector(
           onTap: onActionTap,
           child: Text(
             actionText,
             style: AppTextStyles.bodyText2.copyWith(
-              color: AppColors.primary,
+              color: colors.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -38,4 +39,3 @@ class AuthToggleRow extends StatelessWidget {
     );
   }
 }
-

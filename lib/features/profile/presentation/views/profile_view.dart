@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_account_section.dart';
@@ -22,20 +22,19 @@ class ProfileView extends StatelessWidget {
         if (state is ProfileLogoutSuccess) {
           context.go(AppRouter.login);
         } else if (state is ProfileFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
         body: SafeArea(
           child: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
               if (state is ProfileLoading) {
                 return const Center(child: KLoadingWidget());
               }
-              
+
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),

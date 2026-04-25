@@ -20,6 +20,7 @@ class ProfileListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return InkWell(
       onTap: onTap ?? () {},
       borderRadius: BorderRadius.circular(16),
@@ -33,15 +34,15 @@ class ProfileListItem extends StatelessWidget {
               child: Text(
                 title,
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: AppColors.textPrimary,
+                  color: colors.textPrimary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
             trailing ??
-                const Icon(
+                Icon(
                   Icons.chevron_right_rounded,
-                  color: AppColors.textSecondary,
+                  color: colors.textSecondary,
                   size: 22,
                 ),
           ],
@@ -59,14 +60,16 @@ class _ProfileIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final defaultColor = context.appColors.primary;
+    final color = iconColor ?? defaultColor;
     return Container(
       width: 36,
       height: 36,
       decoration: BoxDecoration(
-        color: (iconColor ?? AppColors.primary).withValues(alpha: 0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Icon(icon, size: 18, color: iconColor ?? AppColors.primary),
+      child: Icon(icon, size: 18, color: color),
     );
   }
 }

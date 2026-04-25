@@ -16,8 +16,9 @@ class KLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final loader = CircularProgressIndicator(
-      color: color ?? (isSmall ? Colors.white : AppColors.primary),
+      color: color ?? (isSmall ? Colors.white : colors.primary),
       strokeWidth: isSmall ? 2 : 4,
     );
 
@@ -36,7 +37,10 @@ class KLoadingWidget extends StatelessWidget {
           loader,
           if (message != null) ...[
             const SizedBox(height: 16),
-            Text(message!, style: AppTextStyles.bodyText2),
+            Text(
+              message!,
+              style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
+            ),
           ],
         ],
       ),

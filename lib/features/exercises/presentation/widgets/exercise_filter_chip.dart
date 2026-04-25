@@ -16,23 +16,24 @@ class ExercisesCategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 9),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withValues(alpha: 0.15)
-              : AppColors.cardBackground,
+              ? colors.primary.withValues(alpha: 0.15)
+              : colors.cardBackground,
           border: Border.all(
-            color: isSelected ? AppColors.primary : const Color(0xFF3B4A46),
+            color: isSelected ? colors.primary : colors.textMuted.withValues(alpha: 0.3),
           ),
           borderRadius: BorderRadius.circular(9999),
         ),
         child: Text(
           label,
           style: AppTextStyles.bodyText2.copyWith(
-            color: isSelected ? AppColors.primary : const Color(0xFFBACAC5),
+            color: isSelected ? colors.primary : colors.textSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),

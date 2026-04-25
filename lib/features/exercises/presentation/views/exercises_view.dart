@@ -19,17 +19,20 @@ class ExercisesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return BlocProvider(
       create: (_) => getIt<ExerciseCubit>()..getExercises(),
       child: Scaffold(
-        backgroundColor: AppColors.background,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('EXERCISES', style: AppTextStyles.mainHeading),
+                Text(
+                  'EXERCISES',
+                  style: AppTextStyles.mainHeading.copyWith(color: colors.textPrimary),
+                ),
                 const SizedBox(height: 24),
                 // Filters
                 BlocSelector<ExerciseCubit, ExerciseState, (int, List<String>)>(
