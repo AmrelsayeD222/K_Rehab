@@ -71,7 +71,7 @@ class ExercisesGrid extends StatelessWidget {
               );
             } else if (state is FeaturedExercisesFailure) {
               return KErrorWidget(
-                error: state.error.toString(),
+                error: state.error,
                 onRetry: () => context
                     .read<FeaturedExercisesCubit>()
                     .getFeaturedExercises(),

@@ -19,12 +19,10 @@ class HomeView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) =>
-              getIt<FeaturedProtocolCubit>()..getFeaturedProtocols(),
+          create: (_) => getIt<FeaturedProtocolCubit>()..getFeaturedProtocols(),
         ),
         BlocProvider(
-          create: (_) =>
-              getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
+          create: (_) => getIt<FeaturedExercisesCubit>()..getFeaturedExercises(),
         ),
       ],
       child: Scaffold(

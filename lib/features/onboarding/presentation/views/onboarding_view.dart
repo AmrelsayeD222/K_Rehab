@@ -34,11 +34,14 @@ class _OnboardingViewState extends State<OnboardingView> {
         if (state is OnboardingCompleted) {
           context.go(AppRouter.login);
         } else if (state is OnboardingPageUpdated) {
-          _pageController.animateToPage(
-            state.currentIndex,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.ease,
-          );
+          if (_pageController.hasClients &&
+              _pageController.page?.round() != state.currentIndex) {
+            _pageController.animateToPage(
+              state.currentIndex,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.ease,
+            );
+          }
         }
       },
       child: Scaffold(

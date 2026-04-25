@@ -15,6 +15,7 @@ import 'package:k_rehab/features/exercises/presentation/views/exercise_details_v
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
 
+import 'package:k_rehab/core/services/cache_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppRouter {
@@ -29,9 +30,13 @@ abstract class AppRouter {
   static GoRouter router() => GoRouter(
     initialLocation: Supabase.instance.client.auth.currentSession != null
         ? mainView
-        : disclaimer,
+        : (CacheHelper.getData(key: 'isOnboardingVisited') == true
+            ? login
+            : disclaimer),
     redirect: (context, state) {
       final isLoggedIn = Supabase.instance.client.auth.currentSession != null;
+      final isOnboardingVisited =
+          CacheHelper.getData(key: 'isOnboardingVisited') ?? false;
 
       final isAuthRoute =
           state.matchedLocation == login ||
@@ -40,7 +45,7 @@ abstract class AppRouter {
           state.matchedLocation == onboarding;
 
       if (!isLoggedIn && !isAuthRoute) {
-        return disclaimer;
+        return isOnboardingVisited ? login : disclaimer;
       }
 
       if (isLoggedIn && isAuthRoute) {
@@ -52,7 +57,10 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: disclaimer,
-        builder: (context, state) => const MedicalDisclaimerView(),
+        builder: (context, state) => BlocProvider(
+          create: (_) => getIt<OnboardingCubit>(),
+          child: const MedicalDisclaimerView(),
+        ),
       ),
       GoRoute(
         path: onboarding,
