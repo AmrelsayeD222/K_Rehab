@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
@@ -15,7 +14,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (interventions.isEmpty) return const SizedBox.shrink();
 
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -46,7 +45,7 @@ class ProtocolInterventionsRow extends StatelessWidget {
                           Text(
                             intervention.name,
                             style: AppTextStyles.bodyText2.copyWith(
-                              color: colors.textLight,
+                              color: colors.onSurfaceVariant,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -68,14 +67,14 @@ class ProtocolInterventionsRow extends StatelessWidget {
                                     child: Icon(
                                       Icons.remove,
                                       size: 10,
-                                      color: colors.textSecondary,
+                                      color: colors.onSurfaceVariant,
                                     ),
                                   ),
                                   Expanded(
                                     child: Text(
                                       item,
                                       style: AppTextStyles.caption.copyWith(
-                                        color: colors.textSecondary,
+                                        color: colors.onSurfaceVariant,
                                       ),
                                     ),
                                   ),

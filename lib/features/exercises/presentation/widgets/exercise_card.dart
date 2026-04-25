@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 
@@ -16,14 +15,14 @@ class ExerciseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: colors.cardBackground,
-          border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
+          color: Theme.of(context).cardColor,
+          border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
           borderRadius: BorderRadius.circular(24),
         ),
         child: Row(
@@ -34,7 +33,7 @@ class ExerciseCard extends StatelessWidget {
                 width: 64,
                 height: 64,
                 decoration: BoxDecoration(
-                  color: colors.background,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 clipBehavior: Clip.antiAlias,
@@ -71,7 +70,7 @@ class ExerciseCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     exercise.title,
-                    style: AppTextStyles.cardTitle.copyWith(color: colors.textLight),
+                    style: AppTextStyles.cardTitle.copyWith(color: colors.onSurfaceVariant),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -80,13 +79,13 @@ class ExerciseCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.cardSubtitle.copyWith(
                       fontSize: 12,
-                      color: colors.textSecondary,
+                      color: colors.onSurfaceVariant,
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: colors.textSecondary),
+            Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
           ],
         ),
       ),

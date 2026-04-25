@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/details/protocol_section_row.dart';
@@ -13,7 +12,7 @@ class ProtocolPhaseContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +39,7 @@ class ProtocolPhaseContent extends StatelessWidget {
         ProtocolSectionRow(title: 'Goals', items: phase.goals),
         ProtocolRationaleRow(title: 'Rationale', text: phase.rationale),
         const SizedBox(height: 24),
-        Divider(color: colors.textMuted.withValues(alpha: 0.2)),
+        Divider(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
       ],
     );
   }

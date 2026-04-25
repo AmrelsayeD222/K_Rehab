@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class AuthTextField extends StatefulWidget {
@@ -41,7 +40,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return TextFormField(
       cursorColor: colors.primary,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
@@ -49,13 +48,13 @@ class _AuthTextFieldState extends State<AuthTextField> {
       obscureText: _obscureText,
       keyboardType: widget.keyboardType,
       validator: widget.validator,
-      style: AppTextStyles.bodyText1.copyWith(color: colors.textPrimary),
+      style: AppTextStyles.bodyText1.copyWith(color: colors.onSurface),
       decoration: InputDecoration(
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
-                  color: _obscureText ? colors.textMuted : colors.primary,
+                  color: _obscureText ? colors.onSurfaceVariant : colors.primary,
                   size: 22,
                 ),
                 onPressed: _toggleVisibility,
@@ -63,9 +62,9 @@ class _AuthTextFieldState extends State<AuthTextField> {
               )
             : widget.suffixIcon,
         hintText: widget.hintText,
-        hintStyle: AppTextStyles.bodyText2.copyWith(color: colors.textMuted),
+        hintStyle: AppTextStyles.bodyText2.copyWith(color: colors.onSurfaceVariant),
         filled: true,
-        fillColor: colors.cardBackground,
+        fillColor: Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class KErrorWidget extends StatelessWidget {
@@ -9,7 +8,7 @@ class KErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -35,7 +34,7 @@ class KErrorWidget extends StatelessWidget {
                 label: const Text('Try Again'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.primary,
-                  foregroundColor: colors.textDark,
+                  foregroundColor: colors.onSurface,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,

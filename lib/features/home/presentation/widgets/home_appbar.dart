@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
@@ -31,7 +30,7 @@ class _HomeWelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         String name = '';
@@ -45,7 +44,7 @@ class _HomeWelcomeText extends StatelessWidget {
           name.isNotEmpty ? 'Hey, $name 👋' : 'Welcome 👋',
           style: AppTextStyles.heading2.copyWith(
             fontSize: 22,
-            color: colors.textPrimary,
+            color: colors.onSurface,
           ),
         ).animate().fadeIn(duration: 400.ms).slideX(begin: -0.1);
       },
@@ -58,7 +57,7 @@ class _HomeProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         UserModel? user;
@@ -79,12 +78,12 @@ class _HomeProfileAvatar extends StatelessWidget {
           backgroundColor: colors.primary.withValues(alpha: .3),
           child: CircleAvatar(
             radius: 22,
-            backgroundColor: colors.cardBackground,
+            backgroundColor: Theme.of(context).cardColor,
             backgroundImage: imageProvider,
             child: imageProvider == null
                 ? Icon(
                     Icons.person_2_rounded,
-                    color: colors.textPrimary,
+                    color: colors.onSurface,
                     size: 26,
                   )
                     .animate()

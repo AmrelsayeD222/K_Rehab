@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
@@ -17,7 +16,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     final tabs = ['All', ...phases.map((p) => p.phaseName)];
 
     return SingleChildScrollView(
@@ -41,7 +40,7 @@ class ProtocolDetailsTabs extends StatelessWidget {
               child: Text(
                 tabs[index],
                 style: AppTextStyles.bodyText1.copyWith(
-                  color: isSelected ? colors.primary : colors.textSecondary,
+                  color: isSelected ? colors.primary : colors.onSurfaceVariant,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),

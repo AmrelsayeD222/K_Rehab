@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProtocolStatItem extends StatelessWidget {
@@ -10,16 +9,16 @@ class ProtocolStatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Row(
       children: [
-        Icon(icon, color: colors.textSecondary, size: 16),
+        Icon(icon, color: colors.onSurfaceVariant, size: 16),
         const SizedBox(width: 6),
         Flexible(
           child: Text(
             text,
             style: AppTextStyles.cardSubtitle.copyWith(
-              color: colors.textSecondary,
+              color: colors.onSurfaceVariant,
               fontWeight: FontWeight.w600,
               fontSize: 12,
               letterSpacing: 0.5,

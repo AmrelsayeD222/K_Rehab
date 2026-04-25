@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class AuthToggleRow extends StatelessWidget {
@@ -16,14 +15,14 @@ class AuthToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
           label,
-          style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
+          style: AppTextStyles.bodyText2.copyWith(color: colors.onSurfaceVariant),
         ),
         GestureDetector(
           onTap: onActionTap,

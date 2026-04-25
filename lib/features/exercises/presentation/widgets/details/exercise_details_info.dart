@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 
@@ -10,17 +9,17 @@ class ExerciseDetailsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           exercise.title,
-          style: AppTextStyles.mainHeading.copyWith(fontSize: 22, color: colors.textPrimary),
+          style: AppTextStyles.mainHeading.copyWith(fontSize: 22, color: colors.onSurface),
         ),
         Text(
           exercise.subtitle,
-          style: AppTextStyles.cardSubtitle.copyWith(color: colors.textSecondary),
+          style: AppTextStyles.cardSubtitle.copyWith(color: colors.onSurfaceVariant),
         ),
         const SizedBox(height: 16),
         Row(
@@ -52,7 +51,7 @@ class ExerciseDetailsInfo extends StatelessWidget {
               child: Text(
                 exercise.difficulty.toUpperCase(),
                 style: AppTextStyles.tag.copyWith(
-                  color: colors.textSecondary,
+                  color: colors.onSurfaceVariant,
                   letterSpacing: 0.55,
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProfileListItem extends StatelessWidget {
@@ -20,7 +19,7 @@ class ProfileListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap ?? () {},
       borderRadius: BorderRadius.circular(16),
@@ -34,7 +33,7 @@ class ProfileListItem extends StatelessWidget {
               child: Text(
                 title,
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: colors.textPrimary,
+                  color: colors.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -42,7 +41,7 @@ class ProfileListItem extends StatelessWidget {
             trailing ??
                 Icon(
                   Icons.chevron_right_rounded,
-                  color: colors.textSecondary,
+                  color: colors.onSurfaceVariant,
                   size: 22,
                 ),
           ],
@@ -60,7 +59,7 @@ class _ProfileIconBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultColor = context.appColors.primary;
+    final defaultColor = Theme.of(context).colorScheme.primary;
     final color = iconColor ?? defaultColor;
     return Container(
       width: 36,

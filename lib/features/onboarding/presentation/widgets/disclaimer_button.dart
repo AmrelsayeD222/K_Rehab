@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class DisclaimerButton extends StatelessWidget {
@@ -16,7 +15,7 @@ class DisclaimerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SizedBox(
@@ -35,11 +34,11 @@ class DisclaimerButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Next", style: AppTextStyles.buttonText.copyWith(color: colors.textDark)),
+              Text("Next", style: AppTextStyles.buttonText.copyWith(color: colors.onSurface)),
               const SizedBox(width: 8),
               SvgPicture.asset(
                 AssetPaths.arrowIcon,
-                colorFilter: ColorFilter.mode(colors.textDark, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(colors.onSurface, BlendMode.srcIn),
               ),
             ],
           ),

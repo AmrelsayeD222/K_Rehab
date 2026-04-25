@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Typography-only styles — no hardcoded colors.
-// Apply color contextually via: AppTextStyles.heading1.copyWith(color: context.appColors.textPrimary)
+// Apply color contextually via: AppTextStyles.heading1.copyWith(color: Theme.of(context).colorScheme.onSurface)
 abstract class AppTextStyles {
   static const String fontFamily = 'Inter';
 

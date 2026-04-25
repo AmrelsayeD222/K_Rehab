@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProfileSectionTitle extends StatelessWidget {
@@ -14,7 +13,7 @@ class ProfileSectionTitle extends StatelessWidget {
       child: Text(
         title,
         style: AppTextStyles.tag.copyWith(
-          color: context.appColors.primary,
+          color: Theme.of(context).colorScheme.primary,
           fontSize: 12,
           letterSpacing: 1.4,
         ),

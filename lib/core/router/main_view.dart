@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/aiCoach/ai_coach_view.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercises_view.dart';
 import 'package:k_rehab/features/home/presentation/views/home_view.dart';
@@ -70,7 +69,7 @@ class _MainBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -87,9 +86,9 @@ class _MainBottomNavBar extends StatelessWidget {
           context.read<NavigationCubit>().changeTab(index);
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: colors.cardBackground,
+        backgroundColor: Theme.of(context).cardColor,
         selectedItemColor: colors.primary,
-        unselectedItemColor: colors.textSecondary.withValues(alpha: 0.5),
+        unselectedItemColor: colors.onSurfaceVariant.withValues(alpha: 0.5),
         selectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12,
@@ -112,7 +111,7 @@ class _MainBottomNavBar extends StatelessWidget {
               colorFilter: ColorFilter.mode(
                 currentIndex == 1
                     ? colors.primary
-                    : colors.textSecondary.withValues(alpha: 0.5),
+                    : colors.onSurfaceVariant.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),
@@ -126,7 +125,7 @@ class _MainBottomNavBar extends StatelessWidget {
               colorFilter: ColorFilter.mode(
                 currentIndex == 2
                     ? colors.primary
-                    : colors.textSecondary.withValues(alpha: 0.5),
+                    : colors.onSurfaceVariant.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),
@@ -140,7 +139,7 @@ class _MainBottomNavBar extends StatelessWidget {
               colorFilter: ColorFilter.mode(
                 currentIndex == 3
                     ? colors.primary
-                    : colors.textSecondary.withValues(alpha: 0.5),
+                    : colors.onSurfaceVariant.withValues(alpha: 0.5),
                 BlendMode.srcIn,
               ),
             ),

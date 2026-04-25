@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
@@ -19,7 +19,7 @@ class ExercisesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return BlocProvider(
       create: (_) => getIt<ExerciseCubit>()..getExercises(),
       child: Scaffold(
@@ -31,7 +31,7 @@ class ExercisesView extends StatelessWidget {
               children: [
                 Text(
                   'EXERCISES',
-                  style: AppTextStyles.mainHeading.copyWith(color: colors.textPrimary),
+                  style: AppTextStyles.mainHeading.copyWith(color: colors.onSurface),
                 ),
                 const SizedBox(height: 24),
                 // Filters

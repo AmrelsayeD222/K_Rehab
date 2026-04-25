@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProfileSegmentedToggle extends StatefulWidget {
@@ -29,14 +28,14 @@ class _ProfileSegmentedToggleState extends State<ProfileSegmentedToggle> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Container(
       height: 30,
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: colors.background,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
+        border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -45,7 +44,7 @@ class _ProfileSegmentedToggleState extends State<ProfileSegmentedToggle> {
     );
   }
 
-  Widget _buildOption(int index, AppColorsExtension colors) {
+  Widget _buildOption(int index, ColorScheme colors) {
     final isSelected = _selected == index;
     return GestureDetector(
       onTap: () {
@@ -63,7 +62,7 @@ class _ProfileSegmentedToggleState extends State<ProfileSegmentedToggle> {
         child: Text(
           widget.options[index],
           style: AppTextStyles.tag.copyWith(
-            color: isSelected ? colors.textDark : colors.textSecondary,
+            color: isSelected ? colors.onSurface : colors.onSurfaceVariant,
             fontSize: 12,
             fontWeight: FontWeight.w600,
           ),

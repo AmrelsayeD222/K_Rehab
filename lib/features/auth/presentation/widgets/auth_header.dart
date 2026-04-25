@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class AuthHeader extends StatelessWidget {
@@ -21,7 +20,7 @@ class AuthHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -30,13 +29,13 @@ class AuthHeader extends StatelessWidget {
         const SizedBox(height: 32),
         Text(
           title,
-          style: AppTextStyles.onboardingTitle.copyWith(color: colors.textPrimary),
+          style: AppTextStyles.onboardingTitle.copyWith(color: colors.onSurface),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 12),
         Text(
           subtitle,
-          style: AppTextStyles.onboardingSubtitle.copyWith(color: colors.textMuted),
+          style: AppTextStyles.onboardingSubtitle.copyWith(color: colors.onSurfaceVariant),
           textAlign: TextAlign.center,
         ),
         SizedBox(height: bottomSpacing),

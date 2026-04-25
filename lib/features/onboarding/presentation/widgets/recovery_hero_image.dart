@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 
 class RecoveryHeroImage extends StatelessWidget {
   const RecoveryHeroImage({super.key, required this.imagePath});
@@ -23,7 +22,7 @@ class RecoveryHeroImage extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: context.appColors.primary.withValues(alpha: 0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   blurRadius: 40,
                   spreadRadius: 20,
                 ),

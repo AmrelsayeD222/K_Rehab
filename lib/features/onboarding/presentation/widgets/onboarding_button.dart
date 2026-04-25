@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class OnboardingButton extends StatelessWidget {
@@ -26,7 +25,7 @@ class OnboardingButton extends StatelessWidget {
           height: 56,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            color: context.appColors.primary,
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

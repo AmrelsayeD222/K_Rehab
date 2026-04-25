@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 
 class DoubleBackExitWrapper extends StatefulWidget {
   final Widget child;
@@ -47,9 +46,9 @@ class _DoubleBackExitWrapperState extends State<DoubleBackExitWrapper> {
               content: Text(
                 'اضغط مرة أخرى للخروج',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: context.appColors.textLight),
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              backgroundColor: context.appColors.cardBackground,
+              backgroundColor: Theme.of(context).cardColor,
               duration: widget.duration,
               behavior: SnackBarBehavior.floating,
               margin: const EdgeInsets.only(

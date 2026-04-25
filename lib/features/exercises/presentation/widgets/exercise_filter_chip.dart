@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ExercisesCategoryChip extends StatelessWidget {
@@ -16,7 +15,7 @@ class ExercisesCategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -24,16 +23,16 @@ class ExercisesCategoryChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? colors.primary.withValues(alpha: 0.15)
-              : colors.cardBackground,
+              : Theme.of(context).cardColor,
           border: Border.all(
-            color: isSelected ? colors.primary : colors.textMuted.withValues(alpha: 0.3),
+            color: isSelected ? colors.primary : colors.onSurfaceVariant.withValues(alpha: 0.3),
           ),
           borderRadius: BorderRadius.circular(9999),
         ),
         child: Text(
           label,
           style: AppTextStyles.bodyText2.copyWith(
-            color: isSelected ? colors.primary : colors.textSecondary,
+            color: isSelected ? colors.primary : colors.onSurfaceVariant,
             fontWeight: FontWeight.w600,
           ),
         ),

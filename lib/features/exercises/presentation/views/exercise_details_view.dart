@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/widgets/exercise_warning_box.dart';
@@ -20,22 +19,22 @@ class ExerciseDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: colors.background.withValues(alpha: 0.7),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.7),
         elevation: 0,
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: CircleAvatar(
-            backgroundColor: colors.cardBackground.withValues(alpha: 0.8),
+            backgroundColor: Theme.of(context).cardColor.withValues(alpha: 0.8),
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new,
                 size: 16,
-                color: colors.textPrimary,
+                color: colors.onSurface,
               ),
               onPressed: () => Navigator.pop(context),
             ),
@@ -43,7 +42,7 @@ class ExerciseDetailsView extends StatelessWidget {
         ),
         title: Text(
           'EXERCISE',
-          style: AppTextStyles.navLabel.copyWith(color: colors.textPrimary),
+          style: AppTextStyles.navLabel.copyWith(color: colors.onSurface),
         ),
       ),
       body: SingleChildScrollView(

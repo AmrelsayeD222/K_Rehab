@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
@@ -16,7 +15,7 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         UserModel? user;
@@ -32,7 +31,7 @@ class ProfileHeader extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               user?.name ?? '...',
-              style: AppTextStyles.heading1.copyWith(color: colors.textPrimary),
+              style: AppTextStyles.heading1.copyWith(color: colors.onSurface),
             ),
             const SizedBox(height: 8),
             const _PremiumBadge(),
@@ -61,7 +60,7 @@ class _ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -71,7 +70,7 @@ class _ProfileAvatar extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: colors.primary, width: 2.5),
-            color: colors.cardBackground,
+            color: Theme.of(context).cardColor,
           ),
           child: state is ProfileImageUploading
               ? const KLoadingWidget()
@@ -87,7 +86,7 @@ class _ProfileAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colors.primary,
                 shape: BoxShape.circle,
-                border: Border.all(color: colors.background, width: 2),
+                border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 2),
               ),
               child: const Icon(
                 Icons.camera_alt_rounded,
@@ -126,7 +125,7 @@ class _AvatarContent extends StatelessWidget {
           child: Icon(
             Icons.person_rounded,
             size: 52,
-            color: context.appColors.textSecondary,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       );
@@ -137,7 +136,7 @@ class _AvatarContent extends StatelessWidget {
       child: Icon(
         Icons.person_rounded,
         size: 52,
-        color: context.appColors.textSecondary,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
     );
   }

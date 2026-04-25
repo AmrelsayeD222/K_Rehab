@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class ProtocolRationaleRow extends StatelessWidget {
@@ -16,7 +15,7 @@ class ProtocolRationaleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (text.isEmpty) return const SizedBox.shrink();
 
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Row(
@@ -38,7 +37,7 @@ class ProtocolRationaleRow extends StatelessWidget {
             child: Text(
               text,
               style: AppTextStyles.bodyText2.copyWith(
-                color: colors.textSecondary,
+                color: colors.onSurfaceVariant,
               ),
             ),
           ),

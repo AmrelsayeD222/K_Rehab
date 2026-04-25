@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 
@@ -13,7 +12,7 @@ class ExerciseGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () {
         context.push(
@@ -26,9 +25,9 @@ class ExerciseGridItem extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: colors.cardBackground,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: colors.textMuted.withValues(alpha: .08)),
+          border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: .08)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,14 +86,14 @@ class ExerciseGridItem extends StatelessWidget {
                 children: [
                   Text(
                     exercise.title,
-                    style: AppTextStyles.cardTitle.copyWith(color: colors.textLight),
+                    style: AppTextStyles.cardTitle.copyWith(color: colors.onSurfaceVariant),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "${exercise.sets ?? '-'} sets × ${exercise.reps ?? '-'} reps",
                     style: AppTextStyles.cardSubtitle.copyWith(
-                      color: colors.textSecondary,
+                      color: colors.onSurfaceVariant,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/home/presentation/widgets/protocol_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,7 @@ class FeaturedProtocolsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,7 +20,7 @@ class FeaturedProtocolsCarousel extends StatelessWidget {
           padding: const EdgeInsets.only(top: 24.0, bottom: 12.0),
           child: Text(
             'Featured Protocols',
-            style: AppTextStyles.heading2.copyWith(color: colors.textPrimary),
+            style: AppTextStyles.heading2.copyWith(color: colors.onSurface),
           ).animate().fadeIn(duration: 400.ms, delay: 100.ms),
         ),
         BlocBuilder<FeaturedProtocolCubit, FeaturedProtocolState>(

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 import 'package:k_rehab/features/onboarding/presentation/widgets/disclaimer_button.dart';
@@ -35,7 +35,7 @@ class MedicalDisclaimerView extends StatelessWidget {
                     const SizedBox(height: 32),
                     Text(
                       'Before You Begin',
-                      style: AppTextStyles.heading1.copyWith(color: context.appColors.textPrimary),
+                      style: AppTextStyles.heading1.copyWith(color: Theme.of(context).colorScheme.onSurface),
                     ),
                     const SizedBox(height: 24),
                     const DisclaimerImageSection(),

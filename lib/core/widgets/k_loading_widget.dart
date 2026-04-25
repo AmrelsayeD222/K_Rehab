@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class KLoadingWidget extends StatelessWidget {
@@ -16,7 +15,7 @@ class KLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     final loader = CircularProgressIndicator(
       color: color ?? (isSmall ? Colors.white : colors.primary),
       strokeWidth: isSmall ? 2 : 4,
@@ -39,7 +38,7 @@ class KLoadingWidget extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               message!,
-              style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
+              style: AppTextStyles.bodyText2.copyWith(color: colors.onSurfaceVariant),
             ),
           ],
         ],

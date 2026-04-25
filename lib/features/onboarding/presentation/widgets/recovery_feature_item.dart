@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class RecoveryFeatureItem extends StatelessWidget {
@@ -26,7 +25,7 @@ class RecoveryFeatureItem extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: AppTextStyles.bodyText2.copyWith(color: context.appColors.textLight),
+        style: AppTextStyles.bodyText2.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
       ),
     );
   }

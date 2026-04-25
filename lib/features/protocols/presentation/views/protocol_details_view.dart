@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/core/widgets/k_error_widget.dart';
@@ -34,13 +33,13 @@ class ProtocolDetailsView extends StatelessWidget {
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: context.appColors.textPrimary,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             onPressed: () => context.pop(),
           ),
           title: Text(
             protocol.title,
-            style: AppTextStyles.heading2.copyWith(color: context.appColors.textPrimary),
+            style: AppTextStyles.heading2.copyWith(color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),

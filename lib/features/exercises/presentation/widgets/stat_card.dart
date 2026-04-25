@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class StatCard extends StatelessWidget {
@@ -10,11 +9,11 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: colors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -23,7 +22,7 @@ class StatCard extends StatelessWidget {
           Text(
             label.toUpperCase(),
             style: AppTextStyles.tag.copyWith(
-              color: colors.textSecondary,
+              color: colors.onSurfaceVariant,
               letterSpacing: 1.0,
             ),
           ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class CategoriesList extends StatelessWidget {
@@ -18,7 +17,7 @@ class CategoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,7 +25,7 @@ class CategoriesList extends StatelessWidget {
           padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
           child: Text(
             'Categories',
-            style: AppTextStyles.heading2.copyWith(color: colors.textPrimary),
+            style: AppTextStyles.heading2.copyWith(color: colors.onSurface),
           ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
         ),
         SingleChildScrollView(
@@ -49,7 +48,7 @@ class CategoriesList extends StatelessWidget {
                         Text(
                           category['name'] as String,
                           style: AppTextStyles.caption.copyWith(
-                            color: colors.textLight,
+                            color: colors.onSurfaceVariant,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),

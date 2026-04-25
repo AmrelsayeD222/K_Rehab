@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 
@@ -17,7 +16,7 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: isLoading ? null : onPressed,
       child: Container(
@@ -32,7 +31,7 @@ class AuthButton extends StatelessWidget {
             ? const KLoadingWidget(isSmall: true)
             : Text(
                 text,
-                style: AppTextStyles.buttonText.copyWith(color: colors.textDark),
+                style: AppTextStyles.buttonText.copyWith(color: colors.onSurface),
               ),
       ),
     );

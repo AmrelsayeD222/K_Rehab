@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class CustomMenuCardWidget extends StatelessWidget {
@@ -20,7 +19,7 @@ class CustomMenuCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     final color = iconColor ?? colors.primary;
     return InkWell(
       onTap: onTap ?? () {},
@@ -42,7 +41,7 @@ class CustomMenuCardWidget extends StatelessWidget {
               child: Text(
                 title,
                 style: AppTextStyles.cardTitle.copyWith(
-                  color: colors.textPrimary,
+                  color: colors.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,
@@ -52,7 +51,7 @@ class CustomMenuCardWidget extends StatelessWidget {
             trailing ??
                 Icon(
                   Icons.chevron_right_rounded,
-                  color: colors.textSecondary,
+                  color: colors.onSurfaceVariant,
                   size: 20,
                 ),
           ],

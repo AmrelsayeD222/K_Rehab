@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class DisclaimerCard extends StatelessWidget {
@@ -15,13 +14,13 @@ class DisclaimerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
+        border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +41,7 @@ class DisclaimerCard extends StatelessWidget {
           Expanded(
             child: Text(
               _disclaimerText,
-              style: AppTextStyles.bodyText2.copyWith(color: colors.textSecondary),
+              style: AppTextStyles.bodyText2.copyWith(color: colors.onSurfaceVariant),
             ),
           ),
         ],

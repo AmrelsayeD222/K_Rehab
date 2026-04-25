@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
+
 import 'package:k_rehab/features/onboarding/data/onboarding_pages_data.dart';
 import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/widgets/onboarding_button.dart';
@@ -74,8 +74,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                         controller: _pageController,
                         count: kOnboardingPages.length,
                         effect: ExpandingDotsEffect(
-                          activeDotColor: context.appColors.primary,
-                          dotColor: context.appColors.primary.withValues(alpha: 0.25),
+                          activeDotColor: Theme.of(context).colorScheme.primary,
+                          dotColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.25),
                           dotHeight: 8,
                           dotWidth: 8,
                           expansionFactor: 3,
@@ -102,7 +102,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                           IconButton(
                                 icon: Icon(
                                   Icons.arrow_back_ios_new,
-                                  color: context.appColors.primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                   size: 20,
                                 ),
                                 onPressed: () => context

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/manager/theme_cubit.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/custom_menu_card_widget.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_section_card.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_section_title.dart';
@@ -12,7 +11,7 @@ class ProfileAppSettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<ThemeCubit>().isDark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,7 +34,7 @@ class ProfileAppSettingsSection extends StatelessWidget {
               trailing: ProfileSegmentedToggle(
                 options: const ['Dark', 'Light'],
                 initialIndex: isDark ? 0 : 1,
-                onChanged: (_) => context.read<ThemeCubit>().toggleTheme(),
+                onChanged: (index) => context.read<ThemeCubit>().toggleTheme(index == 0),
               ),
               onTap: () {},
             ),
@@ -64,14 +63,14 @@ class _NotificationToggleState extends State<_NotificationToggle> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Switch(
       value: _enabled,
       onChanged: (val) => setState(() => _enabled = val),
       activeThumbColor: colors.primary,
       activeTrackColor: colors.primary.withValues(alpha: 0.25),
-      inactiveThumbColor: colors.textSecondary,
-      inactiveTrackColor: colors.textSecondary.withValues(alpha: 0.15),
+      inactiveThumbColor: colors.onSurfaceVariant,
+      inactiveTrackColor: colors.onSurfaceVariant.withValues(alpha: 0.15),
     );
   }
 }

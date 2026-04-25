@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 
@@ -12,7 +11,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Hero(
       tag: protocol.id,
       child: Material(
@@ -27,13 +26,13 @@ class ProtocolCardImageHeader extends StatelessWidget {
                   imageUrl: protocol.imagePath,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Container(
-                    color: colors.cardBackground,
+                    color: Theme.of(context).cardColor,
                     child: const Center(
                       child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                   ),
                   errorWidget: (context, url, error) => Container(
-                    color: colors.cardBackground,
+                    color: Theme.of(context).cardColor,
                     child: const Icon(
                       Icons.broken_image_rounded,
                       color: Colors.grey,

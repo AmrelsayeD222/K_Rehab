@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/utils/app_validators.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
@@ -38,7 +37,7 @@ class LoginFormSection extends StatelessWidget {
             onPressed: () {},
             child: Text(
               'Forgot Password?',
-              style: AppTextStyles.bodyText2.copyWith(color: context.appColors.primary),
+              style: AppTextStyles.bodyText2.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
           ),
         ),

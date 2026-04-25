@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_stat_item.dart';
@@ -11,7 +10,7 @@ class ProtocolCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -22,7 +21,7 @@ class ProtocolCardContent extends StatelessWidget {
             style: AppTextStyles.cardSubtitle.copyWith(
               height: 1.5,
               fontSize: 14,
-              color: colors.textSecondary,
+              color: colors.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 20),

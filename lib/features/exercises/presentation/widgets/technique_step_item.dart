@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class TechniqueStepItem extends StatelessWidget {
@@ -14,7 +13,7 @@ class TechniqueStepItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,7 +38,7 @@ class TechniqueStepItem extends StatelessWidget {
           child: Text(
             description,
             style: AppTextStyles.bodyText2.copyWith(
-              color: colors.textSecondary,
+              color: colors.onSurfaceVariant,
             ),
           ),
         ),

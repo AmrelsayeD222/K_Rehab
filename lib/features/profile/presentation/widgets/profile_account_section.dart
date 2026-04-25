@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/custom_menu_card_widget.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_section_card.dart';
@@ -55,7 +54,7 @@ class _PremiumActiveLabel extends StatelessWidget {
     return Text(
       'Active',
       style: AppTextStyles.tag.copyWith(
-        color: context.appColors.primary,
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 13,
         fontWeight: FontWeight.w600,
       ),

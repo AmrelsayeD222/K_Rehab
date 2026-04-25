@@ -9,14 +9,12 @@ class ThemeCubit extends Cubit<ThemeMode> {
 
   static ThemeMode _loadSavedTheme() {
     final isDark = CacheHelper.getData(key: _themeKey) as bool?;
-    return (isDark ?? true) ? ThemeMode.dark : ThemeMode.light;
+    if (isDark == null) return ThemeMode.system;
+    return isDark ? ThemeMode.dark : ThemeMode.light;
   }
 
-  void toggleTheme() {
-    final isDark = state == ThemeMode.dark;
-    CacheHelper.saveData(key: _themeKey, value: !isDark);
-    emit(isDark ? ThemeMode.light : ThemeMode.dark);
+  void toggleTheme(bool isDark) {
+    CacheHelper.saveData(key: _themeKey, value: isDark);
+    emit(isDark ? ThemeMode.dark : ThemeMode.light);
   }
-
-  bool get isDark => state == ThemeMode.dark;
 }

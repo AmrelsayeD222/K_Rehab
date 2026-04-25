@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 
 class AiCoachPromotion extends StatelessWidget {
@@ -10,14 +9,14 @@ class AiCoachPromotion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 24),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: colors.cardBackground,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: colors.textMuted.withValues(alpha: 0.1)),
+        border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.1)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
@@ -51,7 +50,7 @@ class AiCoachPromotion extends StatelessWidget {
                   'Get personalized guidance\nfor your recovery journey',
                   style: AppTextStyles.sectionHeader.copyWith(
                     fontSize: 16,
-                    color: colors.textLight,
+                    color: colors.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 20),

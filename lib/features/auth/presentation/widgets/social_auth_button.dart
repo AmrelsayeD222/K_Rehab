@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:k_rehab/core/theme/app_colors.dart';
 
 class SocialAuthButton extends StatelessWidget {
   final String iconPath;
@@ -16,16 +15,16 @@ class SocialAuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
+    final colors = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: colors.cardBackground,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.textMuted.withValues(alpha: 0.2)),
+          border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
         ),
         child: SvgPicture.asset(
           iconPath,
