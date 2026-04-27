@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
-import 'package:k_rehab/features/aiCoach/ai_coach_view.dart';
+import 'package:k_rehab/features/recoveryCoach/presentation/views/recovery_coach.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercises_view.dart';
 import 'package:k_rehab/features/home/presentation/views/home_view.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
@@ -20,9 +20,7 @@ class MainView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<NavigationCubit>()),
-        BlocProvider(
-          create: (_) => getIt<ProfileCubit>()..getUserData(),
-        ),
+        BlocProvider(create: (_) => getIt<ProfileCubit>()..getUserData()),
       ],
       child: const _MainViewContent(),
     );
@@ -36,7 +34,7 @@ class _MainViewContent extends StatelessWidget {
     HomeView(),
     ExercisesView(),
     ProtocolsView(),
-    AiCoachView(),
+    RecoveryCoachView(),
     ProfileView(),
   ];
 
@@ -48,13 +46,8 @@ class _MainViewContent extends StatelessWidget {
           currentIndex: currentIndex,
           onBackToHome: () => context.read<NavigationCubit>().changeTab(0),
           child: Scaffold(
-            body: IndexedStack(
-              index: currentIndex,
-              children: _views,
-            ),
-            bottomNavigationBar: _MainBottomNavBar(
-              currentIndex: currentIndex,
-            ),
+            body: IndexedStack(index: currentIndex, children: _views),
+            bottomNavigationBar: _MainBottomNavBar(currentIndex: currentIndex),
           ),
         );
       },
@@ -143,7 +136,7 @@ class _MainBottomNavBar extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
-            label: 'AI Coach',
+            label: 'Recovery Coach',
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.person_rounded),

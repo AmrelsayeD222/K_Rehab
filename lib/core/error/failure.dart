@@ -3,7 +3,3 @@ abstract class Failure {
 
   const Failure(this.errorMessage);
 }
-
-class ServerFailure extends Failure {
-  ServerFailure({required String message}) : super(message);
-}
