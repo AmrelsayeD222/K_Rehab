@@ -8,7 +8,7 @@ import 'package:k_rehab/features/home/presentation/manager/featuredProtocol/feat
 import 'package:k_rehab/features/home/presentation/widgets/exercises_grid.dart';
 import 'package:k_rehab/features/home/presentation/widgets/home_appbar.dart';
 import 'package:k_rehab/features/home/presentation/widgets/featured_protocols_carousel.dart';
-import 'package:k_rehab/features/home/presentation/widgets/categories_list.dart';
+
 import 'package:k_rehab/features/home/presentation/widgets/ai_coach_promotion.dart';
 
 class HomeView extends StatelessWidget {
@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
                   SizedBox(height: 10),
                   HomeAppBar(),
                   FeaturedProtocolsCarousel(),
-                  CategoriesList(),
+                  // CategoriesList(),
                   AiCoachPromotion(),
                   ExercisesGrid(),
                 ],

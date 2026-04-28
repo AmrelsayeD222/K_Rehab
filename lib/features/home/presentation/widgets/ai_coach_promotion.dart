@@ -3,6 +3,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:k_rehab/core/manager/navigation_cubit.dart';
 
 class AiCoachPromotion extends StatelessWidget {
   const AiCoachPromotion({super.key});
@@ -10,108 +12,124 @@ class AiCoachPromotion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 24),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.1)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: colors.primary.withValues(alpha: .1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'AI Recovery Coach',
-                    style: AppTextStyles.tag.copyWith(
-                      color: colors.primary,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Get personalized guidance\nfor your recovery journey',
-                  style: AppTextStyles.sectionHeader.copyWith(
-                    fontSize: 16,
-                    color: colors.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'Start Chatting',
-                          style: AppTextStyles.cardTitle.copyWith(
-                            color: colors.primary,
-                            fontSize: 14,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: colors.primary,
-                        size: 14,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 24.0),
+          child: Text(
+            'AI Recovery Coach',
+            style: AppTextStyles.heading2.copyWith(color: colors.onSurface),
+          ).animate().fadeIn(duration: 400.ms, delay: 300.ms),
+        ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 24, top: 12),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(
+              color: colors.onSurfaceVariant.withValues(alpha: 0.1),
             ),
           ),
-          Stack(
-            alignment: Alignment.center,
+          child: Row(
             children: [
-              Container(
-                    width: 90,
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: colors.primary.withValues(alpha: .05),
-                      shape: BoxShape.circle,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: colors.primary.withValues(alpha: .1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'AI Recovery Coach',
+                        style: AppTextStyles.tag.copyWith(
+                          color: colors.primary,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
-                  )
-                  .animate(onPlay: (controller) => controller.repeat())
-                  .scale(
-                    duration: 2.seconds,
-                    begin: const Offset(1, 1),
-                    end: const Offset(1.1, 1.1),
-                    curve: Curves.easeInOut,
-                  )
-                  .then()
-                  .scale(
-                    duration: 2.seconds,
-                    begin: const Offset(1.1, 1.1),
-                    end: const Offset(1, 1),
-                    curve: Curves.easeInOut,
+                    const SizedBox(height: 12),
+                    Text(
+                      'Get personalized guidance\nfor your recovery journey',
+                      style: AppTextStyles.sectionHeader.copyWith(
+                        fontSize: 16,
+                        color: colors.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        context.read<NavigationCubit>().changeTab(3);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Start Chatting',
+                              style: AppTextStyles.cardTitle.copyWith(
+                                color: colors.primary,
+                                fontSize: 14,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: colors.primary,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                        width: 90,
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: colors.primary.withValues(alpha: .05),
+                          shape: BoxShape.circle,
+                        ),
+                      )
+                      .animate(onPlay: (controller) => controller.repeat())
+                      .scale(
+                        duration: 2.seconds,
+                        begin: const Offset(1, 1),
+                        end: const Offset(1.1, 1.1),
+                        curve: Curves.easeInOut,
+                      )
+                      .then()
+                      .scale(
+                        duration: 2.seconds,
+                        begin: const Offset(1.1, 1.1),
+                        end: const Offset(1, 1),
+                        curve: Curves.easeInOut,
+                      ),
+                  SvgPicture.asset(
+                    AssetPaths.aiCoachIcon,
+                    width: 55,
+                    height: 55,
                   ),
-              SvgPicture.asset(AssetPaths.aiCoachIcon, width: 55, height: 55),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 500.ms, delay: 600.ms).slideY(begin: 0.1);
+        ).animate().fadeIn(duration: 500.ms, delay: 600.ms).slideY(begin: 0.1),
+      ],
+    );
   }
 }
