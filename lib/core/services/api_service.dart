@@ -10,6 +10,8 @@ class ApiService {
   ApiService({required this.dio}) {
     dio.options.baseUrl = _baseUrl;
     dio.options.queryParameters = {'key': AppSecrets.geminiApiKey};
+    dio.options.connectTimeout = const Duration(seconds: 60);
+    dio.options.receiveTimeout = const Duration(seconds: 60);
     dio.interceptors.add(
       LogInterceptor(
         request: true,

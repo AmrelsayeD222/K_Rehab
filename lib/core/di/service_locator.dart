@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
+import 'package:k_rehab/core/services/api_service.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
@@ -24,6 +26,9 @@ import 'package:k_rehab/features/protocols/data/repo/protocol_repo.dart';
 import 'package:k_rehab/features/protocols/data/repo/protocol_repo_impl.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_details_cubit.dart';
+import 'package:k_rehab/features/recoveryCoach/data/repo/recovery_coach_repo.dart';
+import 'package:k_rehab/features/recoveryCoach/data/repo/recovery_coach_repo_impl.dart';
+import 'package:k_rehab/features/recoveryCoach/presentation/manager/recovery_coach_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -88,5 +93,17 @@ void setupServiceLocator() {
 
   getIt.registerFactory<ProtocolDetailsCubit>(
     () => ProtocolDetailsCubit(getIt<ProtocolRepo>()),
+  );
+
+  // Recovery Coach Feature Registrations
+  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<ApiService>(
+    () => ApiService(dio: getIt<Dio>()),
+  );
+  getIt.registerLazySingleton<RecoveryCoachRepo>(
+    () => RecoveryCoachRepoImpl(apiService: getIt<ApiService>()),
+  );
+  getIt.registerFactory<RecoveryCoachCubit>(
+    () => RecoveryCoachCubit(getIt<RecoveryCoachRepo>()),
   );
 }

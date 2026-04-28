@@ -31,7 +31,9 @@ class RecoveryCoachCubit extends Cubit<RecoveryCoachState> {
     emit(RecoveryCoachLoaded(messages: List.from(_messages)));
 
     // Call API
-    final result = await recoveryCoachRepo.sendMessage(_messages);
+    final result = await recoveryCoachRepo.sendMessage(
+      _messages.where((m) => !m.isTyping).toList(),
+    );
     if (isClosed) {
       _isProcessing = false;
       return;
@@ -62,18 +64,5 @@ class RecoveryCoachCubit extends Cubit<RecoveryCoachState> {
     _messages.clear();
     _isProcessing = false;
     emit(RecoveryCoachInitial());
-  }
-
-  Future<void> retryLastMessage() async {
-    if (_messages.isEmpty) return;
-
-    final lastUserMessage = _messages.lastWhere(
-      (m) => m.isUser,
-      orElse: () => ChatMessageModel(content: '', isUser: true),
-    );
-
-    if (lastUserMessage.content.isEmpty) return;
-
-    await sendMessage(lastUserMessage.content);
   }
 }

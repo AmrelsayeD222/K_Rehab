@@ -36,7 +36,7 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
           .toList();
 
       final data = await apiService.post(
-        endpoint: '/v1beta/models/gemini-2.0-flash:generateContent',
+        endpoint: '/gemini-2.5-flash:generateContent',
         body: {
           'system_instruction': {
             'parts': [
@@ -52,7 +52,13 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
         return left(ServerFailure('No response from AI'));
       }
 
-      final parts = candidates[0]['content']['parts'] as List<dynamic>;
+      final candidate = candidates[0] as Map<String, dynamic>;
+      final content = candidate['content'] as Map<String, dynamic>?;
+      if (content == null) {
+        return left(ServerFailure('Response blocked by safety filters'));
+      }
+
+      final parts = content['parts'] as List<dynamic>? ?? [];
       if (parts.isEmpty) {
         return left(ServerFailure('Empty AI response'));
       }

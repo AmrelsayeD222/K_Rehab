@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/manager/navigation_cubit.dart';
-import 'package:k_rehab/features/recoveryCoach/presentation/views/recovery_coach.dart';
+import 'package:k_rehab/features/recoveryCoach/presentation/views/recovery_coach_view.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercises_view.dart';
 import 'package:k_rehab/features/home/presentation/views/home_view.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
