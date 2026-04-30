@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
@@ -16,10 +17,19 @@ class ProtocolCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(
-        AppRouter.protocolDetails,
-        extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
-      ),
+      onTap: () {
+        if (model.isFree) {
+          context.push(
+            AppRouter.protocolDetails,
+            extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
+          );
+        } else {
+          KSnackBar.show(
+            context,
+            message: 'This protocol is paid. Please upgrade to access.',
+          );
+        }
+      },
       child:
           Hero(
                 tag: 'home_protocol_${model.id}',
@@ -78,9 +88,9 @@ class ProtocolCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: const Icon(
-            Icons.arrow_forward_rounded,
-            color: Color(0xFF2a5051),
+          child: Icon(
+            model.isFree ? Icons.arrow_forward_rounded : Icons.lock_rounded,
+            color: const Color(0xFF2a5051),
             size: 20,
           ),
         ),

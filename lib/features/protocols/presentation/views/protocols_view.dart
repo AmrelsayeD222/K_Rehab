@@ -8,6 +8,7 @@ import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_item.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocols_header.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 import 'package:go_router/go_router.dart';
 
 class ProtocolsView extends StatelessWidget {
@@ -73,10 +74,19 @@ class _ProtocolsList extends StatelessWidget {
         final protocol = state.protocols[index];
         return ProtocolCardItem(
               protocol: protocol,
-              onTap: () => context.push(
-                AppRouter.protocolDetails,
-                extra: {'protocol': protocol, 'heroTag': protocol.id},
-              ),
+              onTap: () {
+                if (protocol.isFree) {
+                  context.push(
+                    AppRouter.protocolDetails,
+                    extra: {'protocol': protocol, 'heroTag': protocol.id},
+                  );
+                } else {
+                  KSnackBar.show(
+                    context,
+                    message: 'This protocol is paid. Please upgrade to access.',
+                  );
+                }
+              },
             )
             .animate()
             .fadeIn(
