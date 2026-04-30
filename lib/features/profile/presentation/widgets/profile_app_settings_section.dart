@@ -25,52 +25,23 @@ class ProfileAppSettingsSection extends StatelessWidget {
                 options: ['AR', 'EN'],
                 initialIndex: 1,
               ),
-              onTap: () {},
             ),
             const Divider(height: 1, indent: 64, endIndent: 16),
             CustomMenuCardWidget(
-              icon: isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+              icon: isDark
+                  ? Icons.dark_mode_outlined
+                  : Icons.light_mode_outlined,
               title: 'Theme',
               trailing: ProfileSegmentedToggle(
                 options: const ['Dark', 'Light'],
                 initialIndex: isDark ? 0 : 1,
-                onChanged: (index) => context.read<ThemeCubit>().toggleTheme(index == 0),
+                onChanged: (index) =>
+                    context.read<ThemeCubit>().toggleTheme(index == 0),
               ),
-              onTap: () {},
-            ),
-            const Divider(height: 1, indent: 64, endIndent: 16),
-            const CustomMenuCardWidget(
-              icon: Icons.notifications_none_rounded,
-              title: 'Notifications',
-              trailing: _NotificationToggle(),
             ),
           ],
         ),
       ],
-    );
-  }
-}
-
-class _NotificationToggle extends StatefulWidget {
-  const _NotificationToggle();
-
-  @override
-  State<_NotificationToggle> createState() => _NotificationToggleState();
-}
-
-class _NotificationToggleState extends State<_NotificationToggle> {
-  bool _enabled = true;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    return Switch(
-      value: _enabled,
-      onChanged: (val) => setState(() => _enabled = val),
-      activeThumbColor: colors.primary,
-      activeTrackColor: colors.primary.withValues(alpha: 0.25),
-      inactiveThumbColor: colors.onSurfaceVariant,
-      inactiveTrackColor: colors.onSurfaceVariant.withValues(alpha: 0.15),
     );
   }
 }

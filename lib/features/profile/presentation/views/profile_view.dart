@@ -9,8 +9,9 @@ import 'package:k_rehab/features/profile/presentation/widgets/profile_account_se
 import 'package:k_rehab/features/profile/presentation/widgets/profile_app_settings_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_header.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_logout_button.dart';
-import 'package:k_rehab/features/profile/presentation/widgets/profile_support_section.dart';
+
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -22,9 +23,7 @@ class ProfileView extends StatelessWidget {
         if (state is ProfileLogoutSuccess) {
           context.go(AppRouter.login);
         } else if (state is ProfileFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.error)));
+          KSnackBar.show(context, message: state.error);
         }
       },
       child: Scaffold(
@@ -48,7 +47,7 @@ class ProfileView extends StatelessWidget {
                     SizedBox(height: 24),
                     ProfileAppSettingsSection(),
                     SizedBox(height: 24),
-                    ProfileSupportSection(),
+
                     SizedBox(height: 32),
                     ProfileLogoutButton(),
                     SizedBox(height: 32),

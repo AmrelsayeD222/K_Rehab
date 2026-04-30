@@ -11,6 +11,7 @@ import 'package:k_rehab/features/auth/presentation/widgets/auth_header.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_social_section.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_toggle_row.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/signup_auth_form.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 
 class SignupView extends StatelessWidget {
   const SignupView({super.key});
@@ -21,8 +22,10 @@ class SignupView extends StatelessWidget {
     return BlocListener<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Account Created Successfully!')),
+          KSnackBar.show(
+            context,
+            message: 'Account Created Successfully!',
+            isError: false,
           );
           context.go(AppRouter.mainView);
         }

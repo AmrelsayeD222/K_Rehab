@@ -34,7 +34,6 @@ class ProfileHeader extends StatelessWidget {
               style: AppTextStyles.heading1.copyWith(color: colors.onSurface),
             ),
             const SizedBox(height: 8),
-            const _PremiumBadge(),
           ],
         );
       },
@@ -86,7 +85,10 @@ class _ProfileAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colors.primary,
                 shape: BoxShape.circle,
-                border: Border.all(color: Theme.of(context).scaffoldBackgroundColor, width: 2),
+                border: Border.all(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  width: 2,
+                ),
               ),
               child: const Icon(
                 Icons.camera_alt_rounded,
@@ -117,9 +119,8 @@ class _AvatarContent extends StatelessWidget {
           backgroundColor: Colors.transparent,
           backgroundImage: imageProvider,
         ),
-        placeholder: (context, url) => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        placeholder: (context, url) =>
+            const Center(child: CircularProgressIndicator()),
         errorWidget: (context, url, error) => CircleAvatar(
           backgroundColor: Colors.transparent,
           child: Icon(
@@ -137,31 +138,6 @@ class _AvatarContent extends StatelessWidget {
         Icons.person_rounded,
         size: 52,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
-      ),
-    );
-  }
-}
-
-class _PremiumBadge extends StatelessWidget {
-  const _PremiumBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-      decoration: BoxDecoration(
-        color: const Color(0xFF0A4FBF).withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: const Color(0xFF007AFF).withValues(alpha: 0.6),
-        ),
-      ),
-      child: Text(
-        'PREMIUM MEMBER',
-        style: AppTextStyles.tag.copyWith(
-          color: const Color(0xFF5BA8FF),
-          letterSpacing: 1.2,
-        ),
       ),
     );
   }

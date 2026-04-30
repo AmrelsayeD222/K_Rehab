@@ -16,28 +16,14 @@ class ProfileAccountSection extends StatelessWidget {
         ProfileSectionCard(
           children: [
             CustomMenuCardWidget(
-              icon: Icons.person_outline_rounded,
-              title: 'Personal Information',
-              onTap: () {},
-            ),
-            const Divider(height: 1, indent: 64, endIndent: 16),
-            CustomMenuCardWidget(
-              icon: Icons.lock_outline_rounded,
-              title: 'Change Password',
-              onTap: () {},
-            ),
-            const Divider(height: 1, indent: 64, endIndent: 16),
-            CustomMenuCardWidget(
               icon: Icons.workspace_premium_outlined,
               title: 'Subscription',
               trailing: const _PremiumActiveLabel(),
-              onTap: () {},
             ),
             const Divider(height: 1, indent: 64, endIndent: 16),
             CustomMenuCardWidget(
               icon: Icons.payment_outlined,
               title: 'Payment Methods',
-              onTap: () {},
             ),
           ],
         ),

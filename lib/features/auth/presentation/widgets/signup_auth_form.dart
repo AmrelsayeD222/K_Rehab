@@ -5,6 +5,7 @@ import 'package:k_rehab/core/utils/app_validators.dart';
 import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_button.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 
 class SignupFormSection extends StatelessWidget {
   const SignupFormSection({super.key, required this.onSignupPressed});
@@ -40,9 +41,7 @@ class SignupFormSection extends StatelessWidget {
         BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
             if (state is RegisterFailure) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+              KSnackBar.show(context, message: state.errorMessage);
             }
           },
           builder: (context, state) {

@@ -7,6 +7,7 @@ import '../../data/models/chat_message_model.dart';
 import '../manager/recovery_coach_cubit.dart';
 import 'chat_bubble.dart';
 import 'suggestion_chips.dart';
+import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 
 class ChatListView extends StatefulWidget {
   const ChatListView({super.key});
@@ -39,18 +40,11 @@ class _ChatListViewState extends State<ChatListView> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
     return BlocConsumer<RecoveryCoachCubit, RecoveryCoachState>(
       listener: (context, state) {
         if (state is RecoveryCoachError) {
           log(state.error);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.error),
-              backgroundColor: colors.error,
-            ),
-          );
+          KSnackBar.show(context, message: state.error);
         }
 
         if (state is RecoveryCoachLoaded) {
