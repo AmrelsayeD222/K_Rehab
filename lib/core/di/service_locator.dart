@@ -57,7 +57,10 @@ void setupServiceLocator() {
   );
 
   getIt.registerFactory<ProfileCubit>(
-    () => ProfileCubit(profileRepo: getIt<ProfileRepo>()),
+    () => ProfileCubit(
+      profileRepo: getIt<ProfileRepo>(),
+      authRepo: getIt<AuthRepo>(),
+    ),
   );
 
   // Home Feature Registrations

@@ -15,6 +15,23 @@ import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+
+class GoRouterRefreshStream extends ChangeNotifier {
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.listen((_) => notifyListeners());
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
 
 abstract class AppRouter {
   static const String disclaimer = '/';
@@ -30,6 +47,7 @@ abstract class AppRouter {
     
     return GoRouter(
       initialLocation: disclaimer,
+      refreshListenable: GoRouterRefreshStream(authRepo.authStateStream),
       redirect: (context, state) {
         final isLoggedIn = authRepo.isLoggedIn;
         final isOnboardingVisited =

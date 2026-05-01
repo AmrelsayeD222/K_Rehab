@@ -4,7 +4,6 @@ import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/features/auth/data/models/user_model.dart';
 
 abstract class ProfileRepo {
-  Future<Either<Failure, void>> logout();
   Future<Either<Failure, void>> uploadProfileImage(File image);
   Future<Either<Failure, UserModel>> getUserData();
 }

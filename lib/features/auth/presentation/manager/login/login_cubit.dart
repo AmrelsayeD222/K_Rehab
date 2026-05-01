@@ -12,8 +12,7 @@ class LoginCubit extends Cubit<LoginState> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  LoginCubit({required this.authRepo})
-    : super(LoginInitial());
+  LoginCubit({required this.authRepo}) : super(LoginInitial());
 
   Future<void> login() async {
     emit(LoginLoading());
@@ -28,6 +27,28 @@ class LoginCubit extends Cubit<LoginState> {
       (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),
       (_) => emit(LoginSuccess()),
     );
+  }
+
+  Future<void> signInWithGoogle() async {
+    emit(LoginLoading());
+    final result = await authRepo.signInWithGoogle();
+    if (isClosed) return;
+    result.fold(
+      (failure) => emit(LoginFailure(errorMessage: failure.errorMessage)),
+      (_) {
+        // Keep loading state for 10 seconds to cover the return from browser.
+        // If navigation hasn't happened by then (e.g. user canceled), reset to initial.
+        Future.delayed(const Duration(seconds: 10), () {
+          if (!isClosed) resetLoading();
+        });
+      },
+    );
+  }
+
+  void resetLoading() {
+    if (state is LoginLoading) {
+      emit(LoginInitial());
+    }
   }
 
   @override

@@ -31,6 +31,28 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
+  Future<void> signInWithGoogle() async {
+    emit(RegisterLoading());
+    final result = await authRepo.signInWithGoogle();
+    if (isClosed) return;
+    result.fold(
+      (failure) => emit(RegisterFailure(errorMessage: failure.errorMessage)),
+      (_) {
+        // Keep loading state for 5 seconds to cover the return from browser.
+        // If navigation hasn't happened by then (e.g. user canceled), reset to initial.
+        Future.delayed(const Duration(seconds: 10), () {
+          if (!isClosed) resetLoading();
+        });
+      },
+    );
+  }
+
+  void resetLoading() {
+    if (state is RegisterLoading) {
+      emit(RegisterInitial());
+    }
+  }
+
   @override
   Future<void> close() {
     nameController.dispose();

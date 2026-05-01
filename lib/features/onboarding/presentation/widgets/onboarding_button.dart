@@ -30,10 +30,21 @@ class OnboardingButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(text, style: AppTextStyles.buttonText),
+              Text(
+                text,
+                style: AppTextStyles.buttonText.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
               if (imagePath != null) ...[
                 const SizedBox(width: 8),
-                SvgPicture.asset(imagePath!),
+                SvgPicture.asset(
+                  imagePath!,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).colorScheme.onPrimary,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ],
             ],
           ),

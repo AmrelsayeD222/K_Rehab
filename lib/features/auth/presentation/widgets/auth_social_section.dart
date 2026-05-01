@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+
 import 'package:k_rehab/features/auth/presentation/widgets/social_auth_button.dart';
 
 class AuthSocialSection extends StatelessWidget {
   const AuthSocialSection({
     super.key,
     required this.googleIconPath,
-    required this.appleIconPath,
     required this.onGooglePressed,
-    required this.onApplePressed,
+    required this.text,
   });
 
   final String googleIconPath;
-  final String appleIconPath;
+
   final VoidCallback onGooglePressed;
-  final VoidCallback onApplePressed;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,9 @@ class AuthSocialSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'OR',
-                style: AppTextStyles.caption.copyWith(color: colors.onSurfaceVariant),
+                style: AppTextStyles.caption.copyWith(
+                  color: colors.onSurfaceVariant,
+                ),
               ),
             ),
             Expanded(child: Divider(color: colors.onSurfaceVariant)),
@@ -39,15 +41,11 @@ class AuthSocialSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SocialAuthButton(
+              text: text,
               iconPath: googleIconPath,
               onPressed: onGooglePressed,
             ),
             const SizedBox(width: 24),
-            SocialAuthButton(
-              iconPath: appleIconPath,
-              color: colors.onSurface,
-              onPressed: onApplePressed,
-            ),
           ],
         ),
       ],

@@ -34,11 +34,14 @@ class DisclaimerButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Next", style: AppTextStyles.buttonText.copyWith(color: colors.onSurface)),
+              Text(
+                "Next",
+                style: AppTextStyles.buttonText.copyWith(color: colors.onPrimary),
+              ),
               const SizedBox(width: 8),
               SvgPicture.asset(
                 AssetPaths.arrowIcon,
-                colorFilter: ColorFilter.mode(colors.onSurface, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(colors.onPrimary, BlendMode.srcIn),
               ),
             ],
           ),

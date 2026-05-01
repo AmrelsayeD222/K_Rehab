@@ -6,11 +6,13 @@ class SocialAuthButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? color;
 
+  final String text;
   const SocialAuthButton({
     super.key,
     required this.iconPath,
     required this.onPressed,
     this.color,
+    required this.text,
   });
 
   @override
@@ -24,15 +26,23 @@ class SocialAuthButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colors.onSurfaceVariant.withValues(alpha: 0.2)),
+          border: Border.all(
+            color: colors.onSurfaceVariant.withValues(alpha: 0.2),
+          ),
         ),
-        child: SvgPicture.asset(
-          iconPath,
-          height: 24,
-          width: 24,
-          colorFilter: color != null
-              ? ColorFilter.mode(color!, BlendMode.srcIn)
-              : null,
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              height: 24,
+              width: 24,
+              colorFilter: color != null
+                  ? ColorFilter.mode(color!, BlendMode.srcIn)
+                  : null,
+            ),
+            const SizedBox(width: 8),
+            Text(text),
+          ],
         ),
       ),
     );

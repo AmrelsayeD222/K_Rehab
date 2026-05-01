@@ -4,6 +4,7 @@ import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
+import 'package:k_rehab/core/constants/app_secrets.dart';
 import 'package:k_rehab/features/auth/data/models/auth_params.dart';
 import 'package:k_rehab/features/auth/data/models/user_model.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
@@ -28,8 +29,6 @@ class AuthRepoImpl extends AuthRepo {
           name: user.userMetadata?['name'] ?? params.name,
           createdAt: DateTime.parse(user.createdAt),
         );
-
-        await client.from('profiles').insert(userModel.toJson());
 
         return Right(userModel);
       }
@@ -69,5 +68,37 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
+  Future<Either<Failure, void>> signInWithGoogle() async {
+    try {
+      await client.auth.signInWithOAuth(
+        OAuthProvider.google,
+        authScreenLaunchMode: LaunchMode.externalApplication,
+        redirectTo: AppSecrets.authCallbackUrl,
+      );
+      return const Right(null);
+    } on AuthException catch (e) {
+      return Left(SupabaseAuthFailure.fromAuthException(e));
+    } catch (e) {
+      return Left(SupabaseAuthFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      await client.auth.signOut();
+      return const Right(null);
+    } on AuthException catch (e) {
+      return Left(SupabaseAuthFailure.fromAuthException(e));
+    } catch (e) {
+      return Left(SupabaseAuthFailure(e.toString()));
+    }
+  }
+
+  @override
   bool get isLoggedIn => client.auth.currentSession != null;
+
+  @override
+  Stream<AuthState> get authStateStream =>
+      client.auth.onAuthStateChange.asBroadcastStream();
 }

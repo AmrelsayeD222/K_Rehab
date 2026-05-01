@@ -34,7 +34,7 @@ abstract class AssetPaths {
       'assets/onboarding/video_guided_icon.svg';
 
   // Auth assets
-  static const String appleLogo = 'assets/auth/apple-logo.svg';
+
   static const String googleLogo =
       'assets/auth/google-icon-logo-svgrepo-com.svg';
   static const String loginIcon = 'assets/auth/login icon.svg';
