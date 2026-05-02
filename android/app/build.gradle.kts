@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.k_rehab"
+    namespace = "com.amr.krehab"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,13 +21,28 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.k_rehab"
+        applicationId = "com.amr.krehab"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+    flavorDimensions += "default"
+
+    productFlavors {
+
+        create("development") {
+            dimension = "default"
+            applicationIdSuffix = ".dev"
+            resValue("string", "app_name", "K Rehab Dev")
+        }
+
+        create("production") {
+            dimension = "default"
+            resValue("string", "app_name", "K Rehab Prod")
+        }
     }
 
     buildTypes {

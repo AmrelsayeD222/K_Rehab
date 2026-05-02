@@ -5,21 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "k_rehab",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "k_rehab (profile mode)",
+            "name": "k_rehab (dev)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "args": [
+                "--flavor",
+                "development",
+                "-t",
+                "lib/main_development.dart"
+            ]
         },
         {
-            "name": "k_rehab (release mode)",
+            "name": "k_rehab (prod)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "args": [
+                "--flavor",
+                "production",
+                "-t",
+                "lib/main_production.dart"
+            ]
         }
     ]
 }
