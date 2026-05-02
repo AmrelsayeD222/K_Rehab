@@ -1,7 +1,8 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class AppSecrets {
-  static const String supabaseUrl = 'https://yyueawgxobxnknoptyyl.supabase.co';
-  static const String supabaseAnonKey =
-      'sb_publishable_6fYCFOt7gd-mGl4YNPIyPw_qIPP4OIt';
-  static const String geminiApiKey = 'AIzaSyA-DGPy8xLYrXs4DZ_GlsC-gTbhjbiMUgs';
-  static const String authCallbackUrl = 'io.supabase.krehabapp://login-callback/';
+  static String supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
+  static String supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+  static String geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+  static String authCallbackUrl = dotenv.env['AUTH_CALLBACK_URL'] ?? '';
 }
