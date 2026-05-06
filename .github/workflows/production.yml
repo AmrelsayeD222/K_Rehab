@@ -39,7 +39,11 @@ jobs:
         run: flutter pub get
 
       - name: Build APK (production)
-        run: flutter build apk --release --flavor production -t lib/main_production.dart
+        run: flutter build apk --release --flavor production -t lib/main_production.dart --build-number=${{ github.run_number }}
+
+      
+      - name: Get commit message
+        run: echo "COMMIT_MSG=$(git log -1 --pretty=%s)" >> $GITHUB_ENV
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -51,5 +55,6 @@ jobs:
           releaseNotes: |
             🚀 Production Build
             Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
+            Commit: ${{ env.COMMIT_MSG }}
             By: ${{ github.actor }}
+            Build: #${{ github.run_number }}
