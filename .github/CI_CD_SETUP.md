@@ -17,7 +17,7 @@ Go to: **GitHub Repo → Settings → Secrets and variables → Actions → New 
 |---|---|
 | `DEV_FIREBASE_APP_ID` | `1:966938704373:android:0e461be786869c4704c8bc` |
 | `PROD_FIREBASE_APP_ID` | `1:966938704373:android:fe1ae8146174cf7704c8bc` |
-| `FIREBASE_SERVICE_CREDENTIALS` | JSON content of Firebase Service Account (see below) |
+| `FIREBASE_TOKEN` | Your Firebase CI token (see below) |
 | `SUPABASE_URL` | Your Supabase project URL |
 | `SUPABASE_ANON_KEY` | Your Supabase anon key |
 | `GEMINI_API_KEY` | Your Gemini API key |
@@ -25,17 +25,14 @@ Go to: **GitHub Repo → Settings → Secrets and variables → Actions → New 
 
 ---
 
-## How to Get FIREBASE_SERVICE_CREDENTIALS
+## How to Get FIREBASE_TOKEN
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Select project: **krehab-a4be7**
-3. Navigate to: **IAM & Admin → Service Accounts**
-4. Click **Create Service Account**
-   - Name: `github-actions-distributor`
-   - Role: **Firebase App Distribution Admin**
-4. FIREBASE_TOKEN **insted now**
-5. After creating, click the account → **Keys tab → Add Key → JSON**
-6. Copy the **entire JSON file content** and paste it as the `FIREBASE_SERVICE_CREDENTIALS` secret
+Since you are using a Firebase Token instead of a Service Account:
+1. Install the Firebase CLI on your computer if you haven't already: `npm install -g firebase-tools`
+2. Open your terminal and run: `firebase login:ci`
+3. A browser window will open. Log in with the Google account that has admin access to your Firebase project.
+4. After logging in successfully, your terminal will print a token (usually a long alphanumeric string).
+5. Copy this token and paste it as the `FIREBASE_TOKEN` secret in GitHub.
 
 ---
 
