@@ -50,7 +50,16 @@ Since you are using a Firebase Token instead of a Service Account:
 
 ## Workflow Triggers
 
+This project is configured to use **Manual Triggers** (`workflow_dispatch`) to save GitHub Actions minutes and give you full control over when to release.
+
+To trigger a build:
+1. Go to your GitHub repository in the browser.
+2. Click on the **Actions** tab.
+3. On the left sidebar, select either **🧪 Development Distribution** or **🚀 Production Distribution**.
+4. Click the **Run workflow** dropdown button on the right.
+5. Select the branch (`development` or `main`) and click **Run workflow**.
+
 ```
-push to development  →  builds dev APK  →  sends to internal-testers group
-push to main         →  builds prod APK →  sends to qa-testers group
+Manual Run (Dev Action)   →  builds dev APK  →  sends to internal-testers group
+Manual Run (Prod Action)  →  builds prod APK →  sends to qa-testers group
 ```
