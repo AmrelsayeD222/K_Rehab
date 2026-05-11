@@ -25,35 +25,49 @@ class MedicalDisclaimerView extends StatelessWidget {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: SingleChildScrollView(
+              child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 24),
-                    const DisclaimerLogoHeader(),
-                    const SizedBox(height: 32),
-                    Text(
-                      'Before You Begin',
-                      style: AppTextStyles.heading1.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 24),
+                        const DisclaimerLogoHeader(),
+                        const SizedBox(height: 32),
+                        Text(
+                          'Before You Begin',
+                          style: AppTextStyles.heading1.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface),
+                        ),
+                        const SizedBox(height: 24),
+                        const DisclaimerImageSection(),
+                        const SizedBox(height: 24),
+                        const DisclaimerCard(),
+                        const SizedBox(height: 20),
+                        DisclaimerCheckbox(
+                          value: isAgreed,
+                          onChanged: (value) =>
+                              onboardingCubit.toggleAgreed(value),
+                        ),
+                        const SizedBox(height: 30),
+                      ],
                     ),
-                    const SizedBox(height: 24),
-                    const DisclaimerImageSection(),
-                    const SizedBox(height: 24),
-                    const DisclaimerCard(),
-                    const SizedBox(height: 20),
-                    DisclaimerCheckbox(
-                      value: isAgreed,
-                      onChanged: (value) => onboardingCubit.toggleAgreed(value),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        DisclaimerButton(
+                          enabled: isAgreed,
+                          onPressed: () => context.go(AppRouter.onboarding),
+                        ),
+                        const SizedBox(height: 50),
+                      ],
                     ),
-                    const SizedBox(height: 30),
-                    DisclaimerButton(
-                      enabled: isAgreed,
-                      onPressed: () => context.go(AppRouter.onboarding),
-                    ),
-                    const SizedBox(height: 24),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -34,25 +34,41 @@ class ProfileView extends StatelessWidget {
                 return const Center(child: KLoadingWidget());
               }
 
-              return SingleChildScrollView(
+              return CustomScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    SizedBox(height: 28),
-                    Center(child: ProfileHeader()),
-                    SizedBox(height: 32),
-                    ProfileAccountSection(),
-                    SizedBox(height: 24),
-                    ProfileAppSettingsSection(),
-                    SizedBox(height: 24),
-
-                    SizedBox(height: 32),
-                    ProfileLogoutButton(),
-                    SizedBox(height: 32),
-                  ],
-                ),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          SizedBox(height: 28),
+                          Center(child: ProfileHeader()),
+                          SizedBox(height: 32),
+                          ProfileAccountSection(),
+                          SizedBox(height: 24),
+                          ProfileAppSettingsSection(),
+                          SizedBox(height: 24),
+                          SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          ProfileLogoutButton(),
+                          SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               );
             },
           ),
