@@ -63,3 +63,8 @@ To trigger a build:
 Manual Run (Dev Action)   →  builds dev APK  →  sends to internal-testers group
 Manual Run (Prod Action)  →  builds prod APK →  sends to qa-testers group
 ```
+## How to run app from vs code with specific flavor
+1. cd android
+./gradlew --stop
+cd ..
+2. flutter clean flutter pub get
