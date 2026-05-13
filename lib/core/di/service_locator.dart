@@ -14,9 +14,9 @@ import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onbo
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 import 'package:k_rehab/features/profile/data/repo/repo_impl.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/recoveryCoach/data/repo/recovery_coach_repo.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 import 'package:k_rehab/features/exercises/data/repo/exercise_repo.dart';
 import 'package:k_rehab/features/exercises/data/repo/exercise_repo_impl.dart';
@@ -26,9 +26,19 @@ import 'package:k_rehab/features/protocols/data/repo/protocol_repo.dart';
 import 'package:k_rehab/features/protocols/data/repo/protocol_repo_impl.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_details_cubit.dart';
-import 'package:k_rehab/features/recoveryCoach/data/repo/recovery_coach_repo.dart';
 import 'package:k_rehab/features/recoveryCoach/data/repo/recovery_coach_repo_impl.dart';
 import 'package:k_rehab/features/recoveryCoach/presentation/manager/recovery_coach_cubit.dart';
+
+import 'package:k_rehab/features/protocols/data/data_sources/protocol_local_data_source.dart';
+import 'package:k_rehab/features/protocols/data/data_sources/protocol_remote_data_source.dart';
+import 'package:k_rehab/features/exercises/data/data_sources/exercise_local_data_source.dart';
+import 'package:k_rehab/features/exercises/data/data_sources/exercise_remote_data_source.dart';
+import 'package:k_rehab/features/auth/data/data_sources/auth_local_data_source.dart';
+import 'package:k_rehab/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:k_rehab/features/home/data/data_sources/home_local_data_source.dart';
+import 'package:k_rehab/features/home/data/data_sources/home_remote_data_source.dart';
+import 'package:k_rehab/features/profile/data/data_sources/profile_local_data_source.dart';
+import 'package:k_rehab/features/profile/data/data_sources/profile_remote_data_source.dart';
 
 final getIt = GetIt.instance;
 
@@ -36,14 +46,53 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
   getIt.registerFactory<NavigationCubit>(() => NavigationCubit());
 
+  // Data Sources
+  getIt.registerLazySingleton<ProtocolLocalDataSource>(
+    () => ProtocolLocalDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<ExerciseLocalDataSource>(
+    () => ExerciseLocalDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<HomeLocalDataSource>(
+    () => HomeLocalDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<ProfileLocalDataSource>(
+    () => ProfileLocalDataSourceImpl(),
+  );
 
+  // Remote Data Sources
+  getIt.registerLazySingleton<ProtocolRemoteDataSource>(
+    () => ProtocolRemoteDataSourceImpl(supabaseClient: getIt<SupabaseClient>()),
+  );
+  getIt.registerLazySingleton<ExerciseRemoteDataSource>(
+    () => ExerciseRemoteDataSourceImpl(supabaseClient: getIt<SupabaseClient>()),
+  );
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(client: getIt<SupabaseClient>()),
+  );
+  getIt.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(supabaseClient: getIt<SupabaseClient>()),
+  );
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(client: getIt<SupabaseClient>()),
+  );
 
   getIt.registerLazySingleton<AuthRepo>(
-    () => AuthRepoImpl(client: getIt<SupabaseClient>()),
+    () => AuthRepoImpl(
+      remoteDataSource: getIt<AuthRemoteDataSource>(),
+      localDataSource: getIt<AuthLocalDataSource>(),
+    ),
   );
 
   getIt.registerLazySingleton<ProfileRepo>(
-    () => ProfileRepoImpl(client: getIt<SupabaseClient>()),
+    () => ProfileRepoImpl(
+      remoteDataSource: getIt<ProfileRemoteDataSource>(),
+      localDataSource: getIt<ProfileLocalDataSource>(),
+      supabaseClient: getIt<SupabaseClient>(),
+    ),
   );
 
   getIt.registerFactory<OnboardingCubit>(() => OnboardingCubit());
@@ -65,7 +114,10 @@ void setupServiceLocator() {
 
   // Home Feature Registrations
   getIt.registerLazySingleton<HomeRepo>(
-    () => HomeRepoImpl(supabaseClient: getIt<SupabaseClient>()),
+    () => HomeRepoImpl(
+      remoteDataSource: getIt<HomeRemoteDataSource>(),
+      localDataSource: getIt<HomeLocalDataSource>(),
+    ),
   );
 
   getIt.registerFactory<FeaturedProtocolCubit>(
@@ -78,7 +130,10 @@ void setupServiceLocator() {
 
   // Exercises Feature Registrations
   getIt.registerLazySingleton<ExerciseRepo>(
-    () => ExerciseRepoImpl(supabaseClient: getIt<SupabaseClient>()),
+    () => ExerciseRepoImpl(
+      remoteDataSource: getIt<ExerciseRemoteDataSource>(),
+      localDataSource: getIt<ExerciseLocalDataSource>(),
+    ),
   );
 
   getIt.registerFactory<ExerciseCubit>(
@@ -87,7 +142,10 @@ void setupServiceLocator() {
 
   // Protocols Feature Registrations
   getIt.registerLazySingleton<ProtocolRepo>(
-    () => ProtocolRepoImpl(supabaseClient: getIt<SupabaseClient>()),
+    () => ProtocolRepoImpl(
+      remoteDataSource: getIt<ProtocolRemoteDataSource>(),
+      localDataSource: getIt<ProtocolLocalDataSource>(),
+    ),
   );
 
   getIt.registerFactory<ProtocolCubit>(

@@ -1,16 +1,30 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
+part 'protocol_model.g.dart';
+
+@HiveType(typeId: 6)
 class ProtocolModel extends Equatable {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String subtitle;
+  @HiveField(3)
   final bool isClinicallyReviewed;
+  @HiveField(4)
   final String imagePath;
+  @HiveField(5)
   final String duration;
+  @HiveField(6)
   final String sessions;
+  @HiveField(7)
   final bool isFree;
+  @HiveField(8)
   final bool isFeatured;
+  @HiveField(9)
   final ProtocolDetailsModel? details;
 
   @override

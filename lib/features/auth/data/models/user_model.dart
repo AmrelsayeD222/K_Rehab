@@ -1,10 +1,19 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'user_model.g.dart';
+
+@HiveType(typeId: 5)
 class UserModel extends Equatable {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String email;
+  @HiveField(2)
   final String id;
+  @HiveField(3)
   final String? profileImageUrl;
+  @HiveField(4)
   final DateTime? createdAt;
 
   @override

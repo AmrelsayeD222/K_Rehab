@@ -4,34 +4,37 @@ import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
+import 'package:k_rehab/features/protocols/data/data_sources/protocol_local_data_source.dart';
+import 'package:k_rehab/features/protocols/data/data_sources/protocol_remote_data_source.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/data/repo/protocol_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProtocolRepoImpl implements ProtocolRepo {
-  final SupabaseClient supabaseClient;
+  final ProtocolRemoteDataSource remoteDataSource;
+  final ProtocolLocalDataSource localDataSource;
 
-  ProtocolRepoImpl({required this.supabaseClient});
+  ProtocolRepoImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+  });
 
   @override
   Future<Either<Failure, List<ProtocolModel>>> fetchProtocols() async {
     try {
-      // جلب البيانات الأساسية فقط لتقليل الحجم
-      final response = await supabaseClient
-          .from('protocols')
-          .select(
-            'id, title, subtitle, isClinicallyReviewed, image_path, duration, sessions, isFree, is_featured',
-          );
-      final List<ProtocolModel> protocols = response
-          .map((e) => ProtocolModel.fromJson(e))
-          .toList();
+      final protocols = await remoteDataSource.fetchProtocols();
+      await localDataSource.cacheProtocols(protocols);
       return right(protocols);
     } on PostgrestException catch (e) {
+      final cached = await localDataSource.getCachedProtocols();
+      if (cached.isNotEmpty) return right(cached);
       return left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } on AuthException catch (e) {
       return left(SupabaseAuthFailure.fromAuthException(e));
     } on SocketException catch (e) {
+      final cached = await localDataSource.getCachedProtocols();
+      if (cached.isNotEmpty) return right(cached);
       return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
@@ -43,23 +46,18 @@ class ProtocolRepoImpl implements ProtocolRepo {
     String protocolId,
   ) async {
     try {
-      // جلب الـ document بالكامل
-      final response = await supabaseClient
-          .from('protocols')
-          .select('details')
-          .eq('id', protocolId)
-          .single();
-
-      if (response['details'] == null) {
-        return left(SupabaseDatabaseFailure('No details found'));
-      }
-
-      return right(ProtocolDetailsModel.fromJson(response['details']));
+      final details = await remoteDataSource.fetchProtocolDetails(protocolId);
+      await localDataSource.cacheProtocolDetails(protocolId, details);
+      return right(details);
     } on PostgrestException catch (e) {
+      final cached = await localDataSource.getCachedProtocolDetails(protocolId);
+      if (cached != null) return right(cached);
       return left(SupabaseDatabaseFailure.fromPostgrestException(e));
     } on AuthException catch (e) {
       return left(SupabaseAuthFailure.fromAuthException(e));
     } on SocketException catch (e) {
+      final cached = await localDataSource.getCachedProtocolDetails(protocolId);
+      if (cached != null) return right(cached);
       return left(NetworkFailure.fromSocketException(e));
     } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));

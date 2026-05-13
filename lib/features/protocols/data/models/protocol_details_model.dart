@@ -1,6 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'protocol_details_model.g.dart';
+
+@HiveType(typeId: 0)
 class ProtocolDetailsModel extends Equatable {
+  @HiveField(0)
   final List<ProtocolPhaseModel> phases;
 
   @override
@@ -26,14 +31,23 @@ class ProtocolDetailsModel extends Equatable {
   }
 }
 
+@HiveType(typeId: 1)
 class ProtocolPhaseModel extends Equatable {
+  @HiveField(0)
   final String phaseName;
+  @HiveField(1)
   final String phaseTitle;
+  @HiveField(2)
   final List<String> rehabGoals;
+  @HiveField(3)
   final List<String> criteriaToProgress;
+  @HiveField(4)
   final List<String> impairments;
+  @HiveField(5)
   final List<ProtocolInterventionModel> interventions;
+  @HiveField(6)
   final List<String> goals;
+  @HiveField(7)
   final String rationale;
 
   @override
@@ -89,8 +103,11 @@ class ProtocolPhaseModel extends Equatable {
   }
 }
 
+@HiveType(typeId: 2)
 class ProtocolInterventionModel extends Equatable {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final List<String> items;
 
   @override

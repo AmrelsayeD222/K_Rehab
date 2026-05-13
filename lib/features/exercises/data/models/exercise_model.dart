@@ -1,17 +1,33 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'exercise_model.g.dart';
+
+@HiveType(typeId: 3)
 class ExerciseModel extends Equatable {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String tag;
+  @HiveField(3)
   final String category;
+  @HiveField(4)
   final String difficulty;
+  @HiveField(5)
   final int? sets;
+  @HiveField(6)
   final int? reps;
+  @HiveField(7)
   final int? holdSeconds;
+  @HiveField(8)
   final String subtitle;
+  @HiveField(9)
   final String imageUrl;
+  @HiveField(10)
   final String gifUrl;
+  @HiveField(11)
   final List<ExerciseStepModel> steps;
 
   @override
@@ -66,8 +82,11 @@ class ExerciseModel extends Equatable {
   }
 }
 
+@HiveType(typeId: 4)
 class ExerciseStepModel extends Equatable {
+  @HiveField(0)
   final int step;
+  @HiveField(1)
   final String description;
 
   @override

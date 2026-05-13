@@ -4,10 +4,12 @@ import 'package:k_rehab/core/config/environment_config.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 import 'package:k_rehab/core/services/cache_helper.dart';
 import 'package:k_rehab/core/services/supabase_config.dart';
+import 'package:k_rehab/core/storage/hive_manager.dart';
 import 'package:k_rehab/k_rehab_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await HiveManager.init();
   EnvironmentConfig.environment = AppEnvironment.production;
   await dotenv.load(fileName: ".env");
   await SupabaseConfig.init();

@@ -6,25 +6,27 @@ import 'package:k_rehab/core/error/network_failure.dart';
 import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:k_rehab/features/auth/data/models/user_model.dart';
+import 'package:k_rehab/features/profile/data/data_sources/profile_local_data_source.dart';
+import 'package:k_rehab/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:k_rehab/features/profile/data/repo/profile_repo.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileRepoImpl implements ProfileRepo {
-  final SupabaseClient client;
+  final ProfileRemoteDataSource remoteDataSource;
+  final ProfileLocalDataSource localDataSource;
+  final SupabaseClient supabaseClient;
 
-  ProfileRepoImpl({required this.client});
+  ProfileRepoImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.supabaseClient,
+  });
 
   @override
   Future<Either<Failure, void>> uploadProfileImage(File image) async {
     try {
-      await client.storage
-          .from('profiles')
-          .upload(
-            'profiles/${client.auth.currentUser!.id}',
-            image,
-            fileOptions: const FileOptions(upsert: true),
-          );
+      await remoteDataSource.uploadProfileImage(image);
       return right(null);
     } on StorageException catch (e) {
       return left(SupabaseDatabaseFailure.fromStorageException(e));
@@ -40,25 +42,30 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<Either<Failure, UserModel>> getUserData() async {
     try {
-      final user = client.auth.currentUser;
+      final user = supabaseClient.auth.currentUser;
       if (user != null) {
-        // Get fresh avatar URL with timestamp to bypass cache
-        final baseUrl = client.storage
-            .from('profiles')
-            .getPublicUrl('profiles/${user.id}');
-        final timestamp = DateTime.now().millisecondsSinceEpoch;
-
-        return right(
-          UserModel(
-            id: user.id,
-            name: user.userMetadata?['name'] ?? 'Unknown User',
-            email: user.email ?? 'No Email',
-            profileImageUrl: '$baseUrl?v=$timestamp',
-          ),
+        final baseUrl = remoteDataSource.getPublicUrl(user.id);
+        
+        // We only add a timestamp if we want to force refresh, 
+        // otherwise we use the static URL for caching.
+        final userModel = UserModel(
+          id: user.id,
+          name: user.userMetadata?['name'] ?? 'Unknown User',
+          email: user.email ?? 'No Email',
+          profileImageUrl: baseUrl,
         );
+
+        await localDataSource.cacheUserData(userModel);
+        return right(userModel);
       }
+      
+      final cachedUser = await localDataSource.getCachedUserData();
+      if (cachedUser != null) return right(cachedUser);
+      
       return left(SupabaseAuthFailure('User not logged in'));
     } catch (e) {
+      final cachedUser = await localDataSource.getCachedUserData();
+      if (cachedUser != null) return right(cachedUser);
       return left(SupabaseDatabaseFailure(e.toString()));
     }
   }
