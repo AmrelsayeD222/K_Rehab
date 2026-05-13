@@ -28,6 +28,8 @@ class ProfileRepoImpl implements ProfileRepo {
       return right(null);
     } on StorageException catch (e) {
       return left(SupabaseDatabaseFailure.fromStorageException(e));
+    } on AuthException catch (e) {
+      return left(SupabaseAuthFailure.fromAuthException(e));
     } on SocketException catch (e) {
       return left(NetworkFailure.fromSocketException(e));
     } catch (e) {

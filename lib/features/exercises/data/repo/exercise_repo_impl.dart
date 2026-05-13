@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:k_rehab/core/error/failure.dart';
 import 'package:k_rehab/core/error/network_failure.dart';
+import 'package:k_rehab/core/error/supabase_auth_failure.dart';
 import 'package:k_rehab/core/error/supabase_database_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/exercise_model.dart';
@@ -22,6 +23,8 @@ class ExerciseRepoImpl implements ExerciseRepo {
       return right(exercises);
     } on PostgrestException catch (e) {
       return left(SupabaseDatabaseFailure.fromPostgrestException(e));
+    } on AuthException catch (e) {
+      return left(SupabaseAuthFailure.fromAuthException(e));
     } on SocketException catch (e) {
       return left(NetworkFailure.fromSocketException(e));
     } catch (e) {

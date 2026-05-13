@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
 
 import 'package:k_rehab/core/router/app_router.dart';
+import 'package:k_rehab/core/widgets/k_error_widget.dart';
+import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_item.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocols_header.dart';
@@ -48,11 +50,13 @@ class _ProtocolsList extends StatelessWidget {
     return BlocBuilder<ProtocolCubit, ProtocolState>(
       builder: (context, state) {
         if (state is ProtocolLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: KLoadingWidget());
         } else if (state is ProtocolSuccess) {
           return _buildList(context, state);
         } else if (state is ProtocolFailure) {
-          return _buildError(context, state.error);
+          return KErrorWidget(
+              error: state.error,
+              onRetry: () => context.read<ProtocolCubit>().fetchProtocols());
         }
         return const SizedBox.shrink();
       },
@@ -73,21 +77,21 @@ class _ProtocolsList extends StatelessWidget {
       itemBuilder: (context, index) {
         final protocol = state.protocols[index];
         return ProtocolCardItem(
-              protocol: protocol,
-              onTap: () {
-                if (protocol.isFree) {
-                  context.push(
-                    AppRouter.protocolDetails,
-                    extra: {'protocol': protocol, 'heroTag': protocol.id},
-                  );
-                } else {
-                  KSnackBar.show(
-                    context,
-                    message: 'This protocol is paid. Please upgrade to access.',
-                  );
-                }
-              },
-            )
+          protocol: protocol,
+          onTap: () {
+            if (protocol.isFree) {
+              context.push(
+                AppRouter.protocolDetails,
+                extra: {'protocol': protocol, 'heroTag': protocol.id},
+              );
+            } else {
+              KSnackBar.show(
+                context,
+                message: 'This protocol is paid. Please upgrade to access.',
+              );
+            }
+          },
+        )
             .animate()
             .fadeIn(
               duration: 200.ms,
@@ -95,26 +99,6 @@ class _ProtocolsList extends StatelessWidget {
             )
             .slideY(begin: 0.15, curve: Curves.easeOutCubic);
       },
-    );
-  }
-
-  Widget _buildError(BuildContext context, String error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            error,
-            style: const TextStyle(fontSize: 14),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          TextButton(
-            onPressed: () => context.read<ProtocolCubit>().fetchProtocols(),
-            child: const Text('Retry'),
-          ),
-        ],
-      ),
     );
   }
 }
