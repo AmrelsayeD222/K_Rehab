@@ -1,4 +1,6 @@
-class ExerciseModel {
+import 'package:equatable/equatable.dart';
+
+class ExerciseModel extends Equatable {
   final String id;
   final String title;
   final String tag;
@@ -12,7 +14,23 @@ class ExerciseModel {
   final String gifUrl;
   final List<ExerciseStepModel> steps;
 
-  ExerciseModel({
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        tag,
+        category,
+        difficulty,
+        sets,
+        reps,
+        holdSeconds,
+        subtitle,
+        imageUrl,
+        gifUrl,
+        steps,
+      ];
+
+  const ExerciseModel({
     required this.id,
     required this.title,
     required this.tag,
@@ -48,11 +66,14 @@ class ExerciseModel {
   }
 }
 
-class ExerciseStepModel {
+class ExerciseStepModel extends Equatable {
   final int step;
   final String description;
 
-  ExerciseStepModel({required this.step, required this.description});
+  @override
+  List<Object?> get props => [step, description];
+
+  const ExerciseStepModel({required this.step, required this.description});
 
   factory ExerciseStepModel.fromJson(Map<String, dynamic> json) {
     return ExerciseStepModel(

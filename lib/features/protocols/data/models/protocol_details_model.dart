@@ -1,7 +1,12 @@
-class ProtocolDetailsModel {
+import 'package:equatable/equatable.dart';
+
+class ProtocolDetailsModel extends Equatable {
   final List<ProtocolPhaseModel> phases;
 
-  ProtocolDetailsModel({
+  @override
+  List<Object?> get props => [phases];
+
+  const ProtocolDetailsModel({
     required this.phases,
   });
 
@@ -21,7 +26,7 @@ class ProtocolDetailsModel {
   }
 }
 
-class ProtocolPhaseModel {
+class ProtocolPhaseModel extends Equatable {
   final String phaseName;
   final String phaseTitle;
   final List<String> rehabGoals;
@@ -31,7 +36,19 @@ class ProtocolPhaseModel {
   final List<String> goals;
   final String rationale;
 
-  ProtocolPhaseModel({
+  @override
+  List<Object?> get props => [
+        phaseName,
+        phaseTitle,
+        rehabGoals,
+        criteriaToProgress,
+        impairments,
+        interventions,
+        goals,
+        rationale,
+      ];
+
+  const ProtocolPhaseModel({
     required this.phaseName,
     required this.phaseTitle,
     required this.rehabGoals,
@@ -72,11 +89,14 @@ class ProtocolPhaseModel {
   }
 }
 
-class ProtocolInterventionModel {
+class ProtocolInterventionModel extends Equatable {
   final String name;
   final List<String> items;
 
-  ProtocolInterventionModel({
+  @override
+  List<Object?> get props => [name, items];
+
+  const ProtocolInterventionModel({
     required this.name,
     required this.items,
   });

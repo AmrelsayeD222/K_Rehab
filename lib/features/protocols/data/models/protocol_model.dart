@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_details_model.dart';
 
-class ProtocolModel {
+class ProtocolModel extends Equatable {
   final String id;
   final String title;
   final String subtitle;
@@ -12,7 +13,21 @@ class ProtocolModel {
   final bool isFeatured;
   final ProtocolDetailsModel? details;
 
-  ProtocolModel({
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        subtitle,
+        isClinicallyReviewed,
+        imagePath,
+        duration,
+        sessions,
+        isFree,
+        isFeatured,
+        details,
+      ];
+
+  const ProtocolModel({
     required this.id,
     required this.title,
     required this.subtitle,
