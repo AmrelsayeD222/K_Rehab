@@ -1,5 +1,5 @@
 name: k_rehab
-description: "A new Flutter project."
+description: "Physiotherapy app."
 
 publish_to: 'none' 
 version: 1.0.0+6
@@ -45,7 +45,6 @@ flutter:
     - assets/onboarding/
     - assets/auth/
     - assets/bottomNaviBar/
-    - assets/home/
     - .env
     - assets/protocol/
     
