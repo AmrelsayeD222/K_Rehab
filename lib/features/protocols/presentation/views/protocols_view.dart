@@ -94,8 +94,8 @@ class _ProtocolsList extends StatelessWidget {
         )
             .animate()
             .fadeIn(
-              duration: 200.ms,
-              delay: Duration(milliseconds: 100 * index),
+              duration: 70.ms,
+              delay: Duration(milliseconds: 20 * index),
             )
             .slideY(begin: 0.15, curve: Curves.easeOutCubic);
       },

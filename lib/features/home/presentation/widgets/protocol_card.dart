@@ -30,39 +30,39 @@ class ProtocolCard extends StatelessWidget {
           );
         }
       },
-      child:
-          Hero(
-                tag: 'home_protocol_${model.id}',
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: Container(
-                    width: 300,
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    margin: const EdgeInsets.only(right: 16, bottom: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      image: DecorationImage(
+      child: Hero(
+        tag: 'home_protocol_${model.id}',
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            width: 300,
+            height: MediaQuery.of(context).size.height * 0.22,
+            margin: const EdgeInsets.only(right: 16, bottom: 8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                image: _isValidImageUrl(model.imagePath)
+                    ? DecorationImage(
                         image: CachedNetworkImageProvider(model.imagePath),
                         fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [_buildTitle(), _buildActionButton()],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-              .animate()
-              .fadeIn(
-                duration: 400.ms,
-                delay: Duration(milliseconds: 200 + (index * 100)),
-              )
-              .slideX(begin: 0.1, curve: Curves.easeOut),
+                      )
+                    : null),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [_buildTitle(), _buildActionButton()],
+              ),
+            ),
+          ),
+        ),
+      )
+          .animate()
+          .fadeIn(
+            duration: 400.ms,
+            delay: Duration(milliseconds: 200 + (index * 100)),
+          )
+          .slideX(begin: 0.1, curve: Curves.easeOut),
     );
   }
 
@@ -76,6 +76,12 @@ class ProtocolCard extends StatelessWidget {
         shadows: [const Shadow(color: Colors.black54, blurRadius: 8)],
       ),
     );
+  }
+
+  bool _isValidImageUrl(String path) {
+    if (path.isEmpty || path == 'null') return false;
+    final uri = Uri.tryParse(path);
+    return uri != null && uri.hasAbsolutePath && uri.host.isNotEmpty;
   }
 
   Widget _buildActionButton() {
