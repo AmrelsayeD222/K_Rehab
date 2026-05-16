@@ -20,11 +20,6 @@ class ProfileAccountSection extends StatelessWidget {
               title: 'Subscription',
               trailing: const _PremiumActiveLabel(),
             ),
-            const Divider(height: 1, indent: 64, endIndent: 16),
-            CustomMenuCardWidget(
-              icon: Icons.payment_outlined,
-              title: 'Payment Methods',
-            ),
           ],
         ),
       ],
@@ -38,7 +33,7 @@ class _PremiumActiveLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Active',
+      'Not Active',
       style: AppTextStyles.tag.copyWith(
         color: Theme.of(context).colorScheme.primary,
         fontSize: 13,

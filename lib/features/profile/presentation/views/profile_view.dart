@@ -9,6 +9,7 @@ import 'package:k_rehab/features/profile/presentation/widgets/profile_account_se
 import 'package:k_rehab/features/profile/presentation/widgets/profile_app_settings_section.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_header.dart';
 import 'package:k_rehab/features/profile/presentation/widgets/profile_logout_button.dart';
+import 'package:k_rehab/features/profile/presentation/widgets/profile_premium_card.dart';
 
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/core/widgets/k_snack_bar.dart';
@@ -41,10 +42,12 @@ class ProfileView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     sliver: SliverToBoxAdapter(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: const [
                           SizedBox(height: 28),
-                          Center(child: ProfileHeader()),
+                          ProfileHeader(),
+                          SizedBox(height: 32),
+                          ProfilePremiumCard(),
                           SizedBox(height: 32),
                           ProfileAccountSection(),
                           SizedBox(height: 24),
