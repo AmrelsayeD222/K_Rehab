@@ -15,6 +15,7 @@ import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
 import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
+import 'package:k_rehab/features/payment/presentation/views/paywall_view.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 
@@ -41,6 +42,7 @@ abstract class AppRouter {
   static const String mainView = '/mainView';
   static const String exerciseDetails = '/exerciseDetails';
   static const String protocolDetails = '/protocolDetails';
+  static const String paywall = '/paywall';
 
   static GoRouter router() {
     final authRepo = getIt<AuthRepo>();
@@ -124,6 +126,10 @@ abstract class AppRouter {
             final heroTag = args['heroTag'] as String;
             return ProtocolDetailsView(protocol: protocol, heroTag: heroTag);
           },
+        ),
+        GoRoute(
+          path: paywall,
+          builder: (context, state) => const PaywallView(),
         ),
       ],
     );

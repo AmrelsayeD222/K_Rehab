@@ -39,6 +39,11 @@ import 'package:k_rehab/features/home/data/data_sources/home_local_data_source.d
 import 'package:k_rehab/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:k_rehab/features/profile/data/data_sources/profile_local_data_source.dart';
 import 'package:k_rehab/features/profile/data/data_sources/profile_remote_data_source.dart';
+import 'package:k_rehab/features/payment/data/dataSource/payment_remote_data_source.dart';
+import 'package:k_rehab/features/payment/data/dataSource/paymob_sdk_service.dart';
+import 'package:k_rehab/features/payment/data/repositories/payment_repo.dart';
+import 'package:k_rehab/features/payment/data/repositories/payment_repo_impl.dart';
+import 'package:k_rehab/features/payment/presentation/manager/payment_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -78,6 +83,12 @@ void setupServiceLocator() {
   );
   getIt.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSourceImpl(client: getIt<SupabaseClient>()),
+  );
+  getIt.registerLazySingleton<PaymentRemoteDataSource>(
+    () => PaymentRemoteDataSourceImpl(apiService: getIt<ApiService>()),
+  );
+  getIt.registerLazySingleton<PaymobSdkService>(
+    () => PaymobSdkServiceImpl(),
   );
 
   getIt.registerLazySingleton<AuthRepo>(
@@ -166,5 +177,20 @@ void setupServiceLocator() {
   );
   getIt.registerFactory<RecoveryCoachCubit>(
     () => RecoveryCoachCubit(getIt<RecoveryCoachRepo>()),
+  );
+
+  // Payment Feature Registrations
+  getIt.registerLazySingleton<PaymentRepository>(
+    () => PaymentRepositoryImpl(
+      remoteDataSource: getIt<PaymentRemoteDataSource>(),
+      sdkService: getIt<PaymobSdkService>(),
+    ),
+  );
+
+  getIt.registerFactory<PaymentCubit>(
+    () => PaymentCubit(
+      paymentRepository: getIt<PaymentRepository>(),
+      profileRepo: getIt<ProfileRepo>(),
+    ),
   );
 }

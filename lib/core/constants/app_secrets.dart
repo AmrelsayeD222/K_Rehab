@@ -5,4 +5,12 @@ class AppSecrets {
   static String supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
   static String geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
   static String authCallbackUrl = dotenv.env['AUTH_CALLBACK_URL'] ?? '';
+
+  // Paymob Secrets
+  static String paymobSecretKey = dotenv.env['PAYMOB_SECRET_KEY'] ?? '';
+  static String paymobPublicKey = dotenv.env['PAYMOB_PUBLIC_KEY'] ?? '';
+  static String paymobCardIntegrationId =
+      dotenv.env['PAYMOB_CARD_INTEGRATION_ID'] ?? '';
+  static String paymobWalletIntegrationId =
+      dotenv.env['PAYMOB_WALLET_INTEGRATION_ID'] ?? '';
 }

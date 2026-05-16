@@ -1,15 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:k_rehab/core/constants/app_secrets.dart';
 
 class ApiService {
   final Dio dio;
 
-  static const String _baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models';
-
   ApiService({required this.dio}) {
-    dio.options.baseUrl = _baseUrl;
-    dio.options.queryParameters = {'key': AppSecrets.geminiApiKey};
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
     dio.interceptors.add(
@@ -25,8 +19,32 @@ class ApiService {
   Future<Map<String, dynamic>> post({
     required String endpoint,
     required Map<String, dynamic> body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
   }) async {
-    final response = await dio.post(endpoint, data: body);
+    final response = await dio.post(
+      endpoint,
+      data: body,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> get({
+    required String endpoint,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+  }) async {
+    final response = await dio.get(
+      endpoint,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+    );
     return response.data;
   }
 }

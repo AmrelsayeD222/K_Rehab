@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:k_rehab/core/error/dio_failure.dart';
 import 'package:k_rehab/core/error/failure.dart';
+import 'package:k_rehab/core/constants/app_secrets.dart';
 import 'package:k_rehab/core/services/api_service.dart';
 import '../models/chat_message_model.dart';
 import 'recovery_coach_repo.dart';
@@ -36,7 +37,9 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
           .toList();
 
       final data = await apiService.post(
-        endpoint: '/gemini-2.5-flash:generateContent',
+        endpoint:
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+        queryParameters: {'key': AppSecrets.geminiApiKey},
         body: {
           'system_instruction': {
             'parts': [

@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.amr.krehab"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -61,8 +61,16 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation("com.paymob.sdk:Paymob-SDK:1.9.0")
 }
