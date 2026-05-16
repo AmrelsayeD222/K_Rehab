@@ -15,3 +15,10 @@
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.AnnotationsKt
 -keep class kotlinx.serialization.** { *; }
+
+# ✅ Keep Paymob SDK — لازم تحطّها عشان الـ release build ميكسرش الـ SDK
+-keep class com.paymob.** { *; }
+-dontwarn com.paymob.**
+
+# ✅ Keep DataBinding
+-keep class androidx.databinding.** { *; }
