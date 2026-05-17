@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 
 class ProfilePremiumCard extends StatelessWidget {
   const ProfilePremiumCard({super.key});
@@ -24,7 +26,12 @@ class ProfilePremiumCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
       ),
       child: GestureDetector(
-        onTap: () => context.push(AppRouter.paywall),
+        onTap: () async {
+          await context.push(AppRouter.paywall);
+          if (context.mounted) {
+            context.read<ProfileCubit>().getUserData();
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Row(

@@ -60,6 +60,7 @@ class AuthRepoImpl extends AuthRepo {
           email: session.user.email ?? '',
           name: session.user.userMetadata?['name'] ?? '',
           createdAt: DateTime.parse(session.user.createdAt),
+          isSubscribed: session.user.userMetadata?['isSubscribed'] ?? false,
         );
         await localDataSource.cacheUser(userModel);
         return const Right(null);

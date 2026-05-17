@@ -10,8 +10,9 @@ import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/features/protocols/presentation/manager/protocol_cubit.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_item.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocols_header.dart';
-import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
 
 class ProtocolsView extends StatelessWidget {
   const ProtocolsView({super.key});
@@ -79,16 +80,16 @@ class _ProtocolsList extends StatelessWidget {
         return ProtocolCardItem(
           protocol: protocol,
           onTap: () {
-            if (protocol.isFree) {
+            final profileState = context.read<ProfileCubit>().state;
+            final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
+            
+            if (protocol.isFree || isSubscribed) {
               context.push(
                 AppRouter.protocolDetails,
                 extra: {'protocol': protocol, 'heroTag': protocol.id},
               );
             } else {
-              KSnackBar.show(
-                context,
-                message: 'This protocol is paid. Please upgrade to access.',
-              );
+              context.push(AppRouter.paywall);
             }
           },
         )

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/widgets/k_snack_bar.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
 
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
@@ -18,16 +20,16 @@ class ProtocolCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (model.isFree) {
+        final profileState = context.read<ProfileCubit>().state;
+        final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
+        
+        if (model.isFree || isSubscribed) {
           context.push(
             AppRouter.protocolDetails,
             extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
           );
         } else {
-          KSnackBar.show(
-            context,
-            message: 'This protocol is paid. Please upgrade to access.',
-          );
+          context.push(AppRouter.paywall);
         }
       },
       child: Hero(
@@ -51,7 +53,7 @@ class ProtocolCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_buildTitle(), _buildActionButton()],
+                children: [_buildTitle(), _buildActionButton(context)],
               ),
             ),
           ),
@@ -84,7 +86,11 @@ class ProtocolCard extends StatelessWidget {
     return uri != null && uri.hasAbsolutePath && uri.host.isNotEmpty;
   }
 
-  Widget _buildActionButton() {
+  Widget _buildActionButton(BuildContext context) {
+    final profileState = context.read<ProfileCubit>().state;
+    final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
+    final isUnlocked = model.isFree || isSubscribed;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -95,7 +101,7 @@ class ProtocolCard extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Icon(
-            model.isFree ? Icons.arrow_forward_rounded : Icons.lock_rounded,
+            isUnlocked ? Icons.arrow_forward_rounded : Icons.lock_rounded,
             color: const Color(0xFF2a5051),
             size: 20,
           ),

@@ -53,6 +53,7 @@ class ProfileRepoImpl implements ProfileRepo {
           name: user.userMetadata?['name'] ?? 'Unknown User',
           email: user.email ?? 'No Email',
           profileImageUrl: baseUrl,
+          isSubscribed: user.userMetadata?['isSubscribed'] ?? false,
         );
 
         await localDataSource.cacheUserData(userModel);
@@ -66,6 +67,33 @@ class ProfileRepoImpl implements ProfileRepo {
     } catch (e) {
       final cachedUser = await localDataSource.getCachedUserData();
       if (cachedUser != null) return right(cachedUser);
+      return left(SupabaseDatabaseFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateSubscriptionStatus({required bool isActive}) async {
+    try {
+      await remoteDataSource.updateSubscriptionStatus(isActive);
+      
+      final cachedUser = await localDataSource.getCachedUserData();
+      if (cachedUser != null) {
+        final updatedUser = UserModel(
+          id: cachedUser.id,
+          name: cachedUser.name,
+          email: cachedUser.email,
+          profileImageUrl: cachedUser.profileImageUrl,
+          createdAt: cachedUser.createdAt,
+          isSubscribed: isActive,
+        );
+        await localDataSource.cacheUserData(updatedUser);
+      }
+      return right(null);
+    } on AuthException catch (e) {
+      return left(SupabaseAuthFailure.fromAuthException(e));
+    } on SocketException catch (e) {
+      return left(NetworkFailure.fromSocketException(e));
+    } catch (e) {
       return left(SupabaseDatabaseFailure(e.toString()));
     }
   }

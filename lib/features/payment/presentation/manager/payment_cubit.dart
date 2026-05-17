@@ -38,9 +38,18 @@ class PaymentCubit extends Cubit<PaymentState> {
           userPhone: '+201234567890', // Default if missing from model
         );
 
-        result.fold(
-          (failure) => emit(PaymentFailureState(failure)),
-          (_) => emit(PaymentSuccess()),
+        await result.fold(
+          (failure) async => emit(PaymentFailureState(failure)),
+          (_) async {
+            // 3. Update Subscription Status
+            final updateResult = await _profileRepo.updateSubscriptionStatus(isActive: true);
+            updateResult.fold(
+              (failure) => emit(PaymentFailureState(const IntentionCreationFailure(
+                'تم الدفع ولكن فشل تفعيل الاشتراك',
+              ))),
+              (_) => emit(PaymentSuccess()),
+            );
+          },
         );
       },
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/widgets/protocol_stat_item.dart';
 
@@ -48,13 +51,32 @@ class ProtocolCardContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Text(
-                protocol.isFree ? 'Free' : 'Paid',
-                style: AppTextStyles.cardTitle.copyWith(
-                  color: protocol.isFree ? colors.primary : Colors.amber,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
+              BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  final isSubscribed = state is ProfileSuccess && state.user.isSubscribed;
+                  
+                  String accessText;
+                  Color textColor;
+                  if (protocol.isFree) {
+                    accessText = 'Free';
+                    textColor = colors.primary;
+                  } else if (isSubscribed) {
+                    accessText = 'Unlocked';
+                    textColor = Colors.green;
+                  } else {
+                    accessText = 'Paid';
+                    textColor = Colors.amber;
+                  }
+
+                  return Text(
+                    accessText,
+                    style: AppTextStyles.cardTitle.copyWith(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  );
+                },
               ),
             ],
           ),

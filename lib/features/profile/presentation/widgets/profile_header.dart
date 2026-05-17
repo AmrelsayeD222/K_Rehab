@@ -29,9 +29,32 @@ class ProfileHeader extends StatelessWidget {
           children: [
             _ProfileAvatar(state: state, user: user),
             const SizedBox(height: 16),
-            Text(
-              user?.name ?? '...',
-              style: AppTextStyles.heading1.copyWith(color: colors.onSurface),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  user?.name ?? '...',
+                  style: AppTextStyles.heading1.copyWith(color: colors.onSurface),
+                ),
+                if (user?.isSubscribed ?? false) ...[
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: colors.primary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'PRO',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
             const SizedBox(height: 8),
           ],

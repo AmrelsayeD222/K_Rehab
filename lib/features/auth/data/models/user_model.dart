@@ -15,9 +15,11 @@ class UserModel extends Equatable {
   final String? profileImageUrl;
   @HiveField(4)
   final DateTime? createdAt;
+  @HiveField(5, defaultValue: false)
+  final bool isSubscribed;
 
   @override
-  List<Object?> get props => [name, email, id, profileImageUrl, createdAt];
+  List<Object?> get props => [name, email, id, profileImageUrl, createdAt, isSubscribed];
 
   const UserModel({
     required this.name,
@@ -25,6 +27,7 @@ class UserModel extends Equatable {
     required this.id,
     this.profileImageUrl,
     this.createdAt,
+    this.isSubscribed = false,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +39,7 @@ class UserModel extends Equatable {
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'])
           : null,
+      isSubscribed: json['isSubscribed'] ?? false,
     );
   }
 
@@ -45,6 +49,7 @@ class UserModel extends Equatable {
       'email': email,
       'id': id,
       'profile_image_url': profileImageUrl,
+      'isSubscribed': isSubscribed,
     };
   }
 }

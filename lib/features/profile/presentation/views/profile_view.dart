@@ -43,17 +43,19 @@ class ProfileView extends StatelessWidget {
                     sliver: SliverToBoxAdapter(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          SizedBox(height: 28),
-                          ProfileHeader(),
-                          SizedBox(height: 32),
-                          ProfilePremiumCard(),
-                          SizedBox(height: 32),
-                          ProfileAccountSection(),
-                          SizedBox(height: 24),
-                          ProfileAppSettingsSection(),
-                          SizedBox(height: 24),
-                          SizedBox(height: 32),
+                        children: [
+                          const SizedBox(height: 28),
+                          const ProfileHeader(),
+                          const SizedBox(height: 32),
+                          if (state is ProfileSuccess && !state.user.isSubscribed) ...[
+                            const ProfilePremiumCard(),
+                            const SizedBox(height: 32),
+                          ],
+                          const ProfileAccountSection(),
+                          const SizedBox(height: 24),
+                          const ProfileAppSettingsSection(),
+                          const SizedBox(height: 24),
+                          const SizedBox(height: 32),
                         ],
                       ),
                     ),

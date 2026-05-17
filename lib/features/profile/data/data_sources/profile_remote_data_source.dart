@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class ProfileRemoteDataSource {
   Future<void> uploadProfileImage(File image);
   String getPublicUrl(String userId);
+  Future<void> updateSubscriptionStatus(bool isSubscribed);
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -23,5 +24,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   String getPublicUrl(String userId) {
     return client.storage.from('profiles').getPublicUrl('profiles/$userId');
+  }
+
+  @override
+  Future<void> updateSubscriptionStatus(bool isSubscribed) async {
+    await client.auth.updateUser(
+      UserAttributes(data: {'isSubscribed': isSubscribed}),
+    );
   }
 }
