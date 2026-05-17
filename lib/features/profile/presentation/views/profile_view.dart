@@ -47,14 +47,14 @@ class ProfileView extends StatelessWidget {
                           const SizedBox(height: 28),
                           const ProfileHeader(),
                           const SizedBox(height: 32),
-                          if (state is ProfileSuccess && !state.user.isSubscribed) ...[
+                          if (state is ProfileSuccess &&
+                              !state.user.isSubscribed) ...[
                             const ProfilePremiumCard(),
                             const SizedBox(height: 32),
                           ],
                           const ProfileAccountSection(),
                           const SizedBox(height: 24),
                           const ProfileAppSettingsSection(),
-                          const SizedBox(height: 24),
                           const SizedBox(height: 32),
                         ],
                       ),

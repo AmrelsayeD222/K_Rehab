@@ -19,18 +19,8 @@ class ProfileAppSettingsSection extends StatelessWidget {
         ProfileSectionCard(
           children: [
             CustomMenuCardWidget(
-              icon: Icons.language_rounded,
-              title: 'Language',
-              trailing: const ProfileSegmentedToggle(
-                options: ['AR', 'EN'],
-                initialIndex: 1,
-              ),
-            ),
-            const Divider(height: 1, indent: 64, endIndent: 16),
-            CustomMenuCardWidget(
-              icon: isDark
-                  ? Icons.dark_mode_outlined
-                  : Icons.light_mode_outlined,
+              icon:
+                  isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
               title: 'Theme',
               trailing: ProfileSegmentedToggle(
                 options: const ['Dark', 'Light'],

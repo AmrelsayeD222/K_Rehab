@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
-import 'package:k_rehab/core/theme/app_text_styles.dart';
+
 import 'package:k_rehab/core/utils/app_validators.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/widgets/auth_button.dart';
@@ -31,18 +31,7 @@ class LoginFormSection extends StatelessWidget {
           isPassword: true,
           validator: AppValidators.validatePassword,
         ),
-        const SizedBox(height: 12),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              'Forgot Password?',
-              style: AppTextStyles.bodyText2.copyWith(color: Theme.of(context).colorScheme.primary),
-            ),
-          ),
-        ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
         BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
