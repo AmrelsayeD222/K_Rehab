@@ -29,4 +29,14 @@ class AppValidators {
     }
     return null;
   }
+
+  static bool isValidImageUrl(String? path) {
+    if (path == null || path.isEmpty || path.trim().isEmpty || path == 'null') return false;
+    try {
+      final uri = Uri.tryParse(path);
+      return uri != null && uri.hasAbsolutePath && uri.host.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
 }

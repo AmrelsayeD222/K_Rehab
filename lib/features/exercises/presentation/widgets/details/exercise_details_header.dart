@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:k_rehab/core/utils/app_validators.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
+import 'package:k_rehab/features/exercises/presentation/widgets/details/exercise_video_player.dart';
 
 class ExerciseDetailsHeader extends StatelessWidget {
   final ExerciseModel exercise;
@@ -15,6 +17,9 @@ class ExerciseDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasGif = AppValidators.isValidImageUrl(exercise.gifUrl);
+    final hasImage = AppValidators.isValidImageUrl(exercise.imageUrl);
+
     return Hero(
       tag: heroTag,
       child: Container(
@@ -27,31 +32,39 @@ class ExerciseDetailsHeader extends StatelessWidget {
           ),
         ),
         clipBehavior: Clip.antiAlias,
-        child: exercise.gifUrl.isNotEmpty
-            ? CachedNetworkImage(
-                imageUrl: exercise.gifUrl,
+        child: hasGif
+            ? ExerciseVedioPlayer(
+                url: exercise.gifUrl,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => CachedNetworkImage(
-                  imageUrl: exercise.imageUrl,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => const KLoadingWidget(),
-                ),
-                errorWidget: (context, url, error) => CachedNetworkImage(
-                  imageUrl: exercise.imageUrl,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => const Icon(
-                    Icons.fitness_center,
-                    color: Colors.grey,
-                    size: 64,
-                  ),
-                ),
+                placeholder: hasImage
+                    ? ExerciseVedioPlayer(
+                        url: exercise.imageUrl,
+                        fit: BoxFit.cover,
+                        placeholder: const KLoadingWidget(),
+                      )
+                    : const KLoadingWidget(),
+                errorWidget: hasImage
+                    ? ExerciseVedioPlayer(
+                        url: exercise.imageUrl,
+                        fit: BoxFit.cover,
+                        errorWidget: const Icon(
+                          Icons.fitness_center,
+                          color: Colors.grey,
+                          size: 64,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.fitness_center,
+                        color: Colors.grey,
+                        size: 64,
+                      ),
               )
-            : exercise.imageUrl.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: exercise.imageUrl,
+            : hasImage
+                ? ExerciseVedioPlayer(
+                    url: exercise.imageUrl,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => const KLoadingWidget(),
-                    errorWidget: (context, url, error) => const Icon(
+                    placeholder: const KLoadingWidget(),
+                    errorWidget: const Icon(
                       Icons.fitness_center,
                       color: Colors.grey,
                       size: 64,
