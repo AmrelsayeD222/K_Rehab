@@ -1,7 +1,16 @@
 name: 🚀 Production Distribution
+run-name: "🚀 Prod: ${{ inputs.commit_msg || github.event.head_commit.message || 'Manual Run' }} [#${{ github.run_number }}] (${{ github.actor }})"
 
 on:
   workflow_dispatch:
+    inputs:
+      commit_msg:
+        description: 'Commit message / description (Optional)'
+        required: false
+        type: string
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   distribute-prod:
