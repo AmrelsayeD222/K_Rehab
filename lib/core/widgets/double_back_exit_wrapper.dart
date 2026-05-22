@@ -44,9 +44,10 @@ class _DoubleBackExitWrapperState extends State<DoubleBackExitWrapper> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'اضغط مرة أخرى للخروج',
+                'Press back again to exit ',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               backgroundColor: Theme.of(context).cardColor,
               duration: widget.duration,

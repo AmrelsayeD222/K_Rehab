@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:k_rehab/core/manager/navigation_cubit.dart';
+import 'package:k_rehab/core/router/navigation_cubit.dart';
 
 class AiCoachPromotion extends StatelessWidget {
   const AiCoachPromotion({super.key});
@@ -98,13 +98,13 @@ class AiCoachPromotion extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          color: colors.primary.withValues(alpha: .05),
-                          shape: BoxShape.circle,
-                        ),
-                      )
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                      color: colors.primary.withValues(alpha: .05),
+                      shape: BoxShape.circle,
+                    ),
+                  )
                       .animate(onPlay: (controller) => controller.repeat())
                       .scale(
                         duration: 2.seconds,

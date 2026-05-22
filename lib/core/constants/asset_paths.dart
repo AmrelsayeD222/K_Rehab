@@ -2,8 +2,6 @@ abstract class AssetPaths {
   // Disclaimer assets
   static const String disclaimerLogo =
       'assets/onboarding/medical_disclaimer_logo.svg';
-  static const String disclaimerIcon =
-      'assets/onboarding/medical_disclaimer_icon.svg';
   static const String disclaimerImage =
       'assets/onboarding/medical_disclaimer_image.png';
   static const String arrowIcon = 'assets/onboarding/arrow.svg';
@@ -12,7 +10,7 @@ abstract class AssetPaths {
 
   // Onboarding assets
   static const String adaptivePlanIcon =
-      'assets/onboarding/adbtive_plan_icon.svg';
+      'assets/onboarding/adaptive_plan_icon.svg';
   static const String aiPhysioImage = 'assets/onboarding/ai_physio_image.png';
   static const String askIcon = 'assets/onboarding/ask_icon.svg';
   static const String clinicalReviewedIcon =
@@ -20,44 +18,31 @@ abstract class AssetPaths {
   static const String multiPhaseRehabIcon =
       'assets/onboarding/multi_phase_rehab_icon.svg';
   static const String recoveryProtocolImage =
-      'assets/onboarding/recovery_protocol (2).png';
+      'assets/onboarding/recovery_protocol_2.png';
   static const String recoveryTipsIcon =
       'assets/onboarding/recovery_tips_icon.svg';
   static const String repCounterIcon = 'assets/onboarding/rep_counter_icon.svg';
   static const String safetyNotesIcon =
-      'assets/onboarding/safty_notes_icon.svg';
+      'assets/onboarding/safety_notes_icon.svg';
   static const String therapeuticExerciseImage =
-      'assets/onboarding/therapeutic_exercise_image (2).png';
+      'assets/onboarding/therapeutic_exercise_image_2.png';
   static const String trackProgressIcon =
       'assets/onboarding/track_progress_icon.svg';
   static const String videoGuidedIcon =
       'assets/onboarding/video_guided_icon.svg';
 
   // Auth assets
-
   static const String googleLogo =
       'assets/auth/google-icon-logo-svgrepo-com.svg';
-  static const String loginIcon = 'assets/auth/login icon.svg';
-  static const String signupIcon = 'assets/auth/signup icon.svg';
+  static const String loginIcon = 'assets/auth/login_icon.svg';
+  static const String signupIcon = 'assets/auth/signup_icon.svg';
 
-  // Bottom Navigation assets
+  // Bottom Navigation Bar assets
   static const String aiCoachIcon = 'assets/bottomNaviBar/ai_coach.svg';
   static const String exercisesIcon = 'assets/bottomNaviBar/exercises.svg';
   static const String protocolsIcon = 'assets/bottomNaviBar/protocols.svg';
 
-  // Home assets
-  static const String acl = 'assets/home/acl.png';
-  static const String shoulder = 'assets/home/shoulder.png';
-  static const String back = 'assets/home/back.png';
-  static const String kneeIcon = 'assets/home/knee_icon.jpg';
-  static const String backIcon = 'assets/home/back_icon.jpg';
-  static const String shoulderIcon = 'assets/home/shoulder_icon.jpg';
-  static const String ankleIcon = 'assets/home/ankle_icon.jpg';
-  static const String neckIcon = 'assets/home/neck_icon.jpg';
-  static const String hipIcon = 'assets/home/hip_icon.jpg';
-  static const String straightLegRaise = 'assets/home/straight_leg_raise.jpg';
-  static const String kneeExtention = 'assets/home/knee_extention.jpg';
-
-  static const String calfRaise = 'assets/home/calf_raise.jpg';
-  static const String birdDog = 'assets/home/bird_dog.jpg';
+  // Protocols assets
+  static const String clinicallyPreviewedIcon =
+      'assets/protocol/clinically_previewed.svg';
 }

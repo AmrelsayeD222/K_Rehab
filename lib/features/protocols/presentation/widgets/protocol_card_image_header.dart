@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:k_rehab/core/constants/asset_paths.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 
@@ -61,7 +62,7 @@ class ProtocolCardImageHeader extends StatelessWidget {
                     children: [
                       if (protocol.isClinicallyReviewed) ...[
                         SvgPicture.asset(
-                          'assets/protocol/clinically_previewed.svg',
+                          AssetPaths.clinicallyPreviewedIcon,
                           width: 14,
                           height: 14,
                           colorFilter: ColorFilter.mode(

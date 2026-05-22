@@ -6,32 +6,31 @@ class PaymentFailure extends Failure {
 
 final class IntentionCreationFailure extends PaymentFailure {
   const IntentionCreationFailure(
-      [super.errorMessage = 'فشل في بدء عملية الدفع']);
+      [super.errorMessage = 'Failed to create payment intention']);
 }
 
 // الـ SDK رجع Rejected
 final class PaymentRejectedFailure extends PaymentFailure {
-  const PaymentRejectedFailure([super.errorMessage = 'تم رفض عملية الدفع']);
+  const PaymentRejectedFailure([super.errorMessage = 'Payment rejected']);
 }
 
 // الـ SDK رجع Pending
 final class PaymentPendingFailure extends PaymentFailure {
-  const PaymentPendingFailure(
-      [super.errorMessage = 'عملية الدفع قيد الانتظار']);
+  const PaymentPendingFailure([super.errorMessage = 'Payment is pending']);
 }
 
 // خطأ في الـ MethodChannel (Native bridge)
 final class NativeBridgeFailure extends PaymentFailure {
   const NativeBridgeFailure(
-      [super.errorMessage = 'خطأ في الاتصال بنظام الدفع']);
+      [super.errorMessage = 'Failed to communicate with payment system']);
 }
 
 // خطأ شبكة
 final class PaymentNetworkFailure extends PaymentFailure {
-  const PaymentNetworkFailure([super.errorMessage = 'خطأ في الاتصال بالشبكة']);
+  const PaymentNetworkFailure([super.errorMessage = 'Network error']);
 }
 
 // خطأ غير متوقع
 final class UnexpectedPaymentFailure extends PaymentFailure {
-  const UnexpectedPaymentFailure([super.errorMessage = 'حدث خطأ غير متوقع']);
+  const UnexpectedPaymentFailure([super.errorMessage = 'Unexpected error']);
 }

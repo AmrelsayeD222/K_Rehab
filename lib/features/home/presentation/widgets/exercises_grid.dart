@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:k_rehab/core/manager/navigation_cubit.dart';
+import 'package:k_rehab/core/router/navigation_cubit.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_loading_widget.dart';
 import 'package:k_rehab/core/widgets/k_error_widget.dart';

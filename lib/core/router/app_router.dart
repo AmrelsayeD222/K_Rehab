@@ -1,38 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:k_rehab/core/di/service_locator.dart';
+import 'package:k_rehab/core/router/go_router_refresh_stream.dart';
+import 'package:k_rehab/core/router/main_view.dart';
 import 'package:k_rehab/core/services/cache_helper.dart';
 import 'package:k_rehab/features/auth/data/repositories/auth_repo.dart';
 import 'package:k_rehab/features/auth/presentation/manager/login/login_cubit.dart';
+import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
 import 'package:k_rehab/features/auth/presentation/views/login_view.dart';
 import 'package:k_rehab/features/auth/presentation/views/signup_view.dart';
-import 'package:k_rehab/features/auth/presentation/manager/register/register_cubit.dart';
+import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
+import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
 import 'package:k_rehab/features/onboarding/presentation/manager/onboarding/onboarding_cubit.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/medical_disclaimer_view.dart';
 import 'package:k_rehab/features/onboarding/presentation/views/onboarding_view.dart';
-import 'package:k_rehab/core/router/main_view.dart';
-import 'package:k_rehab/features/exercises/data/models/exercise_model.dart';
-import 'package:k_rehab/features/exercises/presentation/views/exercise_details_view.dart';
+import 'package:k_rehab/features/payment/presentation/views/paywall_view.dart';
 import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
 import 'package:k_rehab/features/protocols/presentation/views/protocol_details_view.dart';
-import 'package:k_rehab/features/payment/presentation/views/paywall_view.dart';
-import 'dart:async';
-import 'package:flutter/foundation.dart';
-
-class GoRouterRefreshStream extends ChangeNotifier {
-  GoRouterRefreshStream(Stream<dynamic> stream) {
-    notifyListeners();
-    _subscription = stream.listen((_) => notifyListeners());
-  }
-
-  late final StreamSubscription<dynamic> _subscription;
-
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
-}
 
 abstract class AppRouter {
   static const String disclaimer = '/';
@@ -44,19 +30,21 @@ abstract class AppRouter {
   static const String protocolDetails = '/protocolDetails';
   static const String paywall = '/paywall';
 
+  static GoRouter? _instance;
+
   static GoRouter router() {
+    if (_instance != null) return _instance!;
     final authRepo = getIt<AuthRepo>();
-    
-    return GoRouter(
-      initialLocation: disclaimer,
+
+    return _instance = GoRouter(
+      initialLocation: disclaimer, 
       refreshListenable: GoRouterRefreshStream(authRepo.authStateStream),
       redirect: (context, state) {
         final isLoggedIn = authRepo.isLoggedIn;
         final isOnboardingVisited =
             CacheHelper.getData(key: 'isOnboardingVisited') ?? false;
 
-        final isAuthRoute =
-            state.matchedLocation == login ||
+        final isAuthRoute = state.matchedLocation == login ||
             state.matchedLocation == signup ||
             state.matchedLocation == disclaimer ||
             state.matchedLocation == onboarding;
@@ -71,10 +59,10 @@ abstract class AppRouter {
           return mainView;
         }
 
-        // Handle initial landing logic if at root
-        if (state.matchedLocation == disclaimer) {
-           if (isLoggedIn) return mainView;
-           if (isOnboardingVisited) return login;
+        // Not logged in + on disclaimer (an auth route, so skipped above)
+        // → redirect to login if onboarding was already visited
+        if (state.matchedLocation == disclaimer && isOnboardingVisited) {
+          return login;
         }
 
         return null;
@@ -112,7 +100,12 @@ abstract class AppRouter {
         GoRoute(
           path: exerciseDetails,
           builder: (context, state) {
-            final args = state.extra as Map<String, dynamic>;
+            final args = state.extra;
+            if (args is! Map<String, dynamic>) {
+              return const Scaffold(
+                body: Center(child: Text('Invalid navigation data')),
+              );
+            }
             final exercise = args['exercise'] as ExerciseModel;
             final heroTag = args['heroTag'] as String;
             return ExerciseDetailsView(exercise: exercise, heroTag: heroTag);
@@ -121,7 +114,12 @@ abstract class AppRouter {
         GoRoute(
           path: protocolDetails,
           builder: (context, state) {
-            final args = state.extra as Map<String, dynamic>;
+            final args = state.extra;
+            if (args is! Map<String, dynamic>) {
+              return const Scaffold(
+                body: Center(child: Text('Invalid navigation data')),
+              );
+            }
             final protocol = args['protocol'] as ProtocolModel;
             final heroTag = args['heroTag'] as String;
             return ProtocolDetailsView(protocol: protocol, heroTag: heroTag);
