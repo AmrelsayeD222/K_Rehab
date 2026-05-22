@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_themes.dart';
 import 'package:k_rehab/core/theme/theme_cubit.dart';
@@ -21,22 +20,15 @@ class _KRehabAppState extends State<KRehabApp> {
       create: (_) => ThemeCubit(),
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
-          return ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (context, child) {
-              return MaterialApp.router(
-                title: 'KRehab',
-                debugShowCheckedModeBanner: false,
-                theme: AppThemes.getLightTheme(),
-                darkTheme: AppThemes.getDarkTheme(),
-                themeMode: themeMode,
-                themeAnimationCurve: Curves.easeInOut,
-                themeAnimationDuration: const Duration(milliseconds: 500),
-                routerConfig: _router,
-              );
-            },
+          return MaterialApp.router(
+            title: 'KRehab',
+            debugShowCheckedModeBanner: false,
+            theme: AppThemes.getLightTheme(),
+            darkTheme: AppThemes.getDarkTheme(),
+            themeMode: themeMode,
+            themeAnimationCurve: Curves.easeInOut,
+            themeAnimationDuration: const Duration(milliseconds: 500),
+            routerConfig: _router,
           );
         },
       ),
