@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:k_rehab/core/constants/app_secrets.dart';
-import 'package:k_rehab/core/error/dio_failure.dart';
 import 'package:k_rehab/core/error/payment_failure.dart';
 import 'package:k_rehab/features/payment/data/dataSource/payment_remote_data_source.dart';
 import 'package:k_rehab/features/payment/data/dataSource/paymob_sdk_service.dart';
@@ -79,12 +77,6 @@ class PaymentRepositoryImpl implements PaymentRepository {
         case PaymobSdkResult.pending:
           return left(const PaymentPendingFailure());
       }
-    } on DioException catch (e) {
-      final failure = ServerFailure.fromDioError(e);
-      if (e.type == DioExceptionType.badResponse) {
-        return left(IntentionCreationFailure(failure.errorMessage));
-      }
-      return left(PaymentNetworkFailure(failure.errorMessage));
     } on Exception catch (e) {
       return left(UnexpectedPaymentFailure(e.toString()));
     }

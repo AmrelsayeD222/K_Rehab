@@ -1,11 +1,9 @@
 // External Packages
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Core
 import 'package:k_rehab/core/router/navigation_cubit.dart';
-import 'package:k_rehab/core/services/api_service.dart';
 
 // Data Sources
 import 'package:k_rehab/features/auth/data/data_sources/auth_local_data_source.dart';
@@ -57,10 +55,6 @@ void setupServiceLocator() {
   // 1. Core Services & External Clients
   // ==========================================
   getIt.registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
-  getIt.registerLazySingleton<Dio>(() => Dio());
-  getIt.registerLazySingleton<ApiService>(
-    () => ApiService(dio: getIt<Dio>()),
-  );
   getIt.registerLazySingleton<PaymobSdkService>(
     () => PaymobSdkServiceImpl(),
   );
@@ -102,7 +96,7 @@ void setupServiceLocator() {
     () => ProtocolRemoteDataSourceImpl(supabaseClient: getIt<SupabaseClient>()),
   );
   getIt.registerLazySingleton<PaymentRemoteDataSource>(
-    () => PaymentRemoteDataSourceImpl(apiService: getIt<ApiService>()),
+    () => PaymentRemoteDataSourceImpl(),
   );
 
   // ==========================================
@@ -140,7 +134,7 @@ void setupServiceLocator() {
     ),
   );
   getIt.registerLazySingleton<RecoveryCoachRepo>(
-    () => RecoveryCoachRepoImpl(apiService: getIt<ApiService>()),
+    () => RecoveryCoachRepoImpl(),
   );
   getIt.registerLazySingleton<PaymentRepository>(
     () => PaymentRepositoryImpl(

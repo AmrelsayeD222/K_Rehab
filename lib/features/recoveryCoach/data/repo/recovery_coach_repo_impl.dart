@@ -1,15 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:k_rehab/core/error/dio_failure.dart';
 import 'package:k_rehab/core/error/failure.dart';
-import 'package:k_rehab/core/constants/app_secrets.dart';
-import 'package:k_rehab/core/services/api_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/chat_message_model.dart';
 import 'recovery_coach_repo.dart';
 
 class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
-  final ApiService apiService;
-
   static const String _systemPrompt =
       'You are a physiotherapy AI coach for the K-Rehab app. '
       'Only answer questions related to physical therapy, '
@@ -17,7 +12,7 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
       'Keep responses concise, supportive, and practical. '
       'Respond in the same language as the user.';
 
-  RecoveryCoachRepoImpl({required this.apiService});
+  RecoveryCoachRepoImpl();
 
   @override
   Future<Either<Failure, String>> sendMessage(
@@ -36,10 +31,8 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
           )
           .toList();
 
-      final data = await apiService.post(
-        endpoint:
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
-        queryParameters: {'key': AppSecrets.geminiApiKey},
+      final response = await Supabase.instance.client.functions.invoke(
+        'chat_with_gemini',
         body: {
           'system_instruction': {
             'parts': [
@@ -49,6 +42,7 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
           'contents': contents,
         },
       );
+      final data = response.data;
 
       final candidates = data['candidates'] as List<dynamic>?;
       if (candidates == null || candidates.isEmpty) {
@@ -67,8 +61,8 @@ class RecoveryCoachRepoImpl implements RecoveryCoachRepo {
       }
       final reply = parts.map((p) => p['text'] as String).join();
       return right(reply.trim());
-    } on DioException catch (e) {
-      return left(ServerFailure.fromDioError(e));
+    } on FunctionException catch (e) {
+      return left(ServerFailure(e.details?.toString() ?? e.toString()));
     } catch (e) {
       return left(ServerFailure(e.toString()));
     }

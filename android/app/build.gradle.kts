@@ -44,7 +44,7 @@ android {
 
         create("production") {
             dimension = "default"
-            resValue("string", "app_name", "K Rehab Prod")
+            resValue("string", "app_name", "K Rehab")
         }
     }
 

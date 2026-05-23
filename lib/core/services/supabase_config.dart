@@ -1,4 +1,5 @@
 import 'package:k_rehab/core/constants/app_secrets.dart';
+import 'package:k_rehab/core/services/secure_storage_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseConfig {
@@ -7,6 +8,9 @@ class SupabaseConfig {
     await Supabase.initialize(
       url: AppSecrets.supabaseUrl,
       anonKey: AppSecrets.supabaseAnonKey,
+      authOptions: const FlutterAuthClientOptions(
+        localStorage: SecureStorageHelper(),
+      ),
     );
   }
 }
