@@ -32,25 +32,49 @@ jobs:
         with:
           channel: stable
 
+      # إنشاء ملف .env بدون GEMINI_API_KEY (تم نقله لـ Supabase Edge Functions)
       - name: Create .env file
         run: |
           cat > .env << 'EOF'
           SUPABASE_URL=${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
-          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           AUTH_CALLBACK_URL=${{ secrets.AUTH_CALLBACK_URL }}
+          PAYMOB_PUBLIC_KEY=${{ secrets.PAYMOB_PUBLIC_KEY }}
+          PAYMOB_CARD_INTEGRATION_ID=${{ secrets.PAYMOB_CARD_INTEGRATION_ID }}
+          PAYMOB_WALLET_INTEGRATION_ID=${{ secrets.PAYMOB_WALLET_INTEGRATION_ID }}
           EOF
 
       - name: Create google-services.json
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
 
+      # إنشاء ملف key.properties وملف الـ Keystore للتوقيع
+      - name: Create key.properties
+        run: |
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=app/k_rehab_release.jks
+          EOF
+
+      - name: Decode & create keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/k_rehab_release.jks
+
       - name: Get dependencies
         run: flutter pub get
 
+      # يبقى APK للـ Dev (أسهل للمختبرين - لا يحتاج Play Store)
       - name: Build APK (development)
-        run: flutter build apk --release --flavor development -t lib/main_development.dart --build-number=${{ github.run_number }}
+        run: |
+          flutter build apk \
+            --release \
+            --flavor development \
+            --target lib/main_development.dart \
+            --build-number=${{ github.run_number }} \
+            --obfuscate \
+            --split-debug-info=./debug_info
 
-      
       - name: Get commit message
         run: echo "COMMIT_MSG=$(git log -1 --pretty=%s)" >> $GITHUB_ENV
 
@@ -67,3 +91,10 @@ jobs:
             Commit: ${{ env.COMMIT_MSG }}
             By: ${{ github.actor }}
             Build: #${{ github.run_number }}
+
+      - name: Upload debug symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-info-dev-${{ github.run_number }}
+          path: debug_info/
+          retention-days: 30

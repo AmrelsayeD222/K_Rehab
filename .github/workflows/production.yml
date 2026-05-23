@@ -32,38 +32,71 @@ jobs:
         with:
           channel: stable
 
+      # إنشاء ملف .env بدون GEMINI_API_KEY (تم نقله لـ Supabase Edge Functions)
       - name: Create .env file
         run: |
           cat > .env << 'EOF'
           SUPABASE_URL=${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
-          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           AUTH_CALLBACK_URL=${{ secrets.AUTH_CALLBACK_URL }}
+          PAYMOB_PUBLIC_KEY=${{ secrets.PAYMOB_PUBLIC_KEY }}
+          PAYMOB_CARD_INTEGRATION_ID=${{ secrets.PAYMOB_CARD_INTEGRATION_ID }}
+          PAYMOB_WALLET_INTEGRATION_ID=${{ secrets.PAYMOB_WALLET_INTEGRATION_ID }}
           EOF
 
       - name: Create google-services.json
         run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
 
+      # إنشاء ملف key.properties وملف الـ Keystore للتوقيع
+      - name: Create key.properties
+        run: |
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=app/k_rehab_release.jks
+          EOF
+
+      - name: Decode & create keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/k_rehab_release.jks
+
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build APK (production)
-        run: flutter build apk --release --flavor production -t lib/main_production.dart --build-number=${{ github.run_number }}
+      # بناء AAB مع التوقيع والـ Obfuscation
+      - name: Build App Bundle (production)
+        run: |
+          flutter build appbundle \
+            --release \
+            --flavor production \
+            --target lib/main_production.dart \
+            --build-number=${{ github.run_number }} \
+            --obfuscate \
+            --split-debug-info=./debug_info
 
-      
       - name: Get commit message
         run: echo "COMMIT_MSG=$(git log -1 --pretty=%s)" >> $GITHUB_ENV
 
+      # رفع AAB إلى Firebase للاختبار
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.PROD_FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: qa-testers
-          file: build/app/outputs/flutter-apk/app-production-release.apk
+          file: build/app/outputs/bundle/productionRelease/app-production-release.aab
           releaseNotes: |
             🚀 Production Build
             Branch: ${{ github.ref_name }}
             Commit: ${{ env.COMMIT_MSG }}
             By: ${{ github.actor }}
             Build: #${{ github.run_number }}
+
+      # حفظ ملفات الـ debug info للـ Crashlytics (تُستخدم لقراءة Stack Traces)
+      - name: Upload debug symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-info-${{ github.run_number }}
+          path: debug_info/
+          retention-days: 90

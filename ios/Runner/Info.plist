@@ -77,5 +77,11 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>يحتاج التطبيق للوصول إلى معرض الصور لتتمكن من رفع صورة لحسابك أو تقاريرك الطبية.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>يحتاج التطبيق للوصول إلى الكاميرا لتتمكن من التقاط صور لتقاريرك أو حالتك ومشاركتها مع الطبيب.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>يحتاج التطبيق للوصول إلى الميكروفون لتسجيل الفيديوهات المطلوبة للتقييم.</string>
 </dict>
 </plist>
