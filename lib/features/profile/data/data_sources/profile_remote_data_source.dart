@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ProfileRemoteDataSource {
   Future<void> uploadProfileImage(File image);
-  String getPublicUrl(String userId);
+  Future<String?> getProfileImageUrl(String userId);
   Future<void> updateSubscriptionStatus(bool isSubscribed);
 }
 
@@ -12,18 +12,23 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   ProfileRemoteDataSourceImpl({required this.client});
 
+  static String profileImagePath(String userId) => 'profiles/$userId';
+
   @override
   Future<void> uploadProfileImage(File image) async {
     await client.storage.from('profiles').upload(
-          'profiles/${client.auth.currentUser!.id}',
+          profileImagePath(client.auth.currentUser!.id),
           image,
           fileOptions: const FileOptions(upsert: true),
         );
   }
 
   @override
-  String getPublicUrl(String userId) {
-    return client.storage.from('profiles').getPublicUrl('profiles/$userId');
+  Future<String?> getProfileImageUrl(String userId) async {
+    final path = profileImagePath(userId);
+    final exists = await client.storage.from('profiles').exists(path);
+    if (!exists) return null;
+    return client.storage.from('profiles').getPublicUrl(path);
   }
 
   @override

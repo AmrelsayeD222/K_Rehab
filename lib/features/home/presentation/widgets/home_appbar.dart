@@ -68,10 +68,7 @@ class _HomeProfileAvatar extends StatelessWidget {
         }
 
         final imageUrl = user?.profileImageUrl;
-        ImageProvider? imageProvider;
-        if (imageUrl != null && imageUrl.isNotEmpty) {
-          imageProvider = CachedNetworkImageProvider(imageUrl);
-        }
+        final hasImage = imageUrl != null && imageUrl.isNotEmpty;
 
         return CircleAvatar(
           radius: 24,
@@ -79,17 +76,33 @@ class _HomeProfileAvatar extends StatelessWidget {
           child: CircleAvatar(
             radius: 22,
             backgroundColor: Theme.of(context).cardColor,
-            backgroundImage: imageProvider,
-            child: imageProvider == null
-                ? Icon(
+            child: hasImage
+                ? ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      width: 44,
+                      height: 44,
+                      fit: BoxFit.cover,
+                      placeholder: (_, __) => Icon(
+                        Icons.person_2_rounded,
+                        color: colors.onSurface,
+                        size: 26,
+                      ),
+                      errorWidget: (_, __, ___) => Icon(
+                        Icons.person_2_rounded,
+                        color: colors.onSurface,
+                        size: 26,
+                      ),
+                    ),
+                  )
+                : Icon(
                     Icons.person_2_rounded,
                     color: colors.onSurface,
                     size: 26,
                   )
                     .animate()
                     .fadeIn(duration: 400.ms)
-                    .scale(begin: const Offset(0.8, 0.8))
-                : null,
+                    .scale(begin: const Offset(0.8, 0.8)),
           ),
         );
       },

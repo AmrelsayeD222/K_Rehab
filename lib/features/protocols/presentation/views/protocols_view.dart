@@ -13,6 +13,7 @@ import 'package:k_rehab/features/protocols/presentation/widgets/protocols_header
 import 'package:go_router/go_router.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
+import 'package:k_rehab/core/router/navigation_cubit.dart';
 
 class ProtocolsView extends StatelessWidget {
   const ProtocolsView({super.key});
@@ -71,34 +72,45 @@ class _ProtocolsList extends StatelessWidget {
       );
     }
 
-    return ListView.separated(
-      physics: const BouncingScrollPhysics(),
-      itemCount: state.protocols.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 24),
-      itemBuilder: (context, index) {
-        final protocol = state.protocols[index];
-        return ProtocolCardItem(
-          protocol: protocol,
-          onTap: () {
-            final profileState = context.read<ProfileCubit>().state;
-            final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
-            
-            if (protocol.isFree || isSubscribed) {
-              context.push(
-                AppRouter.protocolDetails,
-                extra: {'protocol': protocol, 'heroTag': protocol.id},
-              );
-            } else {
-              context.push(AppRouter.paywall);
-            }
-          },
-        )
-            .animate()
-            .fadeIn(
-              duration: 70.ms,
-              delay: Duration(milliseconds: 20 * index),
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, profileState) {
+        final isSubscribed = profileState is ProfileSuccess &&
+            profileState.user.isSubscribed;
+
+        return ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          itemCount: state.protocols.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 24),
+          itemBuilder: (context, index) {
+            final protocol = state.protocols[index];
+            final isUnlocked = protocol.isFree || isSubscribed;
+
+            return ProtocolCardItem(
+              protocol: protocol,
+              isSubscribed: isSubscribed,
+              onTap: () async {
+                if (isUnlocked) {
+                  context.push(
+                    AppRouter.protocolDetails,
+                    extra: {'protocol': protocol, 'heroTag': protocol.id},
+                  );
+                } else {
+                  final currentTab = context.read<NavigationCubit>().state;
+                  final result = await context.push('${AppRouter.paywall}?fromTab=$currentTab');
+                  if (result == true && context.mounted) {
+                    context.read<ProfileCubit>().getUserData();
+                  }
+                }
+              },
             )
-            .slideY(begin: 0.15, curve: Curves.easeOutCubic);
+                .animate()
+                .fadeIn(
+                  duration: 70.ms,
+                  delay: Duration(milliseconds: 20 * index),
+                )
+                .slideY(begin: 0.15, curve: Curves.easeOutCubic);
+          },
+        );
       },
     );
   }

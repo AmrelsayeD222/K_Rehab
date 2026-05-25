@@ -15,9 +15,9 @@ enum SubscriptionPlan {
   String get displayName {
     switch (this) {
       case SubscriptionPlan.monthly:
-        return 'الاشتراك الشهري';
+        return '99 EGP / month';
       case SubscriptionPlan.yearly:
-        return 'الاشتراك السنوي';
+        return '599 EGP / year';
     }
   }
 
@@ -47,12 +47,14 @@ enum PaymobSdkResult {
   pending;
 
   factory PaymobSdkResult.fromString(String value) {
-    switch (value) {
-      case 'Successfull':
+    final lowerValue = value.toLowerCase();
+    switch (lowerValue) {
+      case 'successfull':
+      case 'success':
         return PaymobSdkResult.success;
-      case 'Rejected':
+      case 'rejected':
         return PaymobSdkResult.rejected;
-      case 'Pending':
+      case 'pending':
         return PaymobSdkResult.pending;
       default:
         return PaymobSdkResult.rejected;

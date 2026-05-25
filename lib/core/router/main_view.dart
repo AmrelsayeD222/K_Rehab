@@ -13,14 +13,15 @@ import 'package:k_rehab/features/protocols/presentation/views/protocols_view.dar
 import 'package:k_rehab/features/recoveryCoach/presentation/views/recovery_coach_view.dart';
 
 class MainView extends StatelessWidget {
-  const MainView({super.key});
+  final int initialIndex;
+  const MainView({super.key, this.initialIndex = 0});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt<NavigationCubit>()),
-        BlocProvider(create: (_) => getIt<ProfileCubit>()..getUserData()),
+        BlocProvider(create: (_) => getIt<NavigationCubit>()..changeTab(initialIndex)),
+        BlocProvider.value(value: getIt<ProfileCubit>()..getUserData()),
       ],
       child: const MainViewBody(),
     );

@@ -1,224 +1,125 @@
-import 'package:flutter/material.dart';
-
-import 'package:flutter_animate/flutter_animate.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:go_router/go_router.dart';
-
-import 'package:k_rehab/core/router/app_router.dart';
-
-import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
-
-import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
-
-
-
-import 'package:k_rehab/core/theme/app_text_styles.dart';
-
-import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
-
-
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:k_rehab/core/router/app_router.dart';
+import 'package:k_rehab/core/theme/app_text_styles.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_state.dart';
+import 'package:k_rehab/features/protocols/data/models/protocol_model.dart';
+import 'package:k_rehab/core/router/navigation_cubit.dart';
 
 class ProtocolCard extends StatelessWidget {
-
   final ProtocolModel model;
-
   final int index;
-
-
 
   const ProtocolCard({super.key, required this.model, required this.index});
 
-
-
   @override
-
   Widget build(BuildContext context) {
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, profileState) {
+        final isSubscribed =
+            profileState is ProfileSuccess && profileState.user.isSubscribed;
+        final isUnlocked = model.isFree || isSubscribed;
 
-    return GestureDetector(
-
-      onTap: () {
-
-        final profileState = context.read<ProfileCubit>().state;
-
-        final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
-
-        
-
-        if (model.isFree || isSubscribed) {
-
-          context.push(
-
-            AppRouter.protocolDetails,
-
-            extra: {'protocol': model, 'heroTag': 'home_protocol_${model.id}'},
-
-          );
-
-        } else {
-
-          context.push(AppRouter.paywall);
-
-        }
-
-      },
-
-      child: Hero(
-
-        tag: 'home_protocol_${model.id}',
-
-        child: Material(
-
-          type: MaterialType.transparency,
-
-          child: Container(
-
-            width: 300,
-
-            height: MediaQuery.of(context).size.height * 0.22,
-
-            margin: const EdgeInsets.only(right: 16, bottom: 8),
-
-            decoration: BoxDecoration(
-
-                borderRadius: BorderRadius.circular(24),
-
-                image: _isValidImageUrl(model.imagePath)
-
-                    ? DecorationImage(
-
-                        image: CachedNetworkImageProvider(model.imagePath),
-
-                        fit: BoxFit.cover,
-
-                      )
-
-                    : null),
-
-            child: Padding(
-
-              padding: const EdgeInsets.all(24.0),
-
-              child: Column(
-
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [_buildTitle(), _buildActionButton(context)],
-
+        return GestureDetector(
+          onTap: () async {
+            if (isUnlocked) {
+              context.push(
+                AppRouter.protocolDetails,
+                extra: {
+                  'protocol': model,
+                  'heroTag': 'home_protocol_${model.id}',
+                },
+              );
+            } else {
+              final currentTab = context.read<NavigationCubit>().state;
+              final result = await context.push('${AppRouter.paywall}?fromTab=$currentTab');
+              if (result == true && context.mounted) {
+                context.read<ProfileCubit>().getUserData();
+              }
+            }
+          },
+          child: Hero(
+            tag: 'home_protocol_${model.id}',
+            child: Material(
+              type: MaterialType.transparency,
+              child: Container(
+                width: 300,
+                height: MediaQuery.of(context).size.height * 0.22,
+                margin: const EdgeInsets.only(right: 16, bottom: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  image: _isValidImageUrl(model.imagePath)
+                      ? DecorationImage(
+                          image:
+                              CachedNetworkImageProvider(model.imagePath),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitle(),
+                      _buildActionButton(isUnlocked),
+                    ],
+                  ),
+                ),
               ),
-
             ),
-
           ),
-
-        ),
-
-      )
-
-          .animate()
-
-          .fadeIn(
-
-            duration: 400.ms,
-
-            delay: Duration(milliseconds: 200 + (index * 100)),
-
-          )
-
-          .slideX(begin: 0.1, curve: Curves.easeOut),
-
+        )
+            .animate()
+            .fadeIn(
+              duration: 400.ms,
+              delay: Duration(milliseconds: 200 + (index * 100)),
+            )
+            .slideX(begin: 0.1, curve: Curves.easeOut);
+      },
     );
-
   }
-
-
 
   Widget _buildTitle() {
-
     return Text(
-
       model.title,
-
       style: AppTextStyles.heading2.copyWith(
-
         color: Colors.white,
-
         height: 1.2,
-
         fontSize: 20,
-
         shadows: [const Shadow(color: Colors.black54, blurRadius: 8)],
-
       ),
-
     );
-
   }
-
-
 
   bool _isValidImageUrl(String path) {
-
     if (path.isEmpty || path == 'null') return false;
-
     final uri = Uri.tryParse(path);
-
     return uri != null && uri.hasAbsolutePath && uri.host.isNotEmpty;
-
   }
 
-
-
-  Widget _buildActionButton(BuildContext context) {
-
-    final profileState = context.read<ProfileCubit>().state;
-
-    final isSubscribed = profileState is ProfileSuccess && profileState.user.isSubscribed;
-
-    final isUnlocked = model.isFree || isSubscribed;
-
-
-
+  Widget _buildActionButton(bool isUnlocked) {
     return Row(
-
       mainAxisAlignment: MainAxisAlignment.end,
-
       children: [
-
         Container(
-
           decoration: BoxDecoration(
-
             color: Colors.white,
-
             borderRadius: BorderRadius.circular(12),
-
           ),
-
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-
           child: Icon(
-
             isUnlocked ? Icons.arrow_forward_rounded : Icons.lock_rounded,
-
             color: const Color(0xFF2a5051),
-
             size: 20,
-
           ),
-
         ),
-
       ],
-
     );
-
   }
-
 }
-

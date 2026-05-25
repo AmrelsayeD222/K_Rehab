@@ -29,12 +29,23 @@ class PaymentCubit extends Cubit<PaymentState> {
         )));
       },
       (user) async {
+        final rawName = user.name.trim();
+        final nameParts = rawName.isEmpty
+            ? <String>[]
+            : rawName.split(RegExp(r'\s+')).where((p) => p.isNotEmpty).toList();
+
+        final userFirstName =
+            nameParts.isNotEmpty ? nameParts.first : 'Customer';
+        final userLastName = nameParts.length > 1
+            ? nameParts.last
+            : (nameParts.isNotEmpty ? nameParts.first : 'Customer');
+
         // 2. Start Payment Process
         final result = await _paymentRepository.startSubscriptionPayment(
           plan: plan,
           userEmail: user.email,
-          userFirstName: user.name.split(' ').first,
-          userLastName: user.name.split(' ').last,
+          userFirstName: userFirstName,
+          userLastName: userLastName,
           userPhone: '+201234567890', // Default if missing from model
         );
 
@@ -42,9 +53,11 @@ class PaymentCubit extends Cubit<PaymentState> {
           (failure) async => emit(PaymentFailureState(failure)),
           (_) async {
             // 3. Update Subscription Status
-            final updateResult = await _profileRepo.updateSubscriptionStatus(isActive: true);
+            final updateResult =
+                await _profileRepo.updateSubscriptionStatus(isActive: true);
             updateResult.fold(
-              (failure) => emit(PaymentFailureState(const IntentionCreationFailure(
+              (failure) =>
+                  emit(PaymentFailureState(const IntentionCreationFailure(
                 'تم الدفع ولكن فشل تفعيل الاشتراك',
               ))),
               (_) => emit(PaymentSuccess()),

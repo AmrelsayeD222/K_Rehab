@@ -5,11 +5,13 @@ import 'package:k_rehab/features/protocols/presentation/widgets/protocol_card_im
 
 class ProtocolCardItem extends StatelessWidget {
   final ProtocolModel protocol;
+  final bool isSubscribed;
   final VoidCallback onTap;
 
   const ProtocolCardItem({
     super.key,
     required this.protocol,
+    required this.isSubscribed,
     required this.onTap,
   });
 
@@ -29,7 +31,10 @@ class ProtocolCardItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProtocolCardImageHeader(protocol: protocol),
-            ProtocolCardContent(protocol: protocol),
+            ProtocolCardContent(
+              protocol: protocol,
+              isSubscribed: isSubscribed,
+            ),
           ],
         ),
       ),

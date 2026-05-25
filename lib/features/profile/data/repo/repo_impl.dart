@@ -44,15 +44,14 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       final user = supabaseClient.auth.currentUser;
       if (user != null) {
-        final baseUrl = remoteDataSource.getPublicUrl(user.id);
-        
-        // We only add a timestamp if we want to force refresh, 
-        // otherwise we use the static URL for caching.
+        final profileImageUrl =
+            await remoteDataSource.getProfileImageUrl(user.id);
+
         final userModel = UserModel(
           id: user.id,
           name: user.userMetadata?['name'] ?? 'Unknown User',
           email: user.email ?? 'No Email',
-          profileImageUrl: baseUrl,
+          profileImageUrl: profileImageUrl,
           isSubscribed: user.userMetadata?['isSubscribed'] ?? false,
         );
 

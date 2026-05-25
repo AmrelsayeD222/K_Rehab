@@ -154,7 +154,7 @@ void setupServiceLocator() {
   getIt.registerFactory<LoginCubit>(
     () => LoginCubit(authRepo: getIt<AuthRepo>()),
   );
-  getIt.registerFactory<ProfileCubit>(
+  getIt.registerLazySingleton<ProfileCubit>(
     () => ProfileCubit(
       profileRepo: getIt<ProfileRepo>(),
       authRepo: getIt<AuthRepo>(),

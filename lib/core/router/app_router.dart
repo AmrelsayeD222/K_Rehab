@@ -96,7 +96,14 @@ abstract class AppRouter {
             child: const SignupView(),
           ),
         ),
-        GoRoute(path: mainView, builder: (context, state) => const MainView()),
+        GoRoute(
+          path: mainView,
+          builder: (context, state) {
+            final tabStr = state.uri.queryParameters['tab'];
+            final tabIndex = int.tryParse(tabStr ?? '0') ?? 0;
+            return MainView(initialIndex: tabIndex);
+          },
+        ),
         GoRoute(
           path: exerciseDetails,
           builder: (context, state) {
@@ -127,7 +134,11 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: paywall,
-          builder: (context, state) => const PaywallView(),
+          builder: (context, state) {
+            final fromTabStr = state.uri.queryParameters['fromTab'];
+            final fromTab = int.tryParse(fromTabStr ?? '0') ?? 0;
+            return PaywallView(fromTab: fromTab);
+          },
         ),
       ],
     );

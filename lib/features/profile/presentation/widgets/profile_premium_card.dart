@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:k_rehab/core/router/navigation_cubit.dart';
 
 class ProfilePremiumCard extends StatelessWidget {
   const ProfilePremiumCard({super.key});
@@ -27,8 +28,9 @@ class ProfilePremiumCard extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () async {
-          await context.push(AppRouter.paywall);
-          if (context.mounted) {
+          final currentTab = context.read<NavigationCubit>().state;
+          final result = await context.push('${AppRouter.paywall}?fromTab=$currentTab');
+          if (result == true && context.mounted) {
             context.read<ProfileCubit>().getUserData();
           }
         },

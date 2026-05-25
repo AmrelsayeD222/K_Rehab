@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:k_rehab/core/di/service_locator.dart';
+import 'package:k_rehab/core/router/app_router.dart';
 import 'package:k_rehab/core/theme/app_text_styles.dart';
 import 'package:k_rehab/core/widgets/k_snack_bar.dart';
 import 'package:k_rehab/features/payment/data/models/subscribtion_plan.dart';
@@ -8,9 +10,11 @@ import 'package:k_rehab/features/payment/presentation/manager/payment_cubit.dart
 import 'package:k_rehab/features/payment/presentation/manager/payment_state.dart';
 import 'package:k_rehab/features/payment/presentation/widgets/benefit_item.dart';
 import 'package:k_rehab/features/payment/presentation/widgets/plan_card.dart';
+import 'package:k_rehab/features/profile/presentation/manager/profile_cubit.dart';
 
 class PaywallView extends StatefulWidget {
-  const PaywallView({super.key});
+  final int fromTab;
+  const PaywallView({super.key, this.fromTab = 0});
 
   @override
   State<PaywallView> createState() => _PaywallViewState();
@@ -31,7 +35,8 @@ class _PaywallViewState extends State<PaywallView> {
             KSnackBar.show(context,
                 message: 'Subscription successful! Enjoy all features',
                 isError: false);
-            Navigator.pop(context);
+            getIt<ProfileCubit>().getUserData();
+            context.go('${AppRouter.mainView}?tab=${widget.fromTab}');
           } else if (state is PaymentFailureState) {
             KSnackBar.show(context, message: state.failure.errorMessage);
           }
@@ -41,7 +46,7 @@ class _PaywallViewState extends State<PaywallView> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
               icon: const Icon(Icons.close_rounded),
             ),
             title: Text(
